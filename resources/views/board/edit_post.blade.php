@@ -65,11 +65,7 @@
                     <div class="check">
                       <br>
                       <label>
-                        @if ($post->deal == 'on')
-                          <input type="checkbox" id="deal" name="deal" checked> Договорная цена
-                        @else
-                          <input type="checkbox" id="deal" name="deal"> Договорная цена
-                        @endif
+                        <input type="checkbox" id="deal" name="deal" {{ ($post->deal == 'on') ? 'checked' : null }}> Торг возможен
                       </label>
                     </div>
                   </div>

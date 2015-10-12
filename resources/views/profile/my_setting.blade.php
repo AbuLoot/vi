@@ -12,7 +12,7 @@
                 @include('partials.alerts')
                 <h3>Изменение пароля</h3>
 
-                <form method="POST" action="{{ route('update-password') }}" role="form">
+                <form method="POST" action="/update_password" role="form">
                   {!! csrf_field() !!}
                   <div class="form-group">
                     <label for="password">Старый пароль:</label>
@@ -52,7 +52,7 @@
                 <h3 class="panel-title">Удаление аккаунта</h3>
               </div>
               <div class="panel-body">
-                <form method="POST" action="{{ route('delete-account') }}" accept-charset="UTF-8">
+                <form method="POST" action="delete_account" accept-charset="UTF-8">
                   <input name="_method" type="hidden" value="DELETE">
                   <input name="_token" type="hidden" value="{{ csrf_token() }}">
                   <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить аккаунт?')"><span class="glyphicon glyphicon-fire"></span> Удалить</button>

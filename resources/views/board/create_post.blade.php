@@ -56,7 +56,7 @@
                     <div class="check">
                       <br>
                       <label>
-                        <input type="checkbox" id="deal" name="deal"> Договорная цена
+                        <input type="checkbox" id="deal" name="deal"> Торг возможен
                       </label>
                     </div>
                   </div>
