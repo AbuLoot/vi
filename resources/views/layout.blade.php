@@ -23,7 +23,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-2 col-sm-3 col-xs-4">
-            <a href="{{ route('index') }}"><img src="/img/logo-2.svg" class="img-responsive"></a>
+            <a href="{{ route('index') }}"><img src="/img/vizov-logo.svg" class="logo"></a>
           </div>
           <form action="/search">
             <div class="col-md-8 col-sm-6 col-xs-8">
@@ -108,7 +108,7 @@
         <div class="col-md-8">
           <ul class="list-unstyled list-inline">
             @foreach ($pages as $page)
-              <li><a href="{{ url($page->slug) }}">{{ $page->title }}</a></li>
+              <li><a href="{{ url('p/' . $page->slug) }}">{{ $page->title }}</a></li>
             @endforeach
           </ul>
         </div>

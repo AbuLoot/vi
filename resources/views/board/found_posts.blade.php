@@ -79,7 +79,7 @@
                       </h4>
                       <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>
                     </div>
-                    <p class="text-gray">{{ $post->city->title }} / <b>{{ $post->section->title }}</b><br><small>{{ $post->created_at }} &nbsp; <i class="fa fa-smile-o"></i> {{ $post->views }} &nbsp; <i class="fa fa-comments-o"></i> {{ $post->comments->count() }}</small></p>
+                    <p class="text-gray">{{ $post->city->title }} / {{ $post->section->title }} <br><small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="text-gray glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small></p>
                   </div>
                 </section><hr>
               @empty

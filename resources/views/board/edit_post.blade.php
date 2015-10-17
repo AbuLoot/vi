@@ -65,7 +65,7 @@
                     <div class="check">
                       <br>
                       <label>
-                        <input type="checkbox" id="deal" name="deal" {{ ($post->deal == 'on') ? 'checked' : null }}> Торг возможен
+                        <input type="checkbox" name="deal" {{ ($post->deal == 'on') ? 'checked' : null }}> Торг возможен
                       </label>
                     </div>
                   </div>

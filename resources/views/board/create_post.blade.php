@@ -56,7 +56,7 @@
                     <div class="check">
                       <br>
                       <label>
-                        <input type="checkbox" id="deal" name="deal"> Торг возможен
+                        <input type="checkbox" name="deal"> Торг возможен
                       </label>
                     </div>
                   </div>
@@ -107,10 +107,12 @@
                         <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                       </div>
                     </div>
-                    <p class="btn btn-link btn-sm" id="btn-toggle">
+
+                    <a class="btn btn-link btn-sm" data-toggle="collapse" href="#fileinput-part" aria-expanded="false" aria-controls="collapseExample">
                       <i class="glyphicon glyphicon-plus"></i> Больше
-                    </p>
-                    <div id="fileinput-part">
+                    </a>
+
+                    <div class="collapse" id="fileinput-part">
                       <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
                         <div>
@@ -122,7 +124,6 @@
                           <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                         </div>
                       </div>
-
                       <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
                         <div>
@@ -178,10 +179,41 @@
               </div>
               <div class="form-group">
                 <label for="phone" class="col-md-3 col-sm-3">Телефон</label>
-                <div class="col-md-9 col-sm-9">
+                <div class="col-md-5 col-sm-5">
                   <div class="row">
                     <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
                   </div>
+                </div>
+                <div class="col-md-4 col-sm-4 messengers">
+                  <label><input type="checkbox" name="telegram"> Telegram</label>&nbsp;
+                  <label><input type="checkbox" name="whatsapp"> WhatsApp</label>&nbsp;
+                  <label><input type="checkbox" name="viber"> Viber</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="phone" class="col-md-3 col-sm-3">Телефон</label>
+                <div class="col-md-5 col-sm-5">
+                  <div class="row">
+                    <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 messengers">
+                  <label><input type="checkbox" name="telegram"> Telegram</label>&nbsp;
+                  <label><input type="checkbox" name="whatsapp"> WhatsApp</label>&nbsp;
+                  <label><input type="checkbox" name="viber"> Viber</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="phone" class="col-md-3 col-sm-3">Телефон</label>
+                <div class="col-md-5 col-sm-5">
+                  <div class="row">
+                    <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 messengers">
+                  <label><input type="checkbox" name="telegram"> Telegram</label>&nbsp;
+                  <label><input type="checkbox" name="whatsapp"> WhatsApp</label>&nbsp;
+                  <label><input type="checkbox" name="viber"> Viber</label>
                 </div>
               </div>
               <div class="form-group">

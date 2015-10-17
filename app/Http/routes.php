@@ -1,5 +1,8 @@
 <?php
 
+// Pages
+Route::get('p/{page}', ['uses' => 'PagesController@page']);
+
 // Board
 Route::get('/', ['as' => 'index', 'uses' => 'BoardController@getCall']);
 Route::get('uslugi_vyzova', ['as' => 'call', 'uses' => 'BoardController@getCall']);
@@ -42,9 +45,6 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('update_password', ['uses' => 'ProfileController@updatePassword']);
 	Route::post('delete_account', ['uses' => 'ProfileController@deleteAccount']);
 });
-
-// Pages
-Route::get('{page}', ['uses' => 'PagesController@page']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function()
 {

@@ -1,6 +1,11 @@
 body {
   margin-top: 50px;
-  /*background-color: #f5f8fa;*/
+  background-color: #F5F8FA;
+}
+.logo {
+  margin-left: 0;
+  width: auto;
+  max-height: 30px;
 }
 .text-gray {
   color: #666666;
@@ -14,13 +19,13 @@ body {
 .navbar-basic {
   background-color: #009FD5;
   padding: 10px 0;
+  border-bottom: 1px solid #2882b5;
 }
 
 /* Navbar Services */
 .navbar-services {
   background-color: #ffffff;
-  -webkit-box-shadow: 0 1px 0 rgb(221, 221, 221);
-  box-shadow: 0 1px 0 rgb(221, 221, 221);
+  border-bottom: 1px solid #d3e0e9;
 }
 
 /* Nav Lines */
@@ -60,6 +65,9 @@ body {
 .row-right {
   margin-right: -15px;
 }
+.panel-default {
+  border-color: #d3e0e9;
+}
 .well-modified {
   background-color: #D4EEFF;
   border: none;
@@ -77,12 +85,21 @@ body {
 .post-title-fix {
   min-height: 45px;
 }
-.section-title-fix {
+.section > section > div > div > a {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.section > section > div > div > a > h5 {
   min-height: 32px;
 }
 .form-horizontal .form-group {
   margin-left: -15px;
   margin-right: 0;
+}
+.messengers > label {
+  margin-bottom: 0px;
 }
 
 /* Gallery */

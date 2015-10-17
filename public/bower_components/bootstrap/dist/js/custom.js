@@ -13,7 +13,7 @@ $('#description').maxlength({
 });
 
 // Button Toggle
-$('#fileinput-part').hide();
+/*$('#fileinput-part').hide();
 
 $('#btn-toggle').click(function(){
   var btn = $('#btn-toggle').text();
@@ -23,4 +23,4 @@ $('#btn-toggle').click(function(){
     $('#btn-toggle').html('<i class="glyphicon glyphicon-plus"></i> Больше');
   };
   $('#fileinput-part').toggle();
-});
+});*/
