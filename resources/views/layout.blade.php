@@ -23,7 +23,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-2 col-sm-3 col-xs-4">
-            <a href="{{ route('index') }}"><img src="/img/vizov-logo.svg" class="logo"></a>
+            <a href="{{ route('index') }}"><img src="/img/vizov-logo2.png" class="logo"></a>
           </div>
           <form action="/search">
             <div class="col-md-8 col-sm-6 col-xs-8">
