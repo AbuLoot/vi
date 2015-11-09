@@ -6,8 +6,8 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-8">
-              <h3>Создание рубрики</h3>
-              <form action="{{ route('admin.section.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+              <h3>Создание раздела</h3>
+              <form action="{{ route('admin.section.store') }}" method="post" class="form-horizontal">
                 {!! csrf_field() !!}
                 <div class="form-group">
                   <div class="col-md-offset-3 col-md-9">
@@ -30,7 +30,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="title" class="col-md-3">Заголовок рубрики</label>
+                  <label for="title" class="col-md-3">Заголовок разделы</label>
                   <div class="col-md-9">
                     <input type="text" class="form-control" id="title" name="title" minlength="5" maxlength="80" value="{{ (old('title')) ? old('title') : '' }}" required>
                   </div>
@@ -42,37 +42,9 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="price" class="col-md-3">Картинка</label>
+                  <label for="lang" class="col-md-3">Язык</label>
                   <div class="col-md-9">
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                      <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 185px; height: 120px;"></div>
-                      <div>
-                        <span class="btn btn-default btn-sm btn-file">
-                          <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Изменить</span>
-                          <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
-                          <input type="file" name="image" accept="image/*">
-                        </span>
-                        <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="title_description" class="col-md-3">Мета название</label>
-                  <div class="col-md-9">
-                    <input type="text" class="form-control" id="title_description" name="title_description" maxlength="255" value="{{ (old('title_description')) ? old('title_description') : '' }}">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="meta_description" class="col-md-3">Мета описание</label>
-                  <div class="col-md-9">
-                    <input type="text" class="form-control" id="meta_description" name="meta_description" maxlength="255" value="{{ (old('meta_description')) ? old('meta_description') : '' }}">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="text" class="col-md-3">Текст</label>
-                  <div class="col-md-9">
-                    <textarea class="form-control" id="text" name="text" rows="3" maxlength="2000">{{ (old('text')) ? old('text') : '' }}</textarea>
+                    <input type="text" class="form-control" id="lang" name="lang" maxlength="255" value="{{ (old('lang')) ? old('lang') : '' }}">
                   </div>
                 </div>
                 <div class="form-group">
@@ -85,7 +57,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-md-9 col-md-offset-3">
-                    <button type="submit" class="btn btn-primary">Создать рубрику</button>
+                    <button type="submit" class="btn btn-primary">Создать раздел</button>
                   </div>
                 </div>
               </form>

@@ -18,9 +18,9 @@ class Profile extends Model
         return $this->belongsTo('App\City');
     }
 
-    public function section()
+    public function categories()
     {
-        return $this->belongsTo('App\Section');
+        return $this->belongsTo('App\Category');
     }
 
     public function comments()

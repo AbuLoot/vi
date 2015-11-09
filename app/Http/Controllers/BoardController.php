@@ -8,31 +8,32 @@ use App\Http\Controllers\Controller;
 
 use App\Service;
 use App\Section;
+use App\Category;
 use App\Post;
 use App\Profile;
 
 class BoardController extends Controller
 {
-    // Section Call
+    // Section Services
 
-    public function getCall()
+    public function getServices()
     {
-        $service = Service::where('slug', 'uslugi_vyzova')->first();
-        $sections = Section::where('service_id', 1)->where('status', 1)->orderBy('sort_id')->get();
+        $service = Service::where('slug', 'uslugi')->first();
+        $section = Section::where('service_id', '1')->orderBy('sort_id')->get();
 
-    	return view('board.section', compact('service', 'sections'));
+    	return view('board.section', compact('service', 'section'));
     }
 
-    public function showCall($section, $id)
+    public function showServices($section, $id)
     {
-        $section = Section::where('slug', $section)->first();
+        $section = Category::where('slug', $section)->first();
         $profiles = Profile::where('section_id', $section->id)->take(5)->get();
         $posts = Post::where('section_id', $id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
         return view('board.posts', compact('section', 'profiles', 'posts'));
     }
 
-    public function showPostCall($post, $id)
+    public function showPostServices($post, $id)
     {
         $post = Post::findOrFail($id);
         $post->views = ++$post->views;
@@ -50,54 +51,17 @@ class BoardController extends Controller
         return view('board.post', compact('post', 'images', 'profiles', 'previous', 'next', 'first_number', 'second_number'));
     }
 
-    // Section Repair
+    // Section Products
 
-    public function getRepair()
+    public function getProducts()
     {
-        $service = Service::where('slug', 'uslugi_remonta')->first();
-        $sections = Section::where('service_id', 2)->where('status', 1)->orderBy('sort_id')->get();
-
-    	return view('board.section', compact('service', 'sections'));
-    }
-
-    public function showRepair($section, $id)
-    {
-        $section = Section::where('slug', $section)->first();
-        $profiles = Profile::where('section_id', $section->id)->take(5)->get();
-        $posts = Post::where('section_id', $id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
-
-        return view('board.posts', compact('section', 'profiles', 'posts'));
-    }
-
-    public function showPostRepair($post, $id)
-    {
-        $post = Post::findOrFail($id);
-        $post->views = ++$post->views;
-        $post->save();
-
-        $images = ($post->images) ? unserialize($post->images) : null;
-
-        $previous = Post::where('section_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
-        $next = Post::where('section_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
-
-        $profiles = Profile::where('section_id', $post->section_id)->take(5)->get();
-        $first_number = rand(1, 10);
-        $second_number = rand(1, 10);
-
-        return view('board.post', compact('post', 'images', 'profiles', 'previous', 'next', 'first_number', 'second_number'));
-    }
-
-    // Section Materials
-
-    public function getMaterials()
-    {
-        $service = Service::where('slug', 'stroymaterialy')->first();
+        $service = Service::where('slug', 'tovary')->first();
         $sections = Section::where('service_id', 3)->where('status', 1)->orderBy('sort_id')->get();
 
         return view('board.section', compact('service', 'sections'));
     }
 
-    public function showMaterials($section, $id)
+    public function showProducts($section, $id)
     {
         $section = Section::where('slug', $section)->first();
         $profiles = Profile::where('section_id', $section->id)->take(5)->get();
@@ -106,7 +70,7 @@ class BoardController extends Controller
         return view('board.posts', compact('section', 'profiles', 'posts'));
     }
 
-    public function showPostMaterials($post, $id)
+    public function showPostProducts($post, $id)
     {
         $post = Post::findOrFail($id);
         $post->views = ++$post->views;

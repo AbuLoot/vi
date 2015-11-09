@@ -59,8 +59,8 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li><a href="/admin/pages">Страницы</a></li>
-                  <li><a href="#">Разделы</a></li>
-                  <li><a href="/admin/section">Рубрики</a></li>
+                  <li><a href="/admin/section">Разделы</a></li>
+                  <li><a href="/admin/categories">Категории</a></li>
                   <li><a href="/admin/posts">Объявления</a></li>
                   <li><a href="/admin/users">Пользователи</a></li>
                   <li class="divider"></li>
@@ -78,14 +78,14 @@
         <div class="row">
           <div class="col-md-offset-2 col-md-6 col-sm-8">
             <ul class="nav nav-lines">
-              <li @if (Request::is('/', 'uslugi_vyzova')) class="active" @endif>
-                <a href="{{ route('call') }}">Услуги вызова</a>
+              <li @if (Request::is('/', 'uslugi')) class="active" @endif>
+                <a href="{{ route('services') }}">Услуги</a>
               </li>
-              <li @if (Request::is('uslugi_remonta')) class="active" @endif>
-                <a href="{{ route('repair') }}">Услуги ремонта</a>
+              <li @if (Request::is('tovary')) class="active" @endif>
+                <a href="{{ route('products') }}">Товары</a>
               </li>
-              <li @if (Request::is('stroymaterialy')) class="active" @endif>
-                <a href="{{ route('materials') }}">Стройматериалы</a>
+              <li @if (Request::is('rabota')) class="active" @endif>
+                <a href="#">Работа</a>
               </li>
             </ul>
           </div>

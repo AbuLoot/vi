@@ -1,21 +1,42 @@
 <?php
 
+Route::get('add_categories', function(){
+	$array = [
+	'Аренда недвижимости',
+	'Аренда транспорта',
+	'Аренда спецтехники',
+	'Аренда оборудования',
+
+	];
+
+	$i = 0;
+
+	foreach ($array as $value) {
+		$section = new \App\Category;
+		$section->sort_id = ++$i;
+		$section->section_id = 7;
+		$section->slug = str_slug($value);
+		$section->title = $value;
+		$section->lang = 'ru';
+	}
+	echo 'Success!';
+});
+
+Route::get('create_roles', 'AdminController@createRoles');
+Route::post('post_admin', 'AdminController@postAdmin');
+
 // Pages
 Route::get('p/{page}', ['uses' => 'PagesController@page']);
 
 // Board
-Route::get('/', ['as' => 'index', 'uses' => 'BoardController@getCall']);
-Route::get('uslugi_vyzova', ['as' => 'call', 'uses' => 'BoardController@getCall']);
-Route::get('uslugi_vyzova/{section}/{id}', ['as' => 'show-call', 'uses' => 'BoardController@showCall']);
-Route::get('1/{post}/{id}', ['as' => 'show-post-call', 'uses' => 'BoardController@showPostCall']);
+Route::get('/', ['as' => 'index', 'uses' => 'BoardController@getServices']);
+Route::get('uslugi', ['as' => 'services', 'uses' => 'BoardController@getServices']);
+Route::get('uslugi/{section}/{id}', ['as' => 'show-services', 'uses' => 'BoardController@showServices']);
+Route::get('1/{post}/{id}', ['as' => 'show-post-services', 'uses' => 'BoardController@showPostServices']);
 
-Route::get('uslugi_remonta', ['as' => 'repair', 'uses' => 'BoardController@getRepair']);
-Route::get('uslugi_remonta/{section}/{id}', ['as' => 'show-repair', 'uses' => 'BoardController@showRepair']);
-Route::get('2/{post}/{id}', ['as' => 'show-post-repair', 'uses' => 'BoardController@showPostRepair']);
-
-Route::get('stroymaterialy', ['as' => 'materials', 'uses' => 'BoardController@getMaterials']);
-Route::get('stroymaterialy/{section}/{id}', ['as' => 'show-materials', 'uses' => 'BoardController@showMaterials']);
-Route::get('3/{post}/{id}', ['as' => 'show-post-materials', 'uses' => 'BoardController@showPostMaterials']);
+Route::get('tovary', ['as' => 'products', 'uses' => 'BoardController@getProducts']);
+Route::get('tovary/{section}/{id}', ['as' => 'show-products', 'uses' => 'BoardController@showProducts']);
+Route::get('3/{post}/{id}', ['as' => 'show-post-products', 'uses' => 'BoardController@showPostProducts']);
 
 // Search tools
 Route::get('search', ['uses' => 'BoardController@searchPosts']);
@@ -29,8 +50,7 @@ Route::get('profiles', ['uses' => 'ProfileController@getProfiles']);
 Route::post('review', ['uses' => 'CommentController@saveReview']);
 Route::post('comment', ['uses' => 'CommentController@saveComment']);
 
-Route::group(['middleware' => 'auth'], function()
-{
+Route::group(['middleware' => 'auth'], function() {
 	Route::resource('posts', 'PostsController');
 
 	Route::get('my_profile', ['uses' => 'ProfileController@getMyProfile']);
@@ -46,10 +66,10 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('delete_account', ['uses' => 'ProfileController@deleteAccount']);
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function()
-{
+Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
     Route::resource('users', 'AdminUsersController');
     Route::resource('section', 'AdminSectionController');
+    Route::resource('categories', 'AdminCategoriesController');
     Route::resource('posts', 'AdminPostsController');
     Route::resource('pages', 'AdminPagesController');
 });
