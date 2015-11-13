@@ -33,7 +33,7 @@
                           </tr>
                           <tr>
                             <td>Cфера деятельности</td>
-                            <th>{{ ($profile->section_id == 0) ? 'Не указан' : $profile->section->title }}</th>
+                            <th>{{ ($profile->category_id == 0) ? 'Не указан' : $profile->category->title }}</th>
                           </tr>
                           <tr>
                             <td>Город</td>
@@ -75,7 +75,7 @@
                     @forelse ($posts as $post)
                       <div class="media">
                         <div class="media-left">
-                          <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
+                          <a href="{{ url($post->category->service_id.'/'.$post->slug.'/'.$post->id) }}">
                             @if ( ! empty($post->image))
                               <img class="media-object" src="/img/posts/{{ $post->user_id.'/'.$post->image }}" alt="{{ $post->title }}" style="width:200px">
                             @else
@@ -86,12 +86,12 @@
                         <div class="media-body">
                           <div class="row post-title-fix">
                             <h4 class="col-md-8 media-heading">
-                              <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                              <a href="{{ url($post->category->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                             </h4>
                             <h4 class="col-md-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <br><small>Торг&nbsp;возможен</small> @endif</h4>
                           </div>
                           <p class="text-gray">
-                            {{ $post->city->title }} / <b>{{ $post->section->title }}</b><br>
+                            {{ $post->city->title }} / <b>{{ $post->category->title }}</b><br>
                             <small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small>
                           </p>
                         </div>

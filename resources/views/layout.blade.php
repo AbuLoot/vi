@@ -25,7 +25,7 @@
           <div class="col-md-2 col-sm-3 col-xs-4">
             <a href="{{ route('index') }}"><img src="/img/vizov-logo2.png" class="logo"></a>
           </div>
-          <form action="/search">
+          <form action="/search/posts">
             <div class="col-md-8 col-sm-6 col-xs-8">
               <div class="input-group">
                 <input type="text" class="form-control input-sm" name="text" minlength="2" maxlength="100" placeholder="Введите название услуги или товара" required>

@@ -46,9 +46,9 @@ class Post extends Model
         return date('j '.trans('date.month.'.date('F', strtotime($value))).', Y', strtotime($value));
     }
 
-    public function section()
+    public function category()
     {
-        return $this->belongsTo('App\Section');
+        return $this->belongsTo('App\Category');
     }
 
     public function city()

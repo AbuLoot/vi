@@ -13,21 +13,21 @@
               <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <ol class="breadcrumb">
-                    <li><a href="{{ route($post->section->service->route) }}">{{ $post->section->service->title }}</a></li>
-                    <li><a href="{{ url($post->section->service->slug . '/' . $post->section->slug . '/' . $post->section->id) }}">{{ $post->section->title }}</a></li>
+                    <li><a href="{{ route($post->category->section->service->route) }}">{{ $post->category->section->service->title }}</a></li>
+                    <li><a href="{{ url($post->category->section->service->slug . '/' . $post->category->slug) }}">{{ $post->category->title }}</a></li>
                   </ol>
                 </div>
                 <div class="col-md-6 col-sm-6">
                   <ol class="breadcrumb text-right">
-                    @if (is_null($previous))
+                    @if (is_null($prev))
                       <li class="text-muted">← Предыдущий</li>
                     @else
-                      <li><a href="{{ url($post->section->service_id . '/' . $previous->slug . '/' . $previous->id) }}">← Предыдущий</a></li>
+                      <li><a href="{{ url($post->category->section->service_id . '/' . $prev->slug . '/' . $prev->id) }}">← Предыдущий</a></li>
                     @endif
                     @if (is_null($next))
                       <li class="text-muted">Следуйщий →</li>
                     @else
-                      <li><a href="{{ url($post->section->service_id . '/' . $next->slug . '/' . $next->id) }}">Следуйщий →</a></li>
+                      <li><a href="{{ url($post->category->section->service_id . '/' . $next->slug . '/' . $next->id) }}">Следуйщий →</a></li>
                     @endif
                   </ol>
                 </div>
@@ -97,20 +97,13 @@
                   <div class="panel-heading">
                     <i class="glyphicon glyphicon-comment"></i> Комментарии: {{ $post->comments->count() }}
                   </div>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <tbody>
-                        @foreach ($post->comments as $comment)
-                          <tr>
-                            <th style="width:110px">{{ $comment->name }}</th>
-                            <td>
-                              {{ $comment->comment }}<br>
-                              <small>Опубликовано {{ $comment->created_at }}</small>
-                            </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+                  <div class="panel-body">
+                    @foreach ($post->comments as $comment)
+                      <dl>                
+                        <dt>{{ $comment->name }} &nbsp;&nbsp;<small class="text-muted">{{ $comment->created_at }}</small></dt>
+                        <dd>{{ $comment->comment }}</dd>
+                      </dl>
+                    @endforeach
                   </div>
                 </div>
               @endunless

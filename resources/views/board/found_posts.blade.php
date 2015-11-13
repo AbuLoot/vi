@@ -6,9 +6,9 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="well well-modified well-sm">
-                <form action="/filter">
-                  @if (isset($section))
-                    <input type="hidden" name="section_id" value="{{ $section->id }}">
+                <form action="/filter/posts">
+                  @if (isset($category))
+                    <input type="hidden" name="category_id" value="{{ $category->id }}">
                   @endif
                   <table class="table-condensed">
                     <thead>
@@ -54,17 +54,17 @@
                 </form>
               </div>
 
-              @if (isset($section))
+              @if (isset($category))
                 <ol class="breadcrumb">
-                  <li><a href="{{ route($section->service->route) }}">{{ $section->service->title }}</a></li>
-                  <li class="active">{{ $section->title }}</li>
+                  <li><a href="{{ route($category->section->service->route) }}">{{ $category->section->service->title }}</a></li>
+                  <li class="active">{{ $category->title }}</li>
                 </ol>
               @endif
 
               @forelse ($posts as $post)
                 <section class="media">
                   <div class="media-left">
-                    <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
+                    <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
                       @if ( ! empty($post->image))
                         <img class="media-object" src="/img/posts/{{ $post->user_id.'/'.$post->image }}" alt="{{ $post->title }}" style="width:200px">
                       @else
@@ -75,11 +75,11 @@
                   <div class="media-body">
                     <div class="row post-title-fix">
                       <h4 class="col-md-8 col-sm-8 media-heading">
-                        <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                        <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                       </h4>
                       <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>
                     </div>
-                    <p class="text-gray">{{ $post->city->title }} / {{ $post->section->title }} <br><small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="text-gray glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small></p>
+                    <p class="text-gray">{{ $post->city->title }} / {{ $post->category->section->title }} <br><small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="text-gray glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small></p>
                   </div>
                 </section><hr>
               @empty

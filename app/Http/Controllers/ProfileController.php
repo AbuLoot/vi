@@ -78,8 +78,8 @@ class ProfileController extends Controller
         $profile->user->save();
 
         $profile->city_id = $request->city_id;
-        if ($request->section_id != 0)
-            $profile->section_id = $request->section_id;
+        if ($request->category_id != 0)
+            $profile->category_id = $request->category_id;
         $profile->phone =  $request->phone;
         $profile->skills = $request->skills;
         $profile->address = $request->address;

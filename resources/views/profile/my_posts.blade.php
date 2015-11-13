@@ -13,7 +13,7 @@
                 @forelse ($posts as $post)
                   <div class="media">
                     <div class="media-left">
-                      <a href="{{ route('show-post-call', ['post' => $post->slug, 'id' => $post->id]) }}">
+                      <a href="{{ route('show-post-service', ['post' => $post->slug, 'id' => $post->id]) }}">
                         @if ( ! empty($post->image))
                           <img class="media-object" src="/img/posts/{{ $post->user_id.'/'.$post->image }}" alt="{{ $post->title }}" style="width:200px">
                         @else
@@ -25,10 +25,10 @@
                       <div class="row">
                         <div class="col-md-8">
                           <h4 class="media-heading post-title-fix">
-                            <a href="{{ route('show-post-call', ['post' => $post->slug, 'id' => $post->id]) }}">{{ $post->title }}</a>
+                            <a href="{{ route('show-post-service', ['post' => $post->slug, 'id' => $post->id]) }}">{{ $post->title }}</a>
                           </h4>
                           <p class="text-gray">
-                            {{ $post->city->title }} / <b>{{ $post->section->title }}</b><br>
+                            {{ $post->city->title }} / <b>{{ $post->category->title }}</b><br>
                             <small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small>
                           </p>
                         </div>

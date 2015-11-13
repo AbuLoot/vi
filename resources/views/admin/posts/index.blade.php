@@ -32,10 +32,14 @@
                           </select>
                         </th>
                         <th>
-                          <select class="form-control input-sm" name="section_id">
+                          <select class="form-control input-sm" name="category_id" id="category">
                             <option>-</option>
-                            @foreach($sections as $section)
-                              <option value="{{ $section->id }}">{{ $section->title }}</option>
+                            @foreach ($section as $item)
+                              <optgroup label="{{ $item->title }}">
+                                @foreach ($item->categories as $category)
+                                  <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                @endforeach
+                              </optgroup>
                             @endforeach
                           </select>
                         </th>
@@ -66,7 +70,7 @@
                     @forelse ($posts as $post)
                       <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ $post->section->title }}</td>
+                        <td>{{ $post->category->title }}</td>
                         <td><a href="{{ url($post->service_id.'/'.$post->slug.'/'.$post->id) }}" target="_blank">{{ $post->title }}</a></td>
                         <td class="text-nowrap">{{ $post->price }} тг</td>
                         <td>{{ $post->sort_id }}</td>

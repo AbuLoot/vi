@@ -1,29 +1,7 @@
 <?php
 
-Route::get('add_categories', function(){
-	$array = [
-	'Аренда недвижимости',
-	'Аренда транспорта',
-	'Аренда спецтехники',
-	'Аренда оборудования',
-
-	];
-
-	$i = 0;
-
-	foreach ($array as $value) {
-		$section = new \App\Category;
-		$section->sort_id = ++$i;
-		$section->section_id = 7;
-		$section->slug = str_slug($value);
-		$section->title = $value;
-		$section->lang = 'ru';
-	}
-	echo 'Success!';
-});
-
-Route::get('create_roles', 'AdminController@createRoles');
-Route::post('post_admin', 'AdminController@postAdmin');
+// Route::get('create/roles', 'AdminController@createRoles');
+// Route::post('post/admin', 'AdminController@postAdmin');
 
 // Pages
 Route::get('p/{page}', ['uses' => 'PagesController@page']);
@@ -31,18 +9,18 @@ Route::get('p/{page}', ['uses' => 'PagesController@page']);
 // Board
 Route::get('/', ['as' => 'index', 'uses' => 'BoardController@getServices']);
 Route::get('uslugi', ['as' => 'services', 'uses' => 'BoardController@getServices']);
-Route::get('uslugi/{section}/{id}', ['as' => 'show-services', 'uses' => 'BoardController@showServices']);
-Route::get('1/{post}/{id}', ['as' => 'show-post-services', 'uses' => 'BoardController@showPostServices']);
+Route::get('uslugi/{category}', ['as' => 'show-services', 'uses' => 'BoardController@showServices']);
+Route::get('1/{post}/{id}', ['as' => 'show-post-service', 'uses' => 'BoardController@showPostService']);
 
 Route::get('tovary', ['as' => 'products', 'uses' => 'BoardController@getProducts']);
-Route::get('tovary/{section}/{id}', ['as' => 'show-products', 'uses' => 'BoardController@showProducts']);
-Route::get('3/{post}/{id}', ['as' => 'show-post-products', 'uses' => 'BoardController@showPostProducts']);
+Route::get('tovary/{category}', ['as' => 'show-products', 'uses' => 'BoardController@showProducts']);
+Route::get('2/{post}/{id}', ['as' => 'show-post-product', 'uses' => 'BoardController@showPostProduct']);
 
 // Search tools
-Route::get('search', ['uses' => 'BoardController@searchPosts']);
-Route::get('filter', ['uses' => 'BoardController@filterPosts']);
+Route::get('search/posts', ['uses' => 'BoardController@searchPosts']);
+Route::get('filter/posts', ['uses' => 'BoardController@filterPosts']);
 
-// Profile
+// Profiles
 Route::get('profile/{id}', ['uses' => 'ProfileController@getProfile']);
 Route::get('profiles', ['uses' => 'ProfileController@getProfiles']);
 
@@ -95,6 +73,3 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 // Password reset routes...
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
-
-// Route::get('create/roles', 'AdminController@createRoles');
-// Route::post('post/admin', 'AdminController@postAdmin');

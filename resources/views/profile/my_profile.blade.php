@@ -24,7 +24,7 @@
                       </tr>
                       <tr>
                         <td>Cфера деятельности</td>
-                        <td>{{ ($profile->section_id == 0) ? 'Не указан' : $profile->section->title }}</td>
+                        <td>{{ ($profile->category_id == 0) ? 'Не указан' : $profile->category->title }}</td>
                       </tr>
                       <tr>
                         <td>Город</td>

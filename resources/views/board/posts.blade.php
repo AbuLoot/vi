@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title_description', $section->title_description)
+@section('title_description', $category->title_description)
 
-@section('meta_description', $section->meta_description)
+@section('meta_description', $category->meta_description)
 
 @section('content')
       <div class="row">
@@ -10,8 +10,8 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div class="well well-modified well-sm hidden-xs">
-                <form action="/filter">
-                  <input type="hidden" name="section_id" value="{{ $section->id }}">
+                <form action="/filter/posts">
+                  <input type="hidden" name="category_id" value="{{ $category->id }}">
                   <table class="table-condensed">
                     <tbody>
                       <tr>
@@ -54,13 +54,13 @@
                 </form>
               </div>
               <ol class="breadcrumb">
-                <li><a href="{{ route($section->service->route) }}">{{ $section->service->title }}</a></li>
-                <li class="active">{{ $section->title }}</li>
+                <li><a href="{{ route($category->section->service->route) }}">{{ $category->section->service->title }}</a></li>
+                <li class="active">{{ $category->title }}</li>
               </ol>
               @forelse ($posts as $post)
                 <section class="media">
                   <div class="media-left">
-                    <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
+                    <a href="{{ url($category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
                       @if ( ! empty($post->image))
                         <img class="media-object" src="/img/posts/{{ $post->user_id.'/'.$post->image }}" alt="{{ $post->title }}" style="width:200px;">
                       @else
@@ -71,7 +71,7 @@
                   <div class="media-body">
                     <div class="row post-title-fix">
                       <h4 class="col-md-8 col-sm-8 media-heading">
-                        <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                        <a href="{{ url($category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                       </h4>
                       <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>
                     </div>

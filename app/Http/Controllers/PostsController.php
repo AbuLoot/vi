@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\City;
 use App\Section;
+use App\Category;
 use App\Post;
 use Image;
 use Storage;
@@ -48,7 +49,7 @@ class PostsController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $section = Section::findOrFail($request->section_id);
+        $category = Category::findOrFail($request->category_id);
 
         $introImage = null;
         $images = [];
@@ -123,7 +124,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->user_id = Auth::id();
         $post->city_id = $request->city_id;
-        $post->section_id = $request->section_id;
+        $post->category_id = $request->category_id;
         $post->slug = str_slug($request->title);
         $post->title = $request->title;
         $post->price = $request->price;
@@ -262,7 +263,7 @@ class PostsController extends Controller
         }
 
         $post->city_id = $request->city_id;
-        $post->section_id = $request->section_id;
+        $post->category_id = $request->category_id;
         $post->slug = str_slug($request->title);
         $post->title = $request->title;
         $post->price = $request->price;

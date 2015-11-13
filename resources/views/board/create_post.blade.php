@@ -10,141 +10,123 @@
               {!! csrf_field() !!}
               <div class="form-group">
                 <div class="col-md-offset-3 col-md-9 col-sm-12">
-                  <div class="row">
-                    @include('partials.alerts')
-                  </div>
+                  @include('partials.alerts')
                 </div>
 
                 <label for="title" class="col-md-3 col-sm-3">Заголовок объявления</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <input type="text" class="form-control" id="title" name="title" minlength="5" maxlength="80" value="{{ old('title') }}" required>
-                  </div>
+                  <input type="text" class="form-control" id="title" name="title" minlength="5" maxlength="80" value="{{ old('title') }}" required>
                 </div>
               </div>
               <div class="form-group">
-                <label for="section" class="col-md-3 col-sm-3">Рубрика</label>
+                <label for="category" class="col-md-3 col-sm-3">Категории</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <select class="form-control" name="section_id" id="section">
-                      <optgroup label="Услуги вызова">
-                        @foreach ($section as $item)
-                          @if ($item->service_id == 1)
-                            <option value="{{ $item->id }}">{{ $item->title }}</option>
-                          @endif
+                  <select class="form-control" name="category_id" id="category">
+                    @foreach ($section as $item)
+                      <optgroup label="{{ $item->title }}">
+                        @foreach ($item->categories as $category)
+                          <option value="{{ $category->id }}">{{ $category->title }}</option>                              
                         @endforeach
                       </optgroup>
-                      <optgroup label="Услуги ремонта">
-                        @foreach ($section as $item)
-                          @if ($item->service_id == 2)
-                            <option value="{{ $item->id }}">{{ $item->title }}</option>
-                          @endif
-                        @endforeach
-                      </optgroup>
-                    </select>
-                  </div>
+                    @endforeach
+                  </select>
                 </div>
               </div>
               <div class="form-group">
                 <label for="price" class="col-md-3 col-sm-3">Цена</label>
-                <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <div class="input-group">
-                      <input type="text" class="form-control" id="price" name="price" maxlength="10" value="{{ old('price') }}" required>
-                      <div class="input-group-addon">тг</div>
-                    </div>
-                    <div class="check">
-                      <br>
-                      <label>
-                        <input type="checkbox" name="deal"> Торг возможен
-                      </label>
-                    </div>
+                <div class="col-md-5 col-sm-5">
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="price" name="price" maxlength="10" value="{{ old('price') }}" required>
+                    <div class="input-group-addon">тг</div>
                   </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="deal"> <b>Торг возможен</b>
+                  </label>
                 </div>
               </div>
               <div class="form-group">
                 <label for="price" class="col-md-3 col-sm-3">Описание</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <textarea class="form-control" id="description" name="description" rows="3" maxlength="2000">{{ old('description') }}</textarea>
-                  </div>
+                  <textarea class="form-control" id="description" name="description" rows="6" maxlength="2000">{{ old('description') }}</textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label for="price" class="col-md-3 col-sm-3">Фотографии<br><br> <small class="text-muted">Объявления<br> с фотографиями привлекают клиентов<br> на 80% больше</small></label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                      <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
-                      <div>
-                        <span class="btn btn-default btn-sm btn-file">
-                          <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
-                          <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
-                          <input type="file" name="images[]" accept="image/*">
-                        </span>
-                        <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
-                      </div>
+                  <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                    <div>
+                      <span class="btn btn-default btn-sm btn-file">
+                        <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
+                        <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
+                        <input type="file" name="images[]" accept="image/*">
+                      </span>
+                      <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                     </div>
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                      <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
-                      <div>
-                        <span class="btn btn-default btn-sm btn-file">
-                          <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
-                          <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
-                          <input type="file" name="images[]" accept="image/*">
-                        </span>
-                        <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
-                      </div>
+                  </div>
+                  <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                    <div>
+                      <span class="btn btn-default btn-sm btn-file">
+                        <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
+                        <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
+                        <input type="file" name="images[]" accept="image/*">
+                      </span>
+                      <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                     </div>
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                      <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
-                      <div>
-                        <span class="btn btn-default btn-sm btn-file">
-                          <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
-                          <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
-                          <input type="file" name="images[]" accept="image/*">
-                        </span>
-                        <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
-                      </div>
+                  </div>
+                  <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                    <div>
+                      <span class="btn btn-default btn-sm btn-file">
+                        <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
+                        <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
+                        <input type="file" name="images[]" accept="image/*">
+                      </span>
+                      <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                     </div>
+                  </div>
 
+                  <p>
                     <a class="btn btn-link btn-sm" data-toggle="collapse" href="#fileinput-part" aria-expanded="false" aria-controls="collapseExample">
-                      <i class="glyphicon glyphicon-plus"></i> Больше
+                      Больше картинок <span class="caret"></span>
                     </a>
+                  </p>
 
-                    <div class="collapse" id="fileinput-part">
-                      <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
-                        <div>
-                          <span class="btn btn-default btn-sm btn-file">
-                            <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
-                            <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
-                            <input type="file" name="images[]" accept="image/*">
-                          </span>
-                          <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
-                        </div>
+                  <div class="collapse" id="fileinput-part">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                      <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                      <div>
+                        <span class="btn btn-default btn-sm btn-file">
+                          <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
+                          <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
+                          <input type="file" name="images[]" accept="image/*">
+                        </span>
+                        <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                       </div>
-                      <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
-                        <div>
-                          <span class="btn btn-default btn-sm btn-file">
-                            <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
-                            <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
-                            <input type="file" name="images[]" accept="image/*">
-                          </span>
-                          <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
-                        </div>
+                    </div>
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                      <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                      <div>
+                        <span class="btn btn-default btn-sm btn-file">
+                          <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
+                          <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
+                          <input type="file" name="images[]" accept="image/*">
+                        </span>
+                        <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                       </div>
-                      <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 180px; height: 120px;"></div>
-                        <div>
-                          <span class="btn btn-default btn-sm btn-file">
-                            <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
-                            <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
-                            <input type="file" name="images[]" accept="image/*">
-                          </span>
-                          <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
-                        </div>
+                    </div>
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                      <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                      <div>
+                        <span class="btn btn-default btn-sm btn-file">
+                          <span class="fileinput-new"><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Выбрать</span>
+                          <span class="fileinput-exists"><i class="glyphicon glyphicon-folder-open"></i>&nbsp;</span>
+                          <input type="file" name="images[]" accept="image/*">
+                        </span>
+                        <a href="#" class="btn btn-default btn-sm fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Удалить</a>
                       </div>
                     </div>
                   </div>
@@ -156,33 +138,27 @@
               <div class="form-group">
                 <label for="city" class="col-md-3 col-sm-3">Город</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <select class="form-control" name="city_id" id="city">
-                      @foreach ($cities as $city)
-                        @if ($city->id === $user->profile->city_id)
-                          <option value="{{ $city->id }}" selected>{{ $city->title }}</option>
-                        @else
-                          <option value="{{ $city->id }}">{{ $city->title }}</option>
-                        @endif
-                      @endforeach
-                    </select>
-                  </div>
+                  <select class="form-control" name="city_id" id="city">
+                    @foreach ($cities as $city)
+                      @if ($city->id === $user->profile->city_id)
+                        <option value="{{ $city->id }}" selected>{{ $city->title }}</option>
+                      @else
+                        <option value="{{ $city->id }}">{{ $city->title }}</option>
+                      @endif
+                    @endforeach
+                  </select>
                 </div>
               </div>
               <div class="form-group">
                 <label for="address" class="col-md-3 col-sm-3">Адрес</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <input type="text" class="form-control" id="address" name="address" maxlength="80" value="{{ (old('address')) ? old('address') : $user->profile->address }}">
-                  </div>
+                  <input type="text" class="form-control" id="address" name="address" maxlength="80" value="{{ (old('address')) ? old('address') : $user->profile->address }}">
                 </div>
               </div>
               <div class="form-group">
-                <label for="phone" class="col-md-3 col-sm-3">Телефон</label>
+                <label for="phone" class="col-md-3 col-sm-3">Телефон 1</label>
                 <div class="col-md-5 col-sm-5">
-                  <div class="row">
-                    <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
-                  </div>
+                  <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
                 </div>
                 <div class="col-md-4 col-sm-4 messengers">
                   <label><input type="checkbox" name="telegram"> Telegram</label>&nbsp;
@@ -191,58 +167,37 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="phone" class="col-md-3 col-sm-3">Телефон</label>
+                <label for="phone" class="col-md-3 col-sm-3">Телефон 2</label>
                 <div class="col-md-5 col-sm-5">
-                  <div class="row">
-                    <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
-                  </div>
+                  <input type="tel" class="form-control" id="phone" name="phone2" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}">
                 </div>
                 <div class="col-md-4 col-sm-4 messengers">
-                  <label><input type="checkbox" name="telegram"> Telegram</label>&nbsp;
-                  <label><input type="checkbox" name="whatsapp"> WhatsApp</label>&nbsp;
-                  <label><input type="checkbox" name="viber"> Viber</label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="phone" class="col-md-3 col-sm-3">Телефон</label>
-                <div class="col-md-5 col-sm-5">
-                  <div class="row">
-                    <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-4 messengers">
-                  <label><input type="checkbox" name="telegram"> Telegram</label>&nbsp;
-                  <label><input type="checkbox" name="whatsapp"> WhatsApp</label>&nbsp;
-                  <label><input type="checkbox" name="viber"> Viber</label>
+                  <label><input type="checkbox" name="telegram2"> Telegram</label>&nbsp;
+                  <label><input type="checkbox" name="whatsapp2"> WhatsApp</label>&nbsp;
+                  <label><input type="checkbox" name="viber2"> Viber</label>
                 </div>
               </div>
               <div class="form-group">
                 <label for="email" class="col-md-3 col-sm-3">Email</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <input type="email" class="form-control" id="email" name="email" maxlength="40" value="{{ (old('email')) ? old('email') : $user->email }}">
-                  </div>
+                  <input type="email" class="form-control" id="email" name="email" maxlength="40" value="{{ (old('email')) ? old('email') : $user->email }}">
                 </div>
               </div>
               <div class="form-group">
                 <label for="comment" class="col-md-3 col-sm-3">Разрешить комментарии</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="row">
-                    <select class="form-control" id="comment" name="comment">
-                      <option value="all">Всем</option>
-                      <option value="nobody">Никому</option>
-                      <option value="registered_users">Только зарегистрированным пользователям</option>
-                    </select>
-                    <br>
-                    <p>Размещая объявления на сайте, вы соглашаетесь с <a href="#">этими правилами</a>.</p>
-                  </div>
+                  <select class="form-control" id="comment" name="comment">
+                    <option value="all">Всем</option>
+                    <option value="nobody">Никому</option>
+                    <option value="registered_users">Только зарегистрированным пользователям</option>
+                  </select>
+                  <br>
+                  <p>Размещая объявления на сайте, вы соглашаетесь с <a href="#">этими правилами</a>.</p>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-offset-3 col-sm-offset-3 col-md-9 col-sm-9">
-                  <div class="row">
-                    <button type="submit" class="btn btn-primary">Разместить объявление</button>
-                  </div>
+                  <button type="submit" class="btn btn-primary">Разместить объявление</button>
                 </div>
               </div>
             </form>

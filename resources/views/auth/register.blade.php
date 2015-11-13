@@ -8,7 +8,7 @@
               <h3 class="text-center">Регистрация</h3>
               @include('partials.alerts')
 
-              <form method="POST" action="/post_admin">
+              <form method="POST" action="/auth/register">
                 {!! csrf_field() !!}
                 <div class="form-group">
                   <label for="name" class="control-label">Ваше имя</label>

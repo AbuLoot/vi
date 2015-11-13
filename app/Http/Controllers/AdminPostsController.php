@@ -19,9 +19,9 @@ class AdminPostsController extends Controller
     public function index()
     {
         $posts = Post::paginate(20);
-        $sections = Section::all();
+        $section = Section::all();
 
-        return view('admin.posts.index', compact('posts', 'sections'));
+        return view('admin.posts.index', compact('posts', 'section'));
     }
 
     /**

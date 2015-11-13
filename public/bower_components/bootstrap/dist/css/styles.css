@@ -83,8 +83,12 @@ body {
 .post-title-fix {
   min-height: 45px;
 }
+.fileinput .thumbnail {
+  width: 174px;
+  height: 120px;
+}
 .categories a {
-  /*text-align: center;*/
+  text-align: center;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -92,12 +96,11 @@ body {
 .categories h5 {
   min-height: 32px;
 }
-.form-horizontal .form-group {
-  margin-left: -15px;
-  margin-right: 0;
-}
 .messengers > label {
   margin-bottom: 0px;
+}
+.category-title {
+  cursor: pointer;
 }
 
 /* Gallery */

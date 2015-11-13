@@ -24,31 +24,30 @@ class BoardController extends Controller
     	return view('board.section', compact('service', 'section'));
     }
 
-    public function showServices($section, $id)
+    public function showServices($category)
     {
-        $section = Category::where('slug', $section)->first();
-        $profiles = Profile::where('section_id', $section->id)->take(5)->get();
-        $posts = Post::where('section_id', $id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
+        $category = Category::where('slug', $category)->first();
+        $profiles = Profile::where('category_id', $category->id)->take(5)->get();
+        $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
-        return view('board.posts', compact('section', 'profiles', 'posts'));
+        return view('board.posts', compact('category', 'profiles', 'posts'));
     }
 
-    public function showPostServices($post, $id)
+    public function showPostService($post, $id)
     {
         $post = Post::findOrFail($id);
         $post->views = ++$post->views;
         $post->save();
 
+        $profiles = Profile::where('category_id', $post->category_id)->take(5)->get();
+        $prev = Post::where('category_id', $post->category_id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
+        $next = Post::where('category_id', $post->category_id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
+
         $images = ($post->images) ? unserialize($post->images) : null;
-
-        $previous = Post::where('section_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
-        $next = Post::where('section_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
-
-        $profiles = Profile::where('section_id', $post->section_id)->take(5)->get();
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);
 
-        return view('board.post', compact('post', 'images', 'profiles', 'previous', 'next', 'first_number', 'second_number'));
+        return view('board.post', compact('post', 'profiles', 'prev', 'next', 'images', 'first_number', 'second_number'));
     }
 
     // Section Products
@@ -61,31 +60,30 @@ class BoardController extends Controller
         return view('board.section', compact('service', 'sections'));
     }
 
-    public function showProducts($section, $id)
+    public function showProducts($category)
     {
-        $section = Section::where('slug', $section)->first();
-        $profiles = Profile::where('section_id', $section->id)->take(5)->get();
-        $posts = Post::where('section_id', $id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
+        $category = Category::where('slug', $category)->first();
+        $profiles = Profile::where('category_id', $category->id)->take(5)->get();
+        $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
-        return view('board.posts', compact('section', 'profiles', 'posts'));
+        return view('board.posts', compact('category', 'profiles', 'posts'));
     }
 
-    public function showPostProducts($post, $id)
+    public function showPostProduct($post, $id)
     {
         $post = Post::findOrFail($id);
         $post->views = ++$post->views;
         $post->save();
 
+        $profiles = Profile::where('category_id', $post->category_id)->take(5)->get();
+        $prev = Post::where('category_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
+        $next = Post::where('category_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
+
         $images = ($post->images) ? unserialize($post->images) : null;
-
-        $previous = Post::where('section_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
-        $next = Post::where('section_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
-
-        $profiles = Profile::where('section_id', $post->section_id)->take(5)->get();
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);
 
-        return view('board.post', compact('post', 'images', 'profiles', 'previous', 'next', 'first_number', 'second_number'));
+        return view('board.post', compact('post', 'images', 'profiles', 'prev', 'next', 'first_number', 'second_number'));
     }
 
     // Additional functionality
@@ -130,20 +128,20 @@ class BoardController extends Controller
             $query .= " AND (title LIKE '%$text%' or description LIKE '%$text%')";
         }
 
-        $sections = Section::all();
+        $section = Section::all();
         $profiles = Profile::take(5)->get();
 
-        if ($request->section_id)
+        if ($request->category_id)
         {
-            $section = Section::find($request->section_id);
+            $section = Section::find($request->category_id);
             $posts = Post::where('status', 1)
-                ->where('section_id', $request->section_id)
+                ->where('category_id', $request->category_id)
                 ->whereRaw($query)
                 ->orderBy('id', 'DESC')
                 ->paginate(10);
 
             $posts->appends([
-                'section_id' => (int) $request->section_id,
+                'category_id' => (int) $request->category_id,
                 'city_id' => (int) $request->city_id,
                 'text' => $request->text,
                 'image' => ($request->image == 'on') ? 'on' : NULL,

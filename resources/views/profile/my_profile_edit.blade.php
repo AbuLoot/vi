@@ -25,30 +25,18 @@
                   </div>
                   <div class="form-group">
                     <label for="phone">В какой сфере деятельности вы работаете:</label>
-                    <select class="form-control" name="section_id" id="section">
-                      <option value="0">Выберите рубрику</option>
-                      <optgroup label="Услуги вызова">
-                        @foreach ($section as $item)
-                          @if ($item->service_id == 1)
-                            @if ($item->id == $profile->section_id)
-                              <option value="{{ $item->id }}" selected>{{ $item->title }}</option>
+                    <select class="form-control" name="category_id" id="category">
+                      @foreach ($section as $item)
+                        <optgroup label="{{ $item->title }}">
+                          @foreach ($item->categories as $category)
+                            @if ($category->id == $profile->category_id)
+                              <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
                             @else
-                              <option value="{{ $item->id }}">{{ $item->title }}</option>
+                              <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @endif
-                          @endif
-                        @endforeach
-                      </optgroup>
-                      <optgroup label="Услуги ремонта">
-                        @foreach ($section as $item)
-                          @if ($item->service_id == 2)
-                            @if ($item->id == $profile->section_id)
-                              <option value="{{ $item->id }}" selected>{{ $item->title }}</option>
-                            @else
-                              <option value="{{ $item->id }}">{{ $item->title }}</option>
-                            @endif
-                          @endif
-                        @endforeach
-                      </optgroup>
+                          @endforeach
+                        </optgroup>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group">
