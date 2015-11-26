@@ -10,7 +10,7 @@
               @if (empty($profile->avatar))
                 <img src="/img/no-avatar.png" class="img-responsive">
               @else
-                <img src="/img/users/{{ $profile->user->id . '/' . $profile->avatar }}" class="img-responsive">
+                <img src="/img/users/{{ $profile->user->id . '/' . $profile->avatar }}" class="center-block img-responsive">
               @endif
               <h5 class="text-center">{{ $profile->user->name }}</h5>
             </div>
@@ -83,7 +83,7 @@
                     @forelse ($posts as $post)
                       <div class="media">
                         <div class="media-left">
-                          <a href="{{ url($post->service_id.'/'.$post->slug.'/'.$post->id) }}">
+                          <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
                             @if ( ! empty($post->image))
                               <img class="media-object" src="/img/posts/{{ $post->user_id.'/'.$post->image }}" alt="{{ $post->title }}" style="width:200px">
                             @else
@@ -94,12 +94,12 @@
                         <div class="media-body">
                           <div class="row post-title-fix">
                             <h4 class="col-md-8 media-heading">
-                              <a href="{{ url($post->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                              <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                             </h4>
                             <h4 class="col-md-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <br><small>Торг&nbsp;возможен</small> @endif</h4>
                           </div>
                           <p class="text-gray">
-                            {{ $post->city->title }} / <b>{{ $post->section->title }}</b><br>
+                            {{ $post->city->title }} / <b>{{ $post->category->section->title }}</b><br>
                             <small>{{ $post->created_at }} &nbsp; <i class="fa fa-smile-o"></i> {{ $post->views }} &nbsp; <i class="fa fa-comments-o"></i> {{ $post->comments->count() }}</small>
                           </p>
                         </div>

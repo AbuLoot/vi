@@ -71,7 +71,7 @@
                       <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $post->category->title }}</td>
-                        <td><a href="{{ url($post->service_id.'/'.$post->slug.'/'.$post->id) }}" target="_blank">{{ $post->title }}</a></td>
+                        <td><a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}" target="_blank">{{ $post->title }}</a></td>
                         <td class="text-nowrap">{{ $post->price }} тг</td>
                         <td>{{ $post->sort_id }}</td>
                         @if ($post->status == 1)
@@ -80,8 +80,8 @@
                           <td class="text-danger">Неактивен</td>
                         @endif
                         <td class="text-right text-nowrap">
-                          <a class="btn btn-primary btn-xs" href="{{ url($post->service_id.'/'.$post->slug.'/'.$post->id) }}" title="Просмотр объявления" target="_blank"><span class="glyphicon glyphicon-file"></span></a>
-                          <a class="btn btn-primary btn-xs" href="{{ route('admin.pages.edit', $post->id) }}" title="Редактировать"><span class="glyphicon glyphicon-edit"></span></a>
+                          <a class="btn btn-primary btn-xs" href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}" title="Просмотр объявления" target="_blank"><span class="glyphicon glyphicon-file"></span></a>
+                          <a class="btn btn-primary btn-xs" href="{{ route('admin.posts.edit', $post->id) }}" title="Редактировать"><span class="glyphicon glyphicon-edit"></span></a>
                           <form method="POST" action="{{ route('admin.posts.destroy', $post->id) }}" accept-charset="UTF-8" class="btn-delete">
                             <input name="_method" type="hidden" value="DELETE">
                             <input name="_token" type="hidden" value="{{ csrf_token() }}">

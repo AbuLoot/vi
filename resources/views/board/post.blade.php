@@ -36,7 +36,7 @@
               <div class="row">
                 @if ($images)
                   <div class="col-md-7 col-sm-12 gallery">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <div id="carousel-example-generic" class="carousel" data-ride="carousel" data-interval="false">
                       <div class="carousel-inner" role="listbox">
                         <?php $i = 0; ?>
                         @foreach ($images as $key => $image)

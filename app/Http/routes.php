@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
     Route::resource('users', 'AdminUsersController');
     Route::resource('section', 'AdminSectionController');
     Route::resource('categories', 'AdminCategoriesController');
+    Route::resource('tags', 'AdminTagsController');
     Route::resource('posts', 'AdminPostsController');
     Route::resource('pages', 'AdminPagesController');
 });

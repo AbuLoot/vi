@@ -65,4 +65,9 @@ class Post extends Model
     {
         return $this->morphMany('App\Comment', 'parent');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
 }

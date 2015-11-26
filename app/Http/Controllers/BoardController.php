@@ -76,8 +76,8 @@ class BoardController extends Controller
         $post->save();
 
         $profiles = Profile::where('category_id', $post->category_id)->take(5)->get();
-        $prev = Post::where('category_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
-        $next = Post::where('category_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
+        $prev = Post::where('category_id', $post->category_id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
+        $next = Post::where('category_id', $post->category_id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
 
         $images = ($post->images) ? unserialize($post->images) : null;
         $first_number = rand(1, 10);

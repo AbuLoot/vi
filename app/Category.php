@@ -22,4 +22,9 @@ class Category extends Model
     {
     	return $this->hasMany('App\Profile', 'category_id');
     }
+
+    public function tags()
+    {
+        return $this->hasMany('App\Tag', 'category_id');
+    }
 }

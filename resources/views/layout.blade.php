@@ -61,6 +61,7 @@
                   <li><a href="/admin/pages">Страницы</a></li>
                   <li><a href="/admin/section">Разделы</a></li>
                   <li><a href="/admin/categories">Категории</a></li>
+                  <li><a href="/admin/tags">Теги</a></li>
                   <li><a href="/admin/posts">Объявления</a></li>
                   <li><a href="/admin/users">Пользователи</a></li>
                   <li class="divider"></li>
