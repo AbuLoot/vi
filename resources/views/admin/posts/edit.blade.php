@@ -10,6 +10,7 @@
               <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="PUT">
                 {!! csrf_field() !!}
+
                 <div class="form-group">
                   <div class="col-md-offset-3 col-sm-offset-3 col-md-9 col-sm-9">
                     @include('partials.alerts')

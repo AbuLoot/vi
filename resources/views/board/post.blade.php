@@ -80,7 +80,7 @@
                     <li><i class="glyphicon glyphicon-envelope"></i> {{ $post->email }}</li>
                   </ul>
                   <h3><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</h3><hr>
-                  <p>{{ $post->phone }}</p>
+                  <p>{{ $contacts->phone }} | {{ $contacts->phone2 }}</p>
                   <p>{{ $post->city->title }}, {{ $post->address }}</p>
                   <p>{{ $post->description }}</p>
                   <p><small>{{ $post->created_at }}</small> | <small>Просмотров: {{ $post->views }}</small></p>

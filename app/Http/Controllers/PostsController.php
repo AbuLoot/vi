@@ -133,7 +133,20 @@ class PostsController extends Controller
         $post->image = $introImage;
         $post->images = serialize($images);
         $post->address = $request->address;
-        $post->phone = $request->phone;
+
+        $contacts = [
+            'phone' => $request->phone,
+            'telegram' => $request->telegram,
+            'whatsapp' => $request->whatsapp,
+            'viber' => $request->viber,
+
+            'phone2' => $request->phone2,
+            'telegram2' => $request->telegram2,
+            'whatsapp2' => $request->whatsapp2,
+            'viber2' => $request->viber2
+        ];
+
+        $post->phone = json_encode($contacts);
         $post->email = $request->email;
         $post->comment = $request->comment;
         $post->save();
@@ -161,9 +174,10 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Auth::user()->posts()->find($id);
+        $contacts = json_decode($post->phone);
         $section = Section::orderBy('sort_id')->get();
 
-        return view('board.edit_post', compact('post', 'section'));
+        return view('board.edit_post', compact('post', 'section', 'contacts'));
     }
 
     /**
@@ -272,7 +286,20 @@ class PostsController extends Controller
         if (isset($introImage)) $post->image = $introImage;
         if (isset($images)) $post->images = $images;
         $post->address = $request->address;
-        $post->phone = $request->phone;
+
+        $contacts = [
+            'phone' => $request->phone,
+            'telegram' => $request->telegram,
+            'whatsapp' => $request->whatsapp,
+            'viber' => $request->viber,
+
+            'phone2' => $request->phone2,
+            'telegram2' => $request->telegram2,
+            'whatsapp2' => $request->whatsapp2,
+            'viber2' => $request->viber2
+        ];
+
+        $post->phone = json_encode($contacts);
         $post->email = $request->email;
         $post->comment = $request->comment;
         $post->save();
@@ -282,21 +309,26 @@ class PostsController extends Controller
 
     public function optimalResize($width, $height)
     {
-        if ($this->file->width() <= $this->file->height())
+        if ($this->file->width() > $width AND $this->file->height() > $height)
         {
-            $this->file->resize(null, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-        }
-        else
-        {
-            $this->file->resize($width, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            if ($this->file->width() <= $this->file->height())
+            {
+                $this->file->resize(null, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
+            else
+            {
+                $this->file->resize($width, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
         }
 
         if ($this->file->width() > $width OR $this->file->height() > $height)
+        {
             $this->file->crop($width, $height);
+        }
     }
 
     /**

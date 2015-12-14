@@ -169,7 +169,7 @@
               <div class="form-group">
                 <label for="phone" class="col-md-3 col-sm-3">Телефон 2</label>
                 <div class="col-md-5 col-sm-5">
-                  <input type="tel" class="form-control" id="phone" name="phone2" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}">
+                  <input type="tel" class="form-control" id="phone" name="phone2" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : '' }}">
                 </div>
                 <div class="col-md-4 col-sm-4 messengers">
                   <label><input type="checkbox" name="telegram2"> Telegram</label>&nbsp;
