@@ -12,13 +12,13 @@
               @include('partials.alerts')
               <div class="row">
                 <div class="col-md-6 col-sm-6">
-                  <ol class="breadcrumb">
+                  <ol class="breadcrumb breadcrumb-modified">
                     <li><a href="{{ route($post->category->section->service->route) }}">{{ $post->category->section->service->title }}</a></li>
                     <li><a href="{{ url($post->category->section->service->slug . '/' . $post->category->slug) }}">{{ $post->category->title }}</a></li>
                   </ol>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                  <ol class="breadcrumb text-right">
+                  <ol class="breadcrumb breadcrumb-modified text-right">
                     @if (is_null($prev))
                       <li class="text-muted">← Предыдущий</li>
                     @else

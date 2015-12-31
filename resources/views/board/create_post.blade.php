@@ -24,8 +24,22 @@
                   <select class="form-control" name="category_id" id="category">
                     @foreach ($section as $item)
                       <optgroup label="{{ $item->title }}">
-                        @foreach ($item->categories as $category)
+                        @foreach ($item->categories->sortBy('sort_id') as $category)
                           <option value="{{ $category->id }}">{{ $category->title }}</option>                              
+                        @endforeach
+                      </optgroup>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="tags" class="col-md-3 col-sm-3">Теги</label>
+                <div class="col-md-9 col-sm-9">
+                  <select class="form-control" name="tag_id" id="tags">
+                    @foreach ($section as $item)
+                      <optgroup label="{{ $item->title }}">
+                        @foreach ($item->categories->sortBy('sort_id') as $tag)
+                          <option value="{{ $tag->id }}">{{ $tag->title }}</option>                              
                         @endforeach
                       </optgroup>
                     @endforeach

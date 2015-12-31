@@ -9,54 +9,72 @@
         <div class="col-md-8">
           <div class="panel panel-default">
             <div class="panel-body">
-              <div class="well well-modified well-sm hidden-xs">
-                <form action="/filter/posts">
-                  <input type="hidden" name="category_id" value="{{ $category->id }}">
-                  <table class="table-condensed">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <select class="form-control input-sm" name="city_id">
-                            @foreach($cities as $city)
-                              <option value="{{ $city->id }}">{{ $city->title }}</option>
-                            @endforeach
-                          </select>
-                        </td>
-                        <td>
-                          <input type="text" class="form-control input-sm" name="text" placeholder="Поиск по тексту" value="{{ (Request::input('text')) ? Request::input('text') : NULL }}">
-                        </td>
-                        <td>
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox" name="image"> Только с фото
-                            </label>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="from" placeholder="Цена от">
-                          </div>
-                        </td>
-                        <td>
-                          <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="to" placeholder="до">
-                            <div class="input-group-addon">тг</div>
-                          </div>
-                        </td>
-                        <td>
-                          <button type="submit" class="btn btn-primary btn-block btn-sm">Показать</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </form>
-              </div>
               <ol class="breadcrumb">
                 <li><a href="{{ route($category->section->service->route) }}">{{ $category->section->service->title }}</a></li>
                 <li class="active">{{ $category->title }}</li>
               </ol>
+              <form action="/filter/posts">
+                <input type="hidden" name="category_id" value="{{ $category->id }}">
+                <table class="table-condensed">
+                  <thead>
+                    <tr>
+                      <td>
+                        <select class="form-control input-sm" name="city_id">
+                          @foreach($cities as $city)
+                            <option value="{{ $city->id }}">{{ $city->title }}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td style="width:200px;">
+                        <select class="form-control input-sm" name="tags[]">
+                          @foreach($category->tags as $tag)
+                            <option value="{{ $tag->id }}">{{ $tag->title }}</option>
+                          @endforeach
+                        </select>
+                        <!-- <div class="dropdown">
+                          <button class="btn btn-sm btn-overflow btn-primary dropdown-toggle" type="button" id="category_tags" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Выберите теги <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="category_tags">
+                            @foreach($category->tags as $tag)
+                              <li><input type="checkbox" id="{{ $tag->slug }}" name="tags[]" value="{{ $tag->id }}"><label for="{{ $tag->slug }}">{{ $tag->title }}</label></li>
+                            @endforeach
+                          </ul>
+                        </div> -->
+                      </td>
+                      <td>
+                        <input type="text" class="form-control input-sm" name="text" placeholder="Поиск по тексту" value="{{ (Request::input('text')) ? Request::input('text') : NULL }}">
+                      </td>
+                      <td>
+                        <div class="checkbox">
+                          <label class="text-nowrap">
+                            <input type="checkbox" name="image"> с фото
+                          </label>
+                        </div>
+                      </td>
+                      <td>
+                        <button type="submit" class="btn btn-default btn-block btn-sm">Показать</button>
+                      </td>
+                    </tr>
+                    <!-- <tr>
+                      <td>
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control" name="from" placeholder="Цена от">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control" name="to" placeholder="до">
+                          <div class="input-group-addon">тг</div>
+                        </div>
+                      </td>
+                      <td>
+                        <button type="submit" class="btn btn-primary btn-block btn-sm">Показать</button>
+                      </td>
+                    </tr> -->
+                  </thead>
+                </table>
+              </form><br>
               @forelse ($posts as $post)
                 <section class="media">
                   <div class="media-left">
@@ -91,4 +109,12 @@
           @include('partials/rating')
         </aside>
       </div>
+@endsection
+
+@section('styles')
+  <link href="/bower_components/bootstrap/dist/css/dropdowns-enhancement.min.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+  <script src="/bower_components/bootstrap/dist/js/dropdowns-enhancement.js"></script>
 @endsection

@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-md-8">
               <h3>Создание рубрики</h3>
-              <form action="{{ route('admin.section.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+              <form action="{{ route('admin.categories.store') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 <div class="form-group">
                   <div class="col-md-offset-3 col-md-9">
@@ -20,11 +20,11 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="service_id" class="col-md-3">Услуги</label>
+                  <label for="section_id" class="col-md-3">Разделы</label>
                   <div class="col-md-9">
-                    <select class="form-control" id="service_id" name="service_id">
-                      @foreach (trans('services') as $key => $service)
-                        <option value="{{ $key }}">{{ $service['title'] }}</option>
+                    <select class="form-control" id="section_id" name="section_id">
+                      @foreach ($section as $item)
+                        <option value="{{ $item->id }}">{{ $item->title }}</option>
                       @endforeach
                     </select>
                   </div>

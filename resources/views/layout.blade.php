@@ -80,13 +80,10 @@
           <div class="col-md-offset-2 col-md-6 col-sm-8">
             <ul class="nav nav-lines">
               <li @if (Request::is('/', 'uslugi')) class="active" @endif>
-                <a href="{{ route('services') }}">Услуги</a>
+                <a href="{{ url('uslugi') }}">Услуги</a>
               </li>
-              <li @if (Request::is('tovary')) class="active" @endif>
-                <a href="{{ route('products') }}">Товары</a>
-              </li>
-              <li @if (Request::is('rabota')) class="active" @endif>
-                <a href="#">Работа</a>
+              <li @if (Request::is('proekty')) class="active" @endif>
+                <a href="{{ url('projects') }}">Проекты</a>
               </li>
             </ul>
           </div>
@@ -97,14 +94,12 @@
       </div>
     </nav>
 
-    <div class="container">
-      <br>
+    <div class="container"><br>
       @yield('content')
     </div>
 
     <hr>
-    <footer class="footer">
-      <br>
+    <footer class="footer"><br>
       <div class="container">
         <div class="col-md-8">
           <ul class="list-unstyled list-inline">

@@ -16,7 +16,6 @@
                     <tr class="active">
                       <td>№</td>
                       <td>Категория</td>
-                      <td>Slug</td>
                       <td>Название</td>
                       <td>Номер</td>
                       <td>Статус</td>
@@ -25,11 +24,10 @@
                   </thead>
                   <tbody>
                     <?php $i = 1; ?>
-                    @forelse ($tags as $tag)
+                    @forelse ($tags as $n => $tag)
                       <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $tag->category->title }}</td>
-                        <td>{{ $tag->slug }}</td>
                         <td>{{ $tag->title }}</td>
                         <td>{{ $tag->sort_id }}</td>
                         @if ($tag->status == 1)

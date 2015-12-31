@@ -33,7 +33,9 @@ class AdminCategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $section = Section::orderBy('sort_id')->get();
+
+        return view('admin.categories.create', compact('section'));
     }
 
     /**
@@ -61,7 +63,7 @@ class AdminCategoriesController extends Controller
             $category->sort_id = $request->sort_id;
         else
             $category->sort_id = ++$count;
-        $category->service_id = $request->service_id;
+        $category->section_id = $request->section_id;
         $category->title = $request->title;
         $category->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
         $category->image = $image;

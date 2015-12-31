@@ -25,7 +25,7 @@
                   <select class="form-control" name="category_id" id="category">
                     @foreach ($section as $item)
                       <optgroup label="{{ $item->title }}">
-                        @foreach ($item->categories as $category)
+                        @foreach ($item->categories->sortBy('sort_id') as $category)
                           @if ($category->id == $post->category_id)
                             <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
                           @else

@@ -37,7 +37,7 @@ class PostsController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $section = Section::orderBy('sort_id')->get();
+        $section = Section::orderBy('sort_id')->where('status', 1)->get();
 
         return view('board.create_post', compact('user', 'section'));
     }
@@ -175,7 +175,7 @@ class PostsController extends Controller
     {
         $post = Auth::user()->posts()->find($id);
         $contacts = json_decode($post->phone);
-        $section = Section::orderBy('sort_id')->get();
+        $section = Section::orderBy('sort_id')->where('status', 1)->get();
 
         return view('board.edit_post', compact('post', 'section', 'contacts'));
     }
@@ -309,7 +309,7 @@ class PostsController extends Controller
 
     public function optimalResize($width, $height)
     {
-        if ($this->file->width() > $width AND $this->file->height() > $height)
+        if ($this->file->width() > $width OR $this->file->height() > $height)
         {
             if ($this->file->width() <= $this->file->height())
             {

@@ -30,7 +30,7 @@
                         <td>
                           <div class="checkbox">
                             <label>
-                              <input type="checkbox" name="image" @if (Request::input('image')) checked @endif> Только с фото
+                              <input type="checkbox" name="image" @if (Request::input('image')) checked @endif> только с фото
                             </label>
                           </div>
                         </td>

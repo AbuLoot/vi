@@ -1,6 +1,7 @@
 
         <ul class="nav nav-pills nav-justified">
           <li @if (Request::is('admin/pages', 'admin/pages/*')) class="active" @endif><a href="/admin/pages">Страницы</a></li>
+          <li @if (Request::is('admin/services', 'admin/services/*')) class="active" @endif><a href="/admin/services">Сервисы</a></li>
           <li @if (Request::is('admin/section', 'admin/section/*')) class="active" @endif><a href="/admin/section">Рубрики</a></li>
           <li @if (Request::is('admin/categories', 'admin/categories/*')) class="active" @endif><a href="/admin/categories">Категории</a></li>
           <li @if (Request::is('admin/tags', 'admin/tags/*')) class="active" @endif><a href="/admin/tags">Теги</a></li>

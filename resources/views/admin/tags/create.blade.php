@@ -25,7 +25,7 @@
                     <select class="form-control" name="category_id" id="category">
                       @foreach ($section as $item)
                         <optgroup label="{{ $item->title }}">
-                          @foreach ($item->categories as $category)
+                          @foreach ($item->categories->sortBy('sort_id') as $category)
                             <option value="{{ $category->id }}">{{ $category->title }}</option>
                           @endforeach
                         </optgroup>

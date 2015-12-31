@@ -54,6 +54,18 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'vi',
+            'username'  => 'root',
+            'password'  => 'bireki',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
+        /*'mysql' => [
+            'driver'    => 'mysql',
             'host'      => env('DB_HOST', 'localhost'),
             'database'  => env('DB_DATABASE', 'forge'),
             'username'  => env('DB_USERNAME', 'forge'),
@@ -62,7 +74,7 @@ return [
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
             'strict'    => false,
-        ],
+        ],*/
 
         'pgsql' => [
             'driver'   => 'pgsql',

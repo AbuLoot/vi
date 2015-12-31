@@ -45,7 +45,7 @@ class ProfileController extends Controller
     public function editMyProfile()
     {
         $profile = Auth::user()->profile;
-        $section = Section::orderBy('sort_id')->get();
+        $section = Section::orderBy('sort_id')->where('status', 1)->get();
 
         return view('profile.my_profile_edit', compact('profile', 'section'));
     }
