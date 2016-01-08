@@ -20,9 +20,8 @@ class BoardController extends Controller
     {
         $service = Service::where('slug', 'uslugi')->first();
         $section = Section::where('service_id', '1')->where('status', 1)->orderBy('sort_id')->get();
-        $categories = Category::all();
 
-    	return view('board.section', compact('service', 'section', 'categories'));
+    	return view('board.section', compact('service', 'section'));
     }
 
     public function showServices($category)
@@ -56,11 +55,10 @@ class BoardController extends Controller
 
     public function getProjects()
     {
-        $service = Service::where('slug', 'uslugi')->first();
-        $section = Section::where('service_id', '1')->where('status', 1)->orderBy('sort_id')->get();
-        $categories = Category::all();
+        $service = Service::where('slug', 'proekty')->first();
+        $section = Section::where('service_id', '2')->where('status', 1)->orderBy('sort_id')->get();
 
-        return view('board.section', compact('service', 'section', 'categories'));
+        return view('tender.section', compact('service', 'section'));
     }
 
     public function showProjects($category)
@@ -69,7 +67,7 @@ class BoardController extends Controller
         $profiles = Profile::where('category_id', $category->id)->take(5)->get();
         $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
-        return view('board.posts', compact('category', 'profiles', 'posts'));
+        return view('tender.posts', compact('category', 'profiles', 'posts'));
     }
 
     public function showPostProject($post, $id)
@@ -87,7 +85,7 @@ class BoardController extends Controller
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);
 
-        return view('board.post', compact('post', 'profiles', 'prev', 'next', 'images', 'contacts', 'first_number', 'second_number'));
+        return view('tender.post', compact('post', 'profiles', 'prev', 'next', 'images', 'contacts', 'first_number', 'second_number'));
     }
 
     // Additional functionality

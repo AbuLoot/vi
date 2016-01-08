@@ -15,7 +15,6 @@
                   <thead>
                     <tr class="active">
                       <td>№</td>
-                      <td>Раздел</td>
                       <td>Название</td>
                       <td>Номер</td>
                       <td>Статус</td>
@@ -24,30 +23,51 @@
                   </thead>
                   <tbody>
                     <?php $i = 1; ?>
-                    @forelse ($categories as $category)
+                    @forelse ($services as $service)
                       <tr>
-                        <td>{{ $i++ }}</td>
-                        <td>{{ $category->section->title }}</td>
-                        <td><a href="{{ url($category->section->service->slug.'/'.$category->slug.'/'.$category->id) }}" target="_blank">{{ $category->title }}</a></td>
-                        <td>{{ $category->sort_id }}</td>
-                        @if ($category->status == 1)
-                          <td class="text-success">Активен</td>
-                        @else
-                          <td class="text-danger">Неактивен</td>
-                        @endif
-                        <td class="text-right">
-                          <a class="btn btn-primary btn-xs" href="{{ url(trans('services.'.$category->service_id.'.slug').'/'.$category->slug.'/'.$category->id) }}" title="Просмотр страницы" target="_blank"><span class="glyphicon glyphicon-file"></span></a>
-                          <a class="btn btn-primary btn-xs" href="{{ route('admin.categories.edit', $category->id) }}" title="Редактировать"><span class="glyphicon glyphicon-edit"></span></a>
-                          <form method="POST" action="{{ route('admin.categories.destroy', $category->id) }}" accept-charset="UTF-8" class="btn-delete">
-                            <input name="_method" type="hidden" value="DELETE">
-                            <input name="_token" type="hidden" value="{{ csrf_token() }}">
-                            <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Удалить запись ({{ $category->title }})?')"><span class="glyphicon glyphicon-trash"></span></button>
-                          </form>
-                        </td>
+                        <th colspan="5" class="active">{{ $service->title }}</th>
                       </tr>
+                      @forelse ($service->section as $section)
+                        <tr>
+                          <th></th>
+                          <th colspan="4">{{ $section->title }}</th>
+                        </tr>
+                        @forelse ($section->categories as $category)
+                          <tr>
+                            <td>{{ $i++ }}</td>
+                            <td><a href="{{ url($category->section->service->slug.'/'.$category->slug.'/'.$category->id) }}" target="_blank">{{ $category->title }}</a></td>
+                            <td>{{ $category->sort_id }}</td>
+                            @if ($category->status == 1)
+                              <td class="text-success">Активен</td>
+                            @else
+                              <td class="text-danger">Неактивен</td>
+                            @endif
+                            <td class="text-right">
+                              <a class="btn btn-primary btn-xs" href="{{ url(trans('services.'.$category->service_id.'.slug').'/'.$category->slug.'/'.$category->id) }}" title="Просмотр страницы" target="_blank"><span class="glyphicon glyphicon-file"></span></a>
+                              <a class="btn btn-primary btn-xs" href="{{ route('admin.categories.edit', $category->id) }}" title="Редактировать"><span class="glyphicon glyphicon-edit"></span></a>
+                              <form method="POST" action="{{ route('admin.categories.destroy', $category->id) }}" accept-charset="UTF-8" class="btn-delete">
+                                <input name="_method" type="hidden" value="DELETE">
+                                <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Удалить запись ({{ $category->title }})?')"><span class="glyphicon glyphicon-trash"></span></button>
+                              </form>
+                            </td>
+                          </tr>
+                        @empty
+                          <tr>
+                            <td></td>
+                            <td colspan="4">Нет категориев</td>
+                          </tr>
+                        @endforelse
+                      @empty
+                        <tr>
+                          <td></td>
+                          <td colspan="4">Нет категориев</td>
+                        </tr>
+                      @endforelse
                     @empty
                       <tr>
-                        <td colspan="4">Нет записи</td>
+                        <td></td>
+                        <td colspan="4">Нет категориев</td>
                       </tr>
                     @endforelse
                   </tbody>

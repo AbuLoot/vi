@@ -11,6 +11,7 @@ use App\User;
 use App\Profile;
 use App\Section;
 use App\Http\Requests\ProfileRequest;
+use Hash;
 use Image;
 use Storage;
 use App\Post;
@@ -21,11 +22,12 @@ class ProfileController extends Controller
     public function getProfile($id)
     {
         $profile = Profile::find($id);
+        $contacts = json_decode($profile->phone);
         $posts = $profile->user->posts()->orderBy('id', 'DESC')->get();
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);
 
-        return view('profile.profile_user', compact('posts', 'profile', 'first_number', 'second_number'));
+        return view('profile.profile_user', compact('posts', 'profile', 'contacts', 'first_number', 'second_number'));
     }
 
     public function getProfiles()
@@ -38,16 +40,18 @@ class ProfileController extends Controller
     public function getMyProfile()
     {
         $profile = Auth::user()->profile;
+        $contacts = json_decode($profile->phone);
 
-    	return view('profile.my_profile', compact('profile'));
+    	return view('profile.my_profile', compact('profile', 'contacts'));
     }
 
     public function editMyProfile()
     {
         $profile = Auth::user()->profile;
+        $contacts = json_decode($profile->phone);
         $section = Section::orderBy('sort_id')->where('status', 1)->get();
 
-        return view('profile.my_profile_edit', compact('profile', 'section'));
+        return view('profile.my_profile_edit', compact('profile', 'contacts', 'section'));
     }
 
     public function updateMyProfile(ProfileRequest $request, $id)
@@ -80,7 +84,20 @@ class ProfileController extends Controller
         $profile->city_id = $request->city_id;
         if ($request->category_id != 0)
             $profile->category_id = $request->category_id;
-        $profile->phone =  $request->phone;
+
+        $contacts = [
+            'phone' => $request->phone,
+            'telegram' => $request->telegram,
+            'whatsapp' => $request->whatsapp,
+            'viber' => $request->viber,
+
+            'phone2' => $request->phone2,
+            'telegram2' => $request->telegram2,
+            'whatsapp2' => $request->whatsapp2,
+            'viber2' => $request->viber2
+        ];
+
+        $profile->phone =  json_encode($contacts);
         $profile->skills = $request->skills;
         $profile->address = $request->address;
         $profile->website = $request->website;
@@ -125,7 +142,7 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
-        if (Auth::attempt(['email' => Auth::user()->email, 'password' => $request->password]))
+        if (Hash::check($request->password, Auth::user()->password))
         {
             $user = User::findOrFail(Auth::id());
             $user->password = bcrypt($request->password);
@@ -141,6 +158,6 @@ class ProfileController extends Controller
 
     public function deleteAccount(Request $request)
     {
-        dd($request->all());
+        Auth::user();
     }
 }

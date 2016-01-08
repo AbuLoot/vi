@@ -57,7 +57,31 @@
                   </div>
                   <div class="form-group">
                     <label for="phone">Контакты (телефон):</label>
-                    <input type="tel" class="form-control" name="phone" id="phone" maxlength="40" placeholder="Номер телефона" value="{{ $profile->phone }}">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="tel" class="form-control" name="phone" id="phone" maxlength="40" placeholder="Номер телефона" value="{{ $contacts->phone }}">
+                      </div>
+                      <div class="col-md-6">
+                        <p></p>
+                        <label><input type="checkbox" name="telegram" {{ ($contacts->telegram == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                        <label><input type="checkbox" name="whatsapp" {{ ($contacts->whatsapp == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                        <label><input type="checkbox" name="viber" {{ ($contacts->viber == 'on') ? 'checked' : null }}> Viber</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone2">Контакты (телефон 2):</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="tel" class="form-control" name="phone2" id="phone2" maxlength="40" placeholder="Номер телефона 2" value="{{ $contacts->phone2 }}">
+                      </div>
+                      <div class="col-md-6">
+                        <p></p>
+                        <label><input type="checkbox" name="telegram2" {{ ($contacts->telegram2 == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                        <label><input type="checkbox" name="whatsapp2" {{ ($contacts->whatsapp2 == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                        <label><input type="checkbox" name="viber2" {{ ($contacts->viber2 == 'on') ? 'checked' : null }}> Viber</label>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="skills">Навыки:</label>

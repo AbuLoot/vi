@@ -25,7 +25,7 @@ class AdminPostsController extends Controller
     public function index()
     {
         $posts = Post::paginate(20);
-        $section = Section::all();
+        $section = Section::where('service_id', '1')->where('status', 1)->orderBy('sort_id')->get();
 
         return view('admin.posts.index', compact('posts', 'section'));
     }
@@ -70,9 +70,10 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        $section = Section::orderBy('sort_id')->get();
+        $contacts = json_decode($post->phone);
+        $section = Section::where('service_id', '1')->where('status', 1)->orderBy('sort_id')->get();
 
-        return view('admin.posts.edit', compact('post', 'section'));
+        return view('admin.posts.edit', compact('post', 'contacts', 'section'));
     }
 
     /**

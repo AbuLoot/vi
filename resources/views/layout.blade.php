@@ -19,7 +19,7 @@
     <![endif]-->
   </head>
   <body>
-    <header class="navbar-basic navbar-fixed-top">
+    <header class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="row">
           <div class="col-md-2 col-sm-3 col-xs-4">
@@ -49,7 +49,8 @@
                 <ul class="dropdown-menu">
                   <li><a href="/my_profile">Мой профиль</a></li>
                   <li><a href="/my_posts">Мои объявления</a></li>
-                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить услугу</a></li>
+                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a></li>
+                  <li><a href="{{ route('projects.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Проект</a></li>
                   <li class="divider"></li>
                   <li><a href="/auth/logout">Выход</a></li>
                 </ul>
@@ -59,6 +60,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li><a href="/admin/pages">Страницы</a></li>
+                  <li><a href="/admin/services">Сервисы</a></li>
                   <li><a href="/admin/section">Разделы</a></li>
                   <li><a href="/admin/categories">Категории</a></li>
                   <li><a href="/admin/tags">Теги</a></li>
@@ -80,15 +82,23 @@
           <div class="col-md-offset-2 col-md-6 col-sm-8">
             <ul class="nav nav-lines">
               <li @if (Request::is('/', 'uslugi')) class="active" @endif>
-                <a href="{{ url('uslugi') }}">Услуги</a>
+                <a class="text-uppercase" href="{{ route('services') }}">Услуги</a>
               </li>
               <li @if (Request::is('proekty')) class="active" @endif>
-                <a href="{{ url('projects') }}">Проекты</a>
+                <a class="text-uppercase" href="{{ route('projects') }}">Задачи</a>
               </li>
             </ul>
           </div>
           <div class="col-md-4 col-sm-4">
-            <a class="btn btn-success btn-sm btn-post-service pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить услугу</a>
+            <div class="dropdown pull-right">
+              <button class="btn btn-success btn-sm btn-service dropdown-toggle" type="button" id="createPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="glyphicon glyphicon-plus"></i> Разместить <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="createPost">
+                <li><a href="{{ route('posts.create') }}">Услугу</a></li>
+                <li><a href="{{ route('projects.create') }}">Проект</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

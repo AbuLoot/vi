@@ -67,11 +67,13 @@
         function validatePassword() {
           var pass1 = document.getElementById("password").value;
           var pass2 = document.getElementById("password_confirmation").value;
-          if (pass1 != pass2)
+          if (pass1 != pass2) {
             document.getElementById("password_confirmation").setCustomValidity("Пароли не совпадают");
-          else
+          }
+          else {
             document.getElementById("password_confirmation").setCustomValidity('');
             //empty string means no validation error
+          }
         }
       </script>
 @endsection

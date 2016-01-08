@@ -23,8 +23,12 @@
                   <label for="section_id" class="col-md-3">Разделы</label>
                   <div class="col-md-9">
                     <select class="form-control" id="section_id" name="section_id">
-                      @foreach ($section as $item)
-                        <option value="{{ $item->id }}">{{ $item->title }}</option>
+                      @foreach ($services as $service)
+                        <optgroup label="{{ $service->title }}">
+                          @foreach ($service->section->sortBy('sort_id') as $item)
+                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                          @endforeach
+                        </optgroup>
                       @endforeach
                     </select>
                   </div>
@@ -101,6 +105,4 @@
 
 @section('scripts')
   <script src="/bower_components/jasny-bootstrap/js/fileinput.js"></script>
-  <script src="/bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
-  <script src="/bower_components/bootstrap/dist/js/custom.js"></script>
 @endsection

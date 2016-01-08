@@ -16,8 +16,8 @@
                   <li class="@if (old('id')) NULL @else active @endif"><a href="#info" data-toggle="tab"><i class="glyphicon glyphicon-info-sign"></i> Информация</a></li>
                   <li><a href="#posts" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> Объявления</a></li>
                   <li class="@if (old('id')) active @endif"><a href="#reviews" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i> Отзывы</a></li>
-                </ul>
-                <br>
+                </ul><br>
+
                 <div id="myTabContent" class="tab-content">
                   <div class="tab-pane fade @if (old('id')) NULL @else active in @endif" id="info">
                     <div class="table-responsive">
@@ -48,8 +48,22 @@
                             <td>{{ $profile->skills }}</td>
                           </tr>
                           <tr>
-                            <td>Телефон</td>
-                            <td>{{ $profile->phone }}</td>
+                            <td>Телефон 1</td>
+                            <td>
+                              {{ $contacts->phone }}
+                              @if ($contacts->telegram == 'on') Telegram, @endif
+                              @if ($contacts->whatsapp == 'on') WhatsApp, @endif
+                              @if ($contacts->viber == 'on') Viber @endif
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Телефон 2</td>
+                            <td>
+                              {{ $contacts->phone2 }}
+                              @if ($contacts->telegram2 == 'on') Telegram, @endif
+                              @if ($contacts->whatsapp2 == 'on') WhatsApp, @endif
+                              @if ($contacts->viber2 == 'on') Viber @endif
+                            </td>
                           </tr>
                           <tr>
                             <td>Веб-сайт</td>

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Service;
+use Validator;
+
 class AdminServicesController extends Controller
 {
     /**
@@ -16,7 +19,9 @@ class AdminServicesController extends Controller
      */
     public function index()
     {
-        //
+        $services = Service::all();
+
+        return view('admin.services.index', ['services' => $services]);
     }
 
     /**
@@ -26,7 +31,7 @@ class AdminServicesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.services.create');
     }
 
     /**
@@ -37,18 +42,35 @@ class AdminServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|min:5|max:60|unique:services',
+            'route' => 'required|max:60|unique:services',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        if ($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $service = new Service;
+
+        if ($request->sort_id > 0)
+            $service->sort_id = $request->sort_id;
+        else
+            $service->sort_id = $service->count() + 1;
+        $service->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
+        $service->title = $request->title;
+        $service->route = $request->route;
+        $service->title_description = $request->title_description;
+        $service->meta_description = $request->meta_description;
+        $service->text = $request->text;
+        if ($request->status == 'on')
+            $service->status = 1;
+        else
+            $service->status = 0;
+        $service->save();
+
+        return redirect('/admin/services')->with('status', 'Сервис добавлен!');
     }
 
     /**
@@ -59,7 +81,9 @@ class AdminServicesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $service = Service::findOrFail($id);
+
+        return view('admin.services.edit', ['service' => $service]);
     }
 
     /**
@@ -71,7 +95,25 @@ class AdminServicesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $service = Service::findOrFail($id);
+
+        if ($request->sort_id > 0)
+            $service->sort_id = $request->sort_id;
+        else
+            $service->sort_id = $service->count() + 1;
+        $service->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
+        $service->title = $request->title;
+        $service->route = $request->route;
+        $service->title_description = $request->title_description;
+        $service->meta_description = $request->meta_description;
+        $service->text = $request->text;
+        if ($request->status == 'on')
+            $service->status = 1;
+        else
+            $service->status = 0;
+        $service->save();
+
+        return redirect('/admin/services')->with('status', 'Сервис обновлен!');
     }
 
     /**
@@ -82,6 +124,8 @@ class AdminServicesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Service::destroy($id);
+
+        return redirect('/admin/services')->with('status', 'Сервис удален!');
     }
 }

@@ -34,6 +34,7 @@ Route::post('comment', ['uses' => 'CommentController@saveComment']);
 
 Route::group(['middleware' => 'auth'], function() {
 	Route::resource('posts', 'PostsController');
+	Route::resource('projects', 'ProjectsController');
 
 	Route::get('my_profile', ['uses' => 'ProfileController@getMyProfile']);
 	Route::get('my_profile/edit', ['uses' => 'ProfileController@editMyProfile']);

@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-offset-2 col-md-8">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h3>Редактирование объявления</h3>
+            <h3>Редактирование объявления</h3><br>
             <form action="{{ route('posts.update', $post->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
               <input type="hidden" name="_method" value="PUT">
               {!! csrf_field() !!}
@@ -92,10 +92,9 @@
                     @endif
                   @endfor
                 </div>
-              </div>
+              </div><br>
 
-              <h4>Контактная информация</h4>
-              <br>
+              <h4>Контактная информация</h4><br>
               <div class="form-group">
                 <label for="city" class="col-md-3 col-sm-3">Город</label>
                 <div class="col-md-9 col-sm-9">

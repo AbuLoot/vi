@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -37,9 +38,10 @@ class PostsController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $section = Section::orderBy('sort_id')->where('status', 1)->get();
+        $contacts = json_decode($user->profile->phone);
+        $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
 
-        return view('board.create_post', compact('user', 'section'));
+        return view('board.create_post', compact('user', 'contacts', 'section'));
     }
 
     /**
@@ -175,7 +177,7 @@ class PostsController extends Controller
     {
         $post = Auth::user()->posts()->find($id);
         $contacts = json_decode($post->phone);
-        $section = Section::orderBy('sort_id')->where('status', 1)->get();
+        $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
 
         return view('board.edit_post', compact('post', 'section', 'contacts'));
     }

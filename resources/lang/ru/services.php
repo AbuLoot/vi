@@ -9,15 +9,21 @@ return [
 	],
 
 	"2" => [
+		"route" => "projects",
+		"slug" => "proekty",
+		"title" => "Проекты",
+	],
+
+	/*"3" => [
 		"route" => "products",
 		"slug" => "tovary",
 		"title" => "Товары",
 	],
 
-	"3" => [
+	"4" => [
 		"route" => "jobs",
 		"slug" => "rabota",
 		"title" => "Работа",
-	],
+	],*/
 
 ];

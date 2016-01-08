@@ -39,8 +39,22 @@
                         <td>{{ $profile->skills }}</td>
                       </tr>
                       <tr>
-                        <td>Телефон</td>
-                        <td>{{ $profile->phone }}</td>
+                        <td>Телефон 1</td>
+                        <td>
+                          {{ $contacts->phone }}
+                          @if ($contacts->telegram == 'on') <i class="glyphicon glyphicon-ok"></i> Telegram @endif
+                          @if ($contacts->whatsapp == 'on') <i class="glyphicon glyphicon-ok"></i> WhatsApp @endif
+                          @if ($contacts->viber == 'on') <i class="glyphicon glyphicon-ok"></i> Viber @endif
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Телефон 2</td>
+                        <td>
+                          {{ $contacts->phone2 }}
+                          @if ($contacts->telegram2 == 'on') <i class="glyphicon glyphicon-ok"></i> Telegram @endif
+                          @if ($contacts->whatsapp2 == 'on') <i class="glyphicon glyphicon-ok"></i> WhatsApp @endif
+                          @if ($contacts->viber2 == 'on') <i class="glyphicon glyphicon-ok"></i> Viber @endif
+                        </td>
                       </tr>
                       <tr>
                         <td>Веб-сайт</td>

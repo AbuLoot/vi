@@ -5,9 +5,6 @@ body {
 .logo {
   
 }
-a {
-  /*color: #009FD5;*/
-}
 .text-gray {
   color: #666666;
 }
@@ -16,11 +13,11 @@ a {
   background-color: #D4EEFF;
   padding: 5px 10px;
 }
+
+
 /* Header */
-.navbar-basic {
-  background-color: #009FD5;
+.navbar{
   padding: 10px 0;
-  border-bottom: 1px solid #2882b5;
 }
 
 /* Navbar Services */
@@ -28,6 +25,7 @@ a {
   background-color: #ffffff;
   border-bottom: 1px solid #d3e0e9;
 }
+
 
 /* Nav Lines */
 .nav-lines > li {
@@ -42,7 +40,7 @@ a {
 .nav-lines > li > a:hover {
   padding-bottom: 11px;
   background-color: transparent;
-  border-bottom: 4px solid #009FD5;
+  border-bottom: 4px solid #2780e3;
 }
 .nav-lines > li.active > a,
 .nav-lines > li.active > a:hover,
@@ -51,12 +49,13 @@ a {
   cursor: default;
   padding-bottom: 11px;
   background-color: transparent;
-  border-bottom: 4px solid #009FD5;
+  border-bottom: 4px solid #2780e3;
 }
 
+
 /* Locate Service */
-.btn-post-service {
-  margin: 10px 0;
+.btn-service {
+  margin-top: 10px;
 }
 
 /* Content */
@@ -97,13 +96,14 @@ a {
   height: 120px;
 }
 .categories a {
-  text-align: center;
+  line-height: 1;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-.categories h5 {
-  min-height: 32px;
+.categories .category-title {
+  color: #000;
+  font-size: 13px;
 }
 .messengers > label {
   margin-bottom: 0px;
@@ -121,7 +121,7 @@ a {
   display: inline-block;
 }
 .gallery ol li:hover {
-  outline: 3px solid #009FD5;
+  outline: 3px solid #2780e3;
 }
 @media (max-width: 480px) {
   .gallery ol li {
@@ -135,8 +135,4 @@ a {
 }
 .table-admin > tbody > tr > td {
   vertical-align: middle;
-}
-
-.footer {
-  
 }

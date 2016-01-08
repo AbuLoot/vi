@@ -27,7 +27,7 @@ class CategoryRequest extends Request
             'sort_id' => 'numeric',
             'section_id' => 'required|numeric',
             'title' => 'required|min:5|max:80',
-            'slug' => 'min:5|max:80',
+            'slug' => 'unique:categories|min:5|max:80',
         ];
     }
 }

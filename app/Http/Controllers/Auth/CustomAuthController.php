@@ -93,6 +93,20 @@ class CustomAuthController extends Controller
         $profile = new Profile;
         $profile->user_id = $user->id;
         $profile->city_id = $confirm->city_id;
+
+        $contacts = [
+            'phone' => null,
+            'telegram' => null,
+            'whatsapp' => null,
+            'viber' => null,
+
+            'phone2' => null,
+            'telegram2' => null,
+            'whatsapp2' => null,
+            'viber2' => null
+        ];
+
+        $profile->phone = json_encode($contacts);
         $profile->save();
 
 		$confirm->delete();

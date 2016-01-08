@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Service;
 use App\Section;
 use App\Category;
 use App\Http\Requests\CategoryRequest;
@@ -21,9 +22,10 @@ class AdminCategoriesController extends Controller
      */
     public function index()
     {
+        $services = Service::all();
         $categories = Category::orderBy('section_id')->get();
 
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index', compact('services', 'categories'));
     }
 
     /**
@@ -33,9 +35,9 @@ class AdminCategoriesController extends Controller
      */
     public function create()
     {
-        $section = Section::orderBy('sort_id')->get();
+        $services = Service::all();
 
-        return view('admin.categories.create', compact('section'));
+        return view('admin.categories.create', compact('services'));
     }
 
     /**
@@ -98,11 +100,11 @@ class AdminCategoriesController extends Controller
      */
     public function edit($id)
     {
-        $section = Section::orderBy('sort_id')->get();
+        $services = Service::all();
 
         $category = Category::findOrFail($id);
 
-        return view('admin.categories.edit', compact('section', 'category'));
+        return view('admin.categories.edit', compact('services', 'category'));
     }
 
     /**

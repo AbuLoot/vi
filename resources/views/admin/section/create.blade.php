@@ -66,13 +66,3 @@
         </div>
       </div>
 @endsection
-
-@section('styles')
-  <link href="/bower_components/jasny-bootstrap/dist/css/fileinput.min.css" rel="stylesheet">
-@endsection
-
-@section('scripts')
-  <script src="/bower_components/jasny-bootstrap/js/fileinput.js"></script>
-  <script src="/bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
-  <script src="/bower_components/bootstrap/dist/js/custom.js"></script>
-@endsection

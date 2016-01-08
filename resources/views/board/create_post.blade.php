@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-offset-2 col-md-8">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h3>Разместить услугу</h3>
+            <h3>Разместить услугу</h3><br>
             <form action="{{ route('posts.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="form-group">
@@ -25,7 +25,7 @@
                     @foreach ($section as $item)
                       <optgroup label="{{ $item->title }}">
                         @foreach ($item->categories->sortBy('sort_id') as $category)
-                          <option value="{{ $category->id }}">{{ $category->title }}</option>                              
+                          <option value="{{ $category->id }}">{{ $category->title }}</option>
                         @endforeach
                       </optgroup>
                     @endforeach
@@ -39,7 +39,7 @@
                     @foreach ($section as $item)
                       <optgroup label="{{ $item->title }}">
                         @foreach ($item->categories->sortBy('sort_id') as $tag)
-                          <option value="{{ $tag->id }}">{{ $tag->title }}</option>                              
+                          <option value="{{ $tag->id }}">{{ $tag->title }}</option>
                         @endforeach
                       </optgroup>
                     @endforeach
@@ -145,10 +145,9 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div><br>
 
-              <h4>Контактная информация</h4>
-              <br>
+              <h4>Контактная информация</h4><br>
               <div class="form-group">
                 <label for="city" class="col-md-3 col-sm-3">Город</label>
                 <div class="col-md-9 col-sm-9">
@@ -172,23 +171,23 @@
               <div class="form-group">
                 <label for="phone" class="col-md-3 col-sm-3">Телефон 1</label>
                 <div class="col-md-5 col-sm-5">
-                  <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $user->profile->phone }}" required>
+                  <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $contacts->phone }}" required>
                 </div>
                 <div class="col-md-4 col-sm-4 messengers">
-                  <label><input type="checkbox" name="telegram"> Telegram</label>&nbsp;
-                  <label><input type="checkbox" name="whatsapp"> WhatsApp</label>&nbsp;
-                  <label><input type="checkbox" name="viber"> Viber</label>
+                  <label><input type="checkbox" name="telegram" {{ ($contacts->telegram == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                  <label><input type="checkbox" name="whatsapp" {{ ($contacts->whatsapp == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                  <label><input type="checkbox" name="viber" {{ ($contacts->viber == 'on') ? 'checked' : null }}> Viber</label>
                 </div>
               </div>
               <div class="form-group">
                 <label for="phone" class="col-md-3 col-sm-3">Телефон 2</label>
                 <div class="col-md-5 col-sm-5">
-                  <input type="tel" class="form-control" id="phone" name="phone2" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : '' }}">
+                  <input type="tel" class="form-control" id="phone" name="phone2" minlength="5" maxlength="40" value="{{ (old('phone')) ? old('phone') : $contacts->phone2 }}">
                 </div>
                 <div class="col-md-4 col-sm-4 messengers">
-                  <label><input type="checkbox" name="telegram2"> Telegram</label>&nbsp;
-                  <label><input type="checkbox" name="whatsapp2"> WhatsApp</label>&nbsp;
-                  <label><input type="checkbox" name="viber2"> Viber</label>
+                  <label><input type="checkbox" name="telegram2" {{ ($contacts->telegram2 == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                  <label><input type="checkbox" name="whatsapp2" {{ ($contacts->whatsapp2 == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                  <label><input type="checkbox" name="viber2" {{ ($contacts->viber2 == 'on') ? 'checked' : null }}> Viber</label>
                 </div>
               </div>
               <div class="form-group">
@@ -204,8 +203,7 @@
                     <option value="all">Всем</option>
                     <option value="nobody">Никому</option>
                     <option value="registered_users">Только зарегистрированным пользователям</option>
-                  </select>
-                  <br>
+                  </select><br>
                   <p>Размещая объявления на сайте, вы соглашаетесь с <a href="#">этими правилами</a>.</p>
                 </div>
               </div>

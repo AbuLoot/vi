@@ -33,6 +33,7 @@ class CreatePostsTable extends Migration
             $table->string('email');
             $table->char('comment', 20);
             $table->char('lang', 2);
+            $table->integer('top')->default(0);
             $table->integer('views')->default(0);
             $table->integer('status')->default(1);
             $table->timestamps();

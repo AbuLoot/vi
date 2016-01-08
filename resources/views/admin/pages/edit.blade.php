@@ -80,6 +80,4 @@
 
 @section('scripts')
   <script src="/bower_components/jasny-bootstrap/js/fileinput.js"></script>
-  <script src="/bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
-  <script src="/bower_components/bootstrap/dist/js/custom.js"></script>
 @endsection
