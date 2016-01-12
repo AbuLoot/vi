@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use DB;
+
 use Auth;
 use App\City;
 use App\Section;
@@ -35,13 +37,23 @@ class PostsController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $req)
     {
+
+        if( $req->ajax() ) {
+            if( !$req->input('cat_id') ) {
+                return [];
+            }
+
+            return Category::find($req->input('cat_id'))->tags()->get();
+        }
+
         $user = Auth::user();
         $contacts = json_decode($user->profile->phone);
         $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
+        $selected_category = [];
 
-        return view('board.create_post', compact('user', 'contacts', 'section'));
+        return view('board.create_post', compact('user', 'contacts', 'section', 'selected_category'));
     }
 
     /**
@@ -51,6 +63,7 @@ class PostsController extends Controller
      */
     public function store(PostRequest $request)
     {
+
         $category = Category::findOrFail($request->category_id);
 
         $introImage = null;
@@ -152,6 +165,13 @@ class PostsController extends Controller
         $post->email = $request->email;
         $post->comment = $request->comment;
         $post->save();
+
+        $tags = [];
+        foreach($request->input('tag_id') as $tag) {
+            $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+        }
+
+        DB::table('post_tag')->insert($tags);
 
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
     }
