@@ -8,9 +8,10 @@
     <title>@yield('title_description', 'Vizov.kz')</title>
     <meta name="description" content="@yield('meta_description', 'Vizov.kz')">
 
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-cosmo.min.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/styles.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="/iconfont/material-icons.css">
     @yield('styles')
 
     <!--[if lt IE 9]>
@@ -25,8 +26,8 @@
           <div class="col-md-2 col-sm-3 col-xs-4">
             <a href="{{ route('index') }}"><img src="/img/vizov-logo2.png" class="logo"></a>
           </div>
-          <form action="/search/posts">
-            <div class="col-md-8 col-sm-6 col-xs-8">
+          <div class="col-md-8 col-sm-6 col-xs-8">
+            <form action="/search/posts">
               <div class="input-group">
                 <input type="text" class="form-control input-sm" name="text" minlength="2" maxlength="100" placeholder="Введите название услуги или товара" required>
                 <div class="input-group-btn">
@@ -35,9 +36,9 @@
                   </button>
                 </div>
               </div>
-            </div>
-          </form>
-          <div class="col-md-2 col-sm-3 ">
+            </form>
+          </div>
+          <div class="col-md-2 col-sm-3">
             <div class="btn-group pull-right">
               @if (Auth::guest())
                 <a class="btn btn-primary btn-sm" href="/auth/login">Войти</a>
@@ -76,29 +77,21 @@
       </div>
     </header>
 
-    <nav class="navbar-services">
+    <nav class=""><!-- navbar-services-->
       <div class="container">
         <div class="row">
           <div class="col-md-offset-2 col-md-6 col-sm-8">
-            <ul class="nav nav-lines">
+            <!-- <ul class="nav nav-lines">
               <li @if (Request::is('/', 'uslugi')) class="active" @endif>
                 <a class="text-uppercase" href="{{ route('services') }}">Услуги</a>
               </li>
               <li @if (Request::is('proekty')) class="active" @endif>
                 <a class="text-uppercase" href="{{ route('projects') }}">Задачи</a>
               </li>
-            </ul>
+            </ul> -->
           </div>
           <div class="col-md-4 col-sm-4">
-            <div class="dropdown pull-right">
-              <button class="btn btn-success btn-sm btn-service dropdown-toggle" type="button" id="createPost" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <i class="glyphicon glyphicon-plus"></i> Разместить <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="createPost">
-                <li><a href="{{ route('posts.create') }}">Услугу</a></li>
-                <li><a href="{{ route('projects.create') }}">Проект</a></li>
-              </ul>
-            </div>
+            <a class="btn btn-success btn-sm btn-service pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
           </div>
         </div>
       </div>

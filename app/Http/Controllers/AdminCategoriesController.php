@@ -49,15 +49,15 @@ class AdminCategoriesController extends Controller
     {
         $category = new Category;
 
-        if ($request->hasFile('image'))
-        {
-            $image = $request->file('image')->getClientOriginalName();
-            $request->file('image')->move('img/categories/', $image);
-        }
-        else
-        {
-            $image = 'no-image';
-        }
+        // if ($request->hasFile('image'))
+        // {
+        //     $image = $request->file('image')->getClientOriginalName();
+        //     $request->file('image')->move('img/categories/', $image);
+        // }
+        // else
+        // {
+        //     $image = 'no-image';
+        // }
 
         $count = $category->count();
 
@@ -68,7 +68,7 @@ class AdminCategoriesController extends Controller
         $category->section_id = $request->section_id;
         $category->title = $request->title;
         $category->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
-        $category->image = $image;
+        $category->image = $request->image;
         $category->title_description = $request->title_description;
         $category->meta_description = $request->meta_description;
         $category->text = $request->text;
@@ -117,7 +117,7 @@ class AdminCategoriesController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        if ($request->hasFile('image'))
+        /*if ($request->hasFile('image'))
         {
             $image = $request->file('image')->getClientOriginalName();
             $request->file('image')->move('img/categories/', $image);
@@ -129,7 +129,7 @@ class AdminCategoriesController extends Controller
                     Storage::delete('img/categories/'.$category->image);
                 }
             }
-        }
+        }*/
 
         $count = $category->count();
 
@@ -140,8 +140,7 @@ class AdminCategoriesController extends Controller
         $category->section_id = $request->section_id;
         $category->title = $request->title;
         $category->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
-        if (isset($image))
-            $category->image = $image;
+        $category->image = $request->image;;
         $category->title_description = $request->title_description;
         $category->meta_description = $request->meta_description;
         $category->text = $request->text;
@@ -171,6 +170,6 @@ class AdminCategoriesController extends Controller
 
         $category->delete();
 
-        return redirect('/admin/categories')->with('status', 'Рубрика удалена!');
+        return redirect('/admin/categories')->with('status', 'Категория удалена!');
     }
 }

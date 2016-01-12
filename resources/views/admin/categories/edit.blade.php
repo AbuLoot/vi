@@ -51,6 +51,12 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label for="image" class="col-md-3">Иконка</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" id="image" name="image" minlength="5" maxlength="80" value="{{ (old('image')) ? old('image') : $category->image }}">
+                  </div>
+                </div>
+                <!-- <div class="form-group">
                   <label for="price" class="col-md-3">Картинка</label>
                   <div class="col-md-9">
                     <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -68,7 +74,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="title_description" class="col-md-3">Мета название</label>
                   <div class="col-md-9">

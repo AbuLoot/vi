@@ -20,7 +20,7 @@
               <div class="panel panel-default">
                 <div class="panel-body">
                   <a href="{{ url($category->section->service->slug.'/'.$category->slug) }}">
-                    <img src="/img/categories/{{ $category->image }}" alt="{{ $category->title }}">
+                    <img class="center-block" src="/img/categories/{{ $category->image }}" alt="{{ $category->title }}">
                     <h5>{{ $category->title }}</h5>
                   </a>
                 </div>

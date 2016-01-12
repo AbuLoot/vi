@@ -2,9 +2,7 @@ body {
   margin-top: 50px;
   background-color: #F5F8FA;
 }
-.logo {
-  
-}
+.logo { }
 .text-gray {
   color: #666666;
 }
@@ -95,15 +93,26 @@ body {
   width: 174px;
   height: 120px;
 }
-.categories a {
-  line-height: 1;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.categories {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  border: 1px solid #d3e0e9;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
-.categories .category-title {
+.service {
+  display: inline-block;
+}
+.icon {
+  color: #60a2eb;
+  /*color: rgba(0, 0, 0, 0.54);*/
+  float: left;
+  margin-right: 5px;
+}
+.title {
   color: #000;
-  font-size: 13px;
+  font-size: 16px;
 }
 .messengers > label {
   margin-bottom: 0px;

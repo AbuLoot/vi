@@ -135,6 +135,8 @@ class AdminTagsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Tag::destroy($id);
+
+        return redirect('admin/tags')->with('status', 'Тег удален!');
     }
 }

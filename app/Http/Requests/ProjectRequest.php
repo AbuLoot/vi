@@ -27,6 +27,7 @@ class ProjectRequest extends Request
             'title' => 'required|min:5|max:80',
             'category_id' => 'required|numeric',
             'price' => 'max:10',
+            'files' => 'mimes:jpeg,png,svg,svgs,bmp,gif,odt,ods,odp,doc,docx,xlsx,xls,ppt,pptx,txt,pdf',
             'city_id' => 'required|numeric',
             'address' => 'max:80',
             'phone' => 'required|min:5|max:40',

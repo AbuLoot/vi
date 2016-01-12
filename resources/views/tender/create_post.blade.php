@@ -69,7 +69,10 @@
               <div class="form-group">
                 <label for="files" class="col-md-3 col-sm-3">Файлы</label>
                 <div class="col-md-9 col-sm-9">
-                  <input type="file" id="files" name="files">
+                  <!-- <input type="file" id="files" name="files" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/vnd.oasis.opendocument.text, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation, text/plain, application/pdf, image/*"> -->
+                  <p><input type="file" id="files" multiple name="files[]" title="Загрузите одну или несколько файлов"></p>
+                  <p><input type="file" id="files" multiple name="files[]" title="Загрузите одну или несколько файлов"></p>
+                  <p><input type="file" id="files" multiple name="files[]" title="Загрузите одну или несколько файлов"></p>
                 </div>
               </div><br>
 
