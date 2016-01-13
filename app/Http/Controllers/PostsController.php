@@ -162,8 +162,10 @@ class PostsController extends Controller
         $post->save();
 
         $tags = [];
-        foreach($request->input('tag_id') as $tag) {
-            $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+        if( $request->input('tag_id') ) {
+            foreach($request->input('tag_id') as $tag) {
+                $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+            }
         }
 
         DB::table('post_tag')->insert($tags);
@@ -326,16 +328,18 @@ class PostsController extends Controller
         $post->phone = json_encode($contacts);
         $post->email = $request->email;
         $post->comment = $request->comment;
-        $post->save();
 
         $tags = [];
-        foreach($request->input('tag_id') as $tag) {
-            $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+        if( $request->input('tag_id') ) {
+            foreach($request->input('tag_id') as $tag) {
+                $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+            }
         }
 
         DB::table('post_tag')->where('post_id', $post->id)->delete();
-
         DB::table('post_tag')->insert($tags);
+
+        $post->save();
 
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
     }
