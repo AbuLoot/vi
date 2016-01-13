@@ -41,11 +41,7 @@ class PostsController extends Controller
     {
 
         if( $req->ajax() ) {
-            if( !$req->input('cat_id') ) {
-                return [];
-            }
-
-            return Category::find($req->input('cat_id'))->tags()->get();
+            return $this->getTags( $req->input('cat_id') );
         }
 
         $user = Auth::user();
@@ -389,5 +385,13 @@ class PostsController extends Controller
         $post->delete();
 
         return redirect('/my_posts');
+    }
+
+    public function getTags( $cat_id ) {
+        if( !$cat_id ) {
+            return [];
+        }
+
+        return Category::find($cat_id)->tags()->get();
     }
 }
