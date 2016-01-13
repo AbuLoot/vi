@@ -30,7 +30,7 @@ class BoardController extends Controller
         $profiles = Profile::where('category_id', $category->id)->take(5)->get();
         $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
-        return view('board.posts', compact('category', 'profiles', 'posts'));
+        return view('board.found_posts', compact('category', 'profiles', 'posts'));
     }
 
     public function showPostService($post, $id)
@@ -103,13 +103,14 @@ class BoardController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
+
         return view('board.found_posts', compact('text', 'posts', 'profiles'));
     }
 
     public function filterPosts(Request $request)
     {
         echo $request->tag[1];
-        dd($request->all());
+        // dd($request->all());
 
         $query  = ($request->city_id)
             ? 'city_id = ' . (int) $request->city_id . ' AND '
@@ -170,6 +171,8 @@ class BoardController extends Controller
             ]);
         }
 
-        return view('board.found_posts', compact('section', 'sections', 'profiles', 'posts'));
+        $category = Category::find($request->category_id);
+
+        return view('board.found_posts', compact('category', 'section', 'sections', 'profiles', 'posts'));
     }
 }

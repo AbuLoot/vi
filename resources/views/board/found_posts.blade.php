@@ -5,6 +5,12 @@
         <div class="col-md-8">
           <div class="panel panel-default">
             <div class="panel-body">
+              @if (isset($category))
+                <ol class="breadcrumb">
+                  <li><a href="{{ route($category->section->service->route) }}">{{ $category->section->service->title }}</a></li>
+                  <li class="active">{{ $category->title }}</li>
+                </ol>
+              @endif
               <div class="well well-modified well-sm">
                 <form action="/filter/posts">
                   @if (isset($category))
@@ -53,13 +59,7 @@
                   </table>
                 </form>
               </div>
-
-              @if (isset($category))
-                <ol class="breadcrumb">
-                  <li><a href="{{ route($category->section->service->route) }}">{{ $category->section->service->title }}</a></li>
-                  <li class="active">{{ $category->title }}</li>
-                </ol>
-              @endif
+              <br>
 
               @forelse ($posts as $post)
                 <section class="media">
