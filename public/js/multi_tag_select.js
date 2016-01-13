@@ -36,4 +36,8 @@
 		$('#category').bind("change", handleCategory);
 	}
 
+	if( $('#category_tags').length ) {
+		$('#category_tags').multipleSelect({placeholder: "Выберите подкатегорию"});
+	}
+
 });

@@ -41,6 +41,27 @@
                           </div>
                         </td>
                       </tr>
+                      @if( isset($category_tags) )
+                        <tr>
+                          <td colspan="2">
+                            <div class="form-control input-sm">
+                              <select class="" name="tag_id[]" id="category_tags" style="width:100%;" multiple>
+                                @foreach( $category_tags as $tag)
+                                  <?php 
+                                  $selected = '';
+                                  if( isset( $selected_tags) ) {
+                                    if( array_search($tag->id, $selected_tags) !== false) {
+                                      $selected = 'selected';
+                                    }
+                                  }
+                                   ?>
+                                  <option value="{{ $tag->id }}" {{ $selected }} >{{ $tag->title }}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                          </td>
+                        </tr>
+                      @endif
                       <tr>
                         <td>
                           <input type="text" class="form-control input-sm" name="from" placeholder="Цена от" value="{{ (Request::input('from')) ? Request::input('from') : NULL }}">
@@ -95,4 +116,13 @@
           @include('partials/rating')
         </aside>
       </div>
+@endsection
+
+@section('styles')
+  <link href="/css/multiple-select.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+  <script src="/js/multiple-select.js"></script>
+  <script src="/js/multi_tag_select.js"></script>
 @endsection

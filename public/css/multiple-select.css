@@ -191,6 +191,15 @@
 }
 
 /*customize*/
+.input-sm .ms-choice {
+    height: 20px;
+    line-height: 20px;
+}
+
+.input-sm .ms-choice > div {
+    top: -3px;
+}
+
 .ms-choice {
     border: none;
     border-radius: 0;
