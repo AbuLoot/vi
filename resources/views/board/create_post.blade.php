@@ -36,12 +36,14 @@
               <div class="form-group">
                 <label for="tags" class="col-md-3 col-sm-3">Теги</label>
                 <div class="col-md-9 col-sm-9">
-                  <select class="" name="tag_id[]" id="tags" style="width:100%;" multiple>
-                    <!-- <option value="">Выберите категорию</option> -->
-                    @foreach ($selected_category as $item)
-                      <option value="">{{ dd($item) }}</option>
-                    @endforeach
-                  </select>
+                  <div class="form-control">
+                    <select class="" name="tag_id[]" id="tags" style="width:100%;" multiple>
+                      <!-- <option value="">Выберите категорию</option> -->
+                      @foreach ($selected_category as $item)
+                        <option value="">{{ dd($item) }}</option>
+                      @endforeach
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -226,6 +228,6 @@
   <script src="/bower_components/jasny-bootstrap/js/fileinput.js"></script>
   <script src="/bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
   <script src="/bower_components/bootstrap/dist/js/custom.js"></script>
-  <script src="/js/multi_tag_select.js"></script>
   <script src="/js/multiple-select.js"></script>
+  <script src="/js/multi_tag_select.js"></script>
 @endsection

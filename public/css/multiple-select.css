@@ -189,3 +189,19 @@
 .ms-drop .ms-no-results {
     display: none;
 }
+
+/*customize*/
+.ms-choice {
+    border: none;
+    border-radius: 0;
+    outline: none;
+}
+.ms-drop.bottom {
+    border-radius: 0;
+}
+.ms-parent {
+    width: 100% !important;
+}
+.ms-drop input[type="checkbox"] {
+    margin: 0 4px 0 0;
+}
