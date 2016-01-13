@@ -86,6 +86,19 @@
                   <p><small>{{ $post->created_at }}</small> | <small>Просмотров: {{ $post->views }}</small></p>
                 </div>
               </div>
+              @if( $post->tags()->first() )
+                <div class="row">
+                  <div class="col-md-12">
+                    <p>
+                      Теги:
+                      <?php $tags = $post->tags()->get(); ?>
+                      @foreach( $tags as $tag )
+                        <a href="#">{{ $tag->title }};</a>
+                      @endforeach
+                    </p>
+                  </div>
+                </div>
+              @endif
             </div>
           </article>
         </div>
