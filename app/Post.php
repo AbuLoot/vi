@@ -70,4 +70,17 @@ class Post extends Model
     {
         return $this->belongsToMany('App\Tag');
     }
+
+    public function hasTag( $id )
+    {
+        $tags = $this->tags()->get();
+
+        foreach( $tags as $tag ) {
+            if( $tag->id == $id ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

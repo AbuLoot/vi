@@ -10,6 +10,7 @@ use App\Service;
 use App\Section;
 use App\Category;
 use App\Post;
+use App\Tag;
 use App\Profile;
 
 class BoardController extends Controller
@@ -30,7 +31,9 @@ class BoardController extends Controller
         $profiles = Profile::where('category_id', $category->id)->take(5)->get();
         $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
-        return view('board.posts', compact('category', 'profiles', 'posts'));
+        $category_tags = $category->tags()->get();
+
+        return view('board.found_posts', compact('category', 'category_tags', 'profiles', 'posts'));
     }
 
     public function showPostService($post, $id)
@@ -103,13 +106,14 @@ class BoardController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
+
         return view('board.found_posts', compact('text', 'posts', 'profiles'));
     }
 
     public function filterPosts(Request $request)
     {
-        echo $request->tag[1];
-        dd($request->all());
+        // echo $request->tag[1];
+        // dd($request->all());
 
         $query  = ($request->city_id)
             ? 'city_id = ' . (int) $request->city_id . ' AND '
@@ -152,6 +156,7 @@ class BoardController extends Controller
                 'image' => ($request->image == 'on') ? 'on' : NULL,
                 'from' => (int) $request->from,
                 'to' => (int) $request->to,
+                'tag_id' => $request->tag_id,
             ]);
         }
         else
@@ -167,9 +172,27 @@ class BoardController extends Controller
                 'image' => ($request->image == 'on') ? 'on' : NULL,
                 'from' => (int) $request->from,
                 'to' => (int) $request->to,
+                'tag_id' => $request->tag_id,
             ]);
         }
 
-        return view('board.found_posts', compact('section', 'sections', 'profiles', 'posts'));
+        $selected_tags = [];
+        if( isset($request->tag_id) ) {
+
+            $selected_tags = $request->tag_id;
+
+            foreach ($request->tag_id as $tag_id) {
+                foreach ($posts as $post_key => $post) {
+                    if( !$post->hasTag($tag_id) ) {
+                        unset($posts[$post_key]);
+                    }
+                }
+            }
+        }
+
+        $category = Category::findOrFail($request->category_id);
+        $category_tags = $category->tags()->get();
+
+        return view('board.found_posts', compact('category', 'category_tags', 'selected_tags', 'section', 'sections', 'profiles', 'posts'));
     }
 }

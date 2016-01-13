@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use DB;
+
 use Auth;
 use App\City;
 use App\Section;
@@ -35,8 +37,13 @@ class PostsController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $req)
     {
+
+        if( $req->ajax() ) {
+            return $this->getTags( $req->input('cat_id') );
+        }
+
         $user = Auth::user();
         $contacts = json_decode($user->profile->phone);
         $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
@@ -51,6 +58,7 @@ class PostsController extends Controller
      */
     public function store(PostRequest $request)
     {
+
         $category = Category::findOrFail($request->category_id);
 
         $introImage = null;
@@ -153,6 +161,15 @@ class PostsController extends Controller
         $post->comment = $request->comment;
         $post->save();
 
+        $tags = [];
+        if( $request->input('tag_id') ) {
+            foreach($request->input('tag_id') as $tag) {
+                $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+            }
+        }
+
+        DB::table('post_tag')->insert($tags);
+
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
     }
 
@@ -173,13 +190,20 @@ class PostsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id, Request $req)
     {
+
+        if( $req->ajax() ) {
+            return $this->getTags( $req->input('cat_id') );
+        }
+
         $post = Auth::user()->posts()->find($id);
         $contacts = json_decode($post->phone);
         $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
 
-        return view('board.edit_post', compact('post', 'section', 'contacts'));
+        $all_tags = $this->getTags( $post->category_id );
+
+        return view('board.edit_post', compact('post', 'section', 'contacts', 'all_tags'));
     }
 
     /**
@@ -304,6 +328,17 @@ class PostsController extends Controller
         $post->phone = json_encode($contacts);
         $post->email = $request->email;
         $post->comment = $request->comment;
+
+        $tags = [];
+        if( $request->input('tag_id') ) {
+            foreach($request->input('tag_id') as $tag) {
+                $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+            }
+        }
+
+        DB::table('post_tag')->where('post_id', $post->id)->delete();
+        DB::table('post_tag')->insert($tags);
+
         $post->save();
 
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
@@ -369,5 +404,13 @@ class PostsController extends Controller
         $post->delete();
 
         return redirect('/my_posts');
+    }
+
+    public function getTags( $cat_id ) {
+        if( !$cat_id ) {
+            return [];
+        }
+
+        return Category::find($cat_id)->tags()->get();
     }
 }
