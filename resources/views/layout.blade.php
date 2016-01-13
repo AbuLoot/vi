@@ -8,9 +8,9 @@
     <title>@yield('title_description', 'Vizov.kz')</title>
     <meta name="description" content="@yield('meta_description', 'Vizov.kz')">
 
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-cosmo.min.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/styles.css">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <link rel="stylesheet" href="/iconfont/material-icons.css">
     @yield('styles')
 
@@ -24,7 +24,9 @@
       <div class="container">
         <div class="row">
           <div class="col-md-2 col-sm-3 col-xs-4">
-            <a href="{{ route('index') }}"><img src="/img/vizov-logo2.png" class="logo"></a>
+            <a href="{{ route('index') }}" class="logo">
+              Vizov <!-- <img src="/img/vizov-logo2.png" class="logo"> -->
+            </a>
           </div>
           <div class="col-md-8 col-sm-6 col-xs-8">
             <form action="/search/posts">
@@ -50,8 +52,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="/my_profile">Мой профиль</a></li>
                   <li><a href="/my_posts">Мои объявления</a></li>
-                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a></li>
-                  <li><a href="{{ route('projects.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Проект</a></li>
+                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a></li>
                   <li class="divider"></li>
                   <li><a href="/auth/logout">Выход</a></li>
                 </ul>
@@ -77,27 +78,20 @@
       </div>
     </header>
 
-    <nav class=""><!-- navbar-services-->
+    <nav class="navbar-services">
       <div class="container">
         <div class="row">
-          <div class="col-md-offset-2 col-md-6 col-sm-8">
-            <!-- <ul class="nav nav-lines">
-              <li @if (Request::is('/', 'uslugi')) class="active" @endif>
-                <a class="text-uppercase" href="{{ route('services') }}">Услуги</a>
-              </li>
-              <li @if (Request::is('proekty')) class="active" @endif>
-                <a class="text-uppercase" href="{{ route('projects') }}">Задачи</a>
-              </li>
-            </ul> -->
+          <div class="col-md-offset-2 col-md-8 col-sm-8">
+            <a class="btn btn-link btn-sm text-uppercase" href="{{ route('services') }}"><b>Все Услуги</b></a>
           </div>
-          <div class="col-md-4 col-sm-4">
-            <a class="btn btn-success btn-sm btn-service pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
+          <div class="col-md-2 col-sm-4">
+            <a class="btn btn-success btn-sm pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a>
           </div>
         </div>
       </div>
     </nav>
 
-    <div class="container"><br>
+    <div class="container">
       @yield('content')
     </div>
 

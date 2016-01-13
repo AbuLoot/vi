@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('title_description', $profile->user->name)
+
+@section('meta_description', $profile->user->about)
+
 @section('content')
       <div class="row">
         <div class="col-md-3">
@@ -13,7 +17,7 @@
                 <h3>{{ $profile->user->name }}</h3>
 
                 <ul class="nav nav-tabs">
-                  <li class="@if (old('id')) NULL @else active @endif"><a href="#info" data-toggle="tab"><i class="glyphicon glyphicon-info-sign"></i> Информация</a></li>
+                  <li class="@if (old('id')) NULL @else active @endif"><a href="#info" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
                   <li><a href="#posts" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> Объявления</a></li>
                   <li class="@if (old('id')) active @endif"><a href="#reviews" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i> Отзывы</a></li>
                 </ul><br>
@@ -105,7 +109,7 @@
                             <h4 class="col-md-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <br><small>Торг&nbsp;возможен</small> @endif</h4>
                           </div>
                           <p class="text-gray">
-                            {{ $post->city->title }} / <b>{{ $post->category->title }}</b><br>
+                            {{ $post->city->title }} / {{ $post->category->title }}<br>
                             <small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small>
                           </p>
                         </div>

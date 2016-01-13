@@ -28,7 +28,7 @@
                             <a href="{{ route('show-post-service', ['post' => $post->slug, 'id' => $post->id]) }}">{{ $post->title }}</a>
                           </h4>
                           <p class="text-gray">
-                            {{ $post->city->title }} / <b>{{ $post->category->title }}</b><br>
+                            {{ $post->city->title }} / {{ $post->category->title }}<br>
                             <small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small>
                           </p>
                         </div>

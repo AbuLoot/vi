@@ -125,7 +125,7 @@ class BoardController extends Controller
 
         $query .= ($request->to)
             ? 'price <= ' . (int) $request->to
-            : 'price <= 9999999';
+            : 'price <= 9999999999';
 
         if ($request->text)
         {

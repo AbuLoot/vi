@@ -2,7 +2,7 @@
 
 @section('title_description', $post->title)
 
-@section('meta_description', $post->description)
+@section('meta_description', str_limit($post->description, 200))
 
 @section('content')
       <div class="row">

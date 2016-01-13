@@ -1,8 +1,17 @@
 body {
-  margin-top: 50px;
+  margin-top: 55px;
   background-color: #F5F8FA;
 }
-.logo { }
+.logo {
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.logo:hover, .logo:active {
+  color: #fff;
+  text-decoration: none;
+}
 .text-gray {
   color: #666666;
 }
@@ -20,8 +29,16 @@ body {
 
 /* Navbar Services */
 .navbar-services {
-  background-color: #ffffff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
   border-bottom: 1px solid #d3e0e9;
+}
+
+
+/* Locate Service */
+.btn-service {
+  /*margin-top: 10px;*/
 }
 
 
@@ -50,11 +67,6 @@ body {
   border-bottom: 4px solid #2780e3;
 }
 
-
-/* Locate Service */
-.btn-service {
-  margin-top: 10px;
-}
 
 /* Content */
 .row-left {
