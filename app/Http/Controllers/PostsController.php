@@ -328,6 +328,15 @@ class PostsController extends Controller
         $post->comment = $request->comment;
         $post->save();
 
+        $tags = [];
+        foreach($request->input('tag_id') as $tag) {
+            $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
+        }
+
+        DB::table('post_tag')->where('post_id', $post->id)->delete();
+
+        DB::table('post_tag')->insert($tags);
+
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
     }
 
