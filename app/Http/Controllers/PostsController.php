@@ -47,9 +47,8 @@ class PostsController extends Controller
         $user = Auth::user();
         $contacts = json_decode($user->profile->phone);
         $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
-        $selected_category = [];
 
-        return view('board.create_post', compact('user', 'contacts', 'section', 'selected_category'));
+        return view('board.create_post', compact('user', 'contacts', 'section'));
     }
 
     /**
@@ -189,13 +188,20 @@ class PostsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id, Request $req)
     {
+
+        if( $req->ajax() ) {
+            return $this->getTags( $req->input('cat_id') );
+        }
+
         $post = Auth::user()->posts()->find($id);
         $contacts = json_decode($post->phone);
         $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
 
-        return view('board.edit_post', compact('post', 'section', 'contacts'));
+        $all_tags = $this->getTags( $post->category_id );
+
+        return view('board.edit_post', compact('post', 'section', 'contacts', 'all_tags'));
     }
 
     /**

@@ -39,9 +39,6 @@
                   <div class="form-control">
                     <select class="" name="tag_id[]" id="tags" style="width:100%;" multiple>
                       <!-- <option value="">Выберите категорию</option> -->
-                      @foreach ($selected_category as $item)
-                        <option value="">{{ dd($item) }}</option>
-                      @endforeach
                     </select>
                   </div>
                 </div>
