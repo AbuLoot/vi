@@ -13,6 +13,9 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Bican\Roles\Traits\HasRoleAndPermission;
 use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
 
+use Torann\GeoIP\GeoIPFacade as GeoIP;
+
+
 /*class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract,
@@ -52,5 +55,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function posts()
     {
         return $this->hasMany('App\Post');
+    }
+
+    public static function detectUserLocation() {
+
+        $city = [NULL];
+
+        if( auth()->check() ) {
+            $user = auth()->user();
+            $city = $user->profile->city()->get();
+
+        } else {
+            $user_location = GeoIP::getLocation();
+            $city = City::where('slug', $user_location['city'])->get();
+        }
+
+        if( empty($city[0]) ) {
+            $city[0] = City::first();
+        }
+
+        view()->share('user_city', $city[0]);
     }
 }
