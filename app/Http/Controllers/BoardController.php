@@ -12,9 +12,16 @@ use App\Category;
 use App\Post;
 use App\Tag;
 use App\Profile;
+use App\User;
 
 class BoardController extends Controller
 {
+
+    public function __construct() 
+    {
+        User::detectUserLocation();
+    }
+
     // Section Services
 
     public function getServices()

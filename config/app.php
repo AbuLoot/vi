@@ -149,7 +149,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
         /*
-         * GELOIP
+         * GEOIP
         */
 
         Torann\GeoIP\GeoIPServiceProvider::class,
