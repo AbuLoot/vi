@@ -159,7 +159,7 @@ class BoardController extends Controller
                 'image' => ($request->image == 'on') ? 'on' : NULL,
                 'from' => (int) $request->from,
                 'to' => (int) $request->to,
-                'tag_id' => $request->tag_id,
+                'tag_id' => $request->tags_id,
             ]);
         }
         else
@@ -175,21 +175,28 @@ class BoardController extends Controller
                 'image' => ($request->image == 'on') ? 'on' : NULL,
                 'from' => (int) $request->from,
                 'to' => (int) $request->to,
-                'tag_id' => $request->tag_id,
+                'tag_id' => $request->tags_id,
             ]);
         }
 
         $selected_tags = [];
 
-        if( isset($request->tag_id) ) {
+        if( isset($request->tags_id) ) {
 
-            $selected_tags = $request->tag_id;
+            $selected_tags = $request->tags_id;
 
-            foreach ($request->tag_id as $tag_id) {
-                foreach ($posts as $post_key => $post) {
-                    if( !$post->hasTag($tag_id) ) {
-                        unset($posts[$post_key]);
+            foreach ($posts as $post_key => $post) 
+            {
+                $hasTag = false;
+                foreach ($selected_tags as $tag_id) 
+                {
+                    if( $post->hasTag($tag_id) ) {
+                        $hasTag = true;
                     }
+                }
+
+                if( !$hasTag ) {
+                    unset($posts[$post_key]);
                 }
             }
         }

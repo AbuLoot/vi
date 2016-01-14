@@ -161,14 +161,9 @@ class PostsController extends Controller
         $post->comment = $request->comment;
         $post->save();
 
-        $tags = [];
-        if( $request->input('tag_id') ) {
-            foreach($request->input('tag_id') as $tag) {
-                $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
-            }
+        if( $tags_id = $request->input('tags_id') ) {
+            $post->attachTags( $tags_id);
         }
-
-        DB::table('post_tag')->insert($tags);
 
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
     }
@@ -329,15 +324,10 @@ class PostsController extends Controller
         $post->email = $request->email;
         $post->comment = $request->comment;
 
-        $tags = [];
-        if( $request->input('tag_id') ) {
-            foreach($request->input('tag_id') as $tag) {
-                $tags[] = array('post_id' => $post->id, 'tag_id' => $tag);
-            }
+        if( $tags_id = $request->input('tags_id') ) {
+            $post->detachTags();
+            $post->attachTags( $tags_id);
         }
-
-        DB::table('post_tag')->where('post_id', $post->id)->delete();
-        DB::table('post_tag')->insert($tags);
 
         $post->save();
 
