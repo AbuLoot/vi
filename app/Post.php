@@ -83,4 +83,18 @@ class Post extends Model
 
         return false;
     }
+
+    public function attachTags( $tags_id )
+    {
+        $this->tags()->attach( $tags_id );
+    }
+
+    public function detachTags( $tags_id = NULL )
+    {
+        if( $tags_id ) {
+            $this->tags()->detach( $tags_id);
+        } else {
+            $this->tags()->detach();
+        }
+    }
 }
