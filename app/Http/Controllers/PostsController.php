@@ -161,7 +161,7 @@ class PostsController extends Controller
         $post->comment = $request->comment;
         $post->save();
 
-        if( $tags_id = $request->input('tag_id') ) {
+        if( $tags_id = $request->input('tags_id') ) {
             $post->attachTags( $tags_id);
         }
 
@@ -324,7 +324,7 @@ class PostsController extends Controller
         $post->email = $request->email;
         $post->comment = $request->comment;
 
-        if( $tags_id = $request->input('tag_id') ) {
+        if( $tags_id = $request->input('tags_id') ) {
             $post->detachTags();
             $post->attachTags( $tags_id);
         }
