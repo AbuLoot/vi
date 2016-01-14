@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Torann\GeoIP\GeoIPFacade as GeoIP;
 use App\Page;
 use App\City;
 

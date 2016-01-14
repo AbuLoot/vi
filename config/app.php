@@ -148,6 +148,12 @@ return [
         Bican\Roles\RolesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
 
+        /*
+         * GEOIP
+        */
+
+        Torann\GeoIP\GeoIPServiceProvider::class,
+
     ],
 
     /*
@@ -197,6 +203,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Image'     => Intervention\Image\Facades\Image::class,
+
+        'GeoIP'     => Torann\GeoIP\GeoIPFacade::class,
 
     ],
 

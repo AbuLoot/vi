@@ -21,9 +21,13 @@
                       <tr>
                         <td>
                           <select class="form-control input-sm" name="city_id">
+                            <?php 
+                              $user_city_id = $user_city->id ? $user_city->id : NULL; // $user_city shared to view in AppServiceProvider
+                              $user_city_id = Request::input('city_id') ? Request::input('city_id') : $user_city_id;
+                            ?>
                             @foreach($cities as $city)
-                              @if ($city->id === Request::input('city_id'))
-                                <option value="{{ $city->id }}" selected>{{ $city->title }}</option>
+                              @if ($city->id == $user_city_id)
+                                <option value="{{ $city->id }}" selected >{{ $city->title }}</option>
                               @else
                                 <option value="{{ $city->id }}">{{ $city->title }}</option>
                               @endif

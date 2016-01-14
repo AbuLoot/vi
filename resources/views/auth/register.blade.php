@@ -17,9 +17,13 @@
                 <div class="form-group">
                   <label for="city" class="control-label">Город</label>
                   <select class="form-control" id="city" name="city_id">
-                    @foreach ($cities as $city)
-                      @if (old('city_id') == $city->id)
-                        <option value="{{ $city->id }}" selected>{{ $city->title }}</option>
+                    <?php 
+                      $user_city_id = $user_city->id ? $user_city->id : NULL; // $user_city shared to view in AppServiceProvider
+                      $user_city_id = Request::input('city_id') ? Request::input('city_id') : $user_city_id;
+                    ?>
+                    @foreach($cities as $city)
+                      @if ($city->id == $user_city_id)
+                        <option value="{{ $city->id }}" selected >{{ $city->title }}</option>
                       @else
                         <option value="{{ $city->id }}">{{ $city->title }}</option>
                       @endif
