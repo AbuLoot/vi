@@ -47,14 +47,14 @@
                             <div class="form-control input-sm">
                               <select class="" name="tag_id[]" id="category_tags" style="width:100%;" multiple>
                                 @foreach( $category_tags as $tag)
-                                  <?php 
-                                  $selected = '';
-                                  if( isset( $selected_tags) ) {
-                                    if( array_search($tag->id, $selected_tags) !== false) {
-                                      $selected = 'selected';
+                                  <?php
+                                    $selected = '';
+                                    if ( isset( $selected_tags) ) {
+                                      if ( array_search($tag->id, $selected_tags) !== false) {
+                                        $selected = 'selected';
+                                      }
                                     }
-                                  }
-                                   ?>
+                                  ?>
                                   <option value="{{ $tag->id }}" {{ $selected }} >{{ $tag->title }}</option>
                                 @endforeach
                               </select>
@@ -104,8 +104,8 @@
                   </div>
                 </section><hr>
               @empty
-                <h4>Ничего не найдено.</h4>
-                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Добавить объявление</a>
+                <h4>В этой рубрике пока нет объявлений.</h4>
+                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a>
               @endforelse
 
               {!! $posts->render() !!}

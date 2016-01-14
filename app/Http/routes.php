@@ -12,10 +12,6 @@ Route::get('uslugi', ['as' => 'services', 'uses' => 'BoardController@getServices
 Route::get('uslugi/{category}', ['as' => 'show-services', 'uses' => 'BoardController@showServices']);
 Route::get('1/{post}/{id}', ['as' => 'show-post-service', 'uses' => 'BoardController@showPostService']);
 
-Route::get('proekty', ['as' => 'projects', 'uses' => 'BoardController@getProjects']);
-Route::get('proekty/{category}', ['as' => 'show-projects', 'uses' => 'BoardController@showProjects']);
-Route::get('3/{post}/{id}', ['as' => 'show-post-project', 'uses' => 'BoardController@showPostProject']);
-
 // Route::get('tovary', ['as' => 'products', 'uses' => 'BoardController@getProducts']);
 // Route::get('tovary/{category}', ['as' => 'show-products', 'uses' => 'BoardController@showProducts']);
 // Route::get('2/{post}/{id}', ['as' => 'show-post-product', 'uses' => 'BoardController@showPostProduct']);

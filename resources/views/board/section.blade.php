@@ -13,7 +13,7 @@
           @foreach ($item->categories->sortBy('sort_id')->chunk(3) as $chunk)
             <div class="row">
               @foreach ($chunk as $category)
-                <div class="col-md-4 col-sm-4 col-xs-6">
+                <div class="col-md-4 col-sm-4 col-xs-12">
                   <a href="{{ url($category->section->service->slug.'/'.$category->slug) }}" class="service">
                     <i class="material-icons md-36 icon">{{ $category->image }}</i> <span class="title">{{ $category->title }}</span>
                   </a>

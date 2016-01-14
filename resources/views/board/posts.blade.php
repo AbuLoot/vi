@@ -17,46 +17,46 @@
                 <form action="/filter/posts">
                   <input type="hidden" name="category_id" value="{{ $category->id }}">
                   <table class="table-condensed">
-                      <thead>
-                        <tr>
-                          <td>
-                            <select class="form-control input-sm" name="city_id">
-                              @foreach($cities as $city)
-                                @if ($city->id === Request::input('city_id'))
-                                  <option value="{{ $city->id }}" selected>{{ $city->title }}</option>
-                                @else
-                                  <option value="{{ $city->id }}">{{ $city->title }}</option>
-                                @endif
-                              @endforeach
-                            </select>
-                          </td>
-                          <td>
-                            <input type="text" class="form-control input-sm" name="text" placeholder="Поиск по тексту" value="{{ (Request::input('text')) ? Request::input('text') : NULL }}">
-                          </td>
-                          <td>
-                            <div class="checkbox">
-                              <label>
-                                <input type="checkbox" name="image" @if (Request::input('image')) checked @endif> только с фото
-                              </label>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <input type="text" class="form-control input-sm" name="from" placeholder="Цена от" value="{{ (Request::input('from')) ? Request::input('from') : NULL }}">
-                          </td>
-                          <td>
-                            <div class="input-group input-group-sm">
-                              <input type="text" class="form-control" name="to" placeholder="до" value="{{ (Request::input('to')) ? Request::input('to') : NULL }}">
-                              <div class="input-group-addon">тг</div>
-                            </div>
-                          </td>
-                          <td>
-                            <button type="submit" class="btn btn-primary btn-block btn-sm">Показать</button>
-                          </td>
-                        </tr>
-                      </thead>
-                    </table>
+                    <thead>
+                      <tr>
+                        <td>
+                          <select class="form-control input-sm" name="city_id">
+                            @foreach($cities as $city)
+                              @if ($city->id === Request::input('city_id'))
+                                <option value="{{ $city->id }}" selected>{{ $city->title }}</option>
+                              @else
+                                <option value="{{ $city->id }}">{{ $city->title }}</option>
+                              @endif
+                            @endforeach
+                          </select>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control input-sm" name="text" placeholder="Поиск по тексту" value="{{ (Request::input('text')) ? Request::input('text') : NULL }}">
+                        </td>
+                        <td>
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" name="image" @if (Request::input('image')) checked @endif> только с фото
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="text" class="form-control input-sm" name="from" placeholder="Цена от" value="{{ (Request::input('from')) ? Request::input('from') : NULL }}">
+                        </td>
+                        <td>
+                          <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" name="to" placeholder="до" value="{{ (Request::input('to')) ? Request::input('to') : NULL }}">
+                            <div class="input-group-addon">тг</div>
+                          </div>
+                        </td>
+                        <td>
+                          <button type="submit" class="btn btn-primary btn-block btn-sm">Показать</button>
+                        </td>
+                      </tr>
+                    </thead>
+                  </table>
                 </form>
               </div>
               <br>
@@ -83,7 +83,7 @@
                 </section><hr>
               @empty
                 <h4>В этой рубрике пока нет объявлений.</h4>
-                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Добавить объявление</a>
+                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a>
               @endforelse
 
               {!! $posts->render() !!}
