@@ -113,15 +113,11 @@ class BoardController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
-
         return view('board.found_posts', compact('text', 'posts', 'profiles'));
     }
 
     public function filterPosts(Request $request)
     {
-        // echo $request->tag[1];
-        // dd($request->all());
-
         $query  = ($request->city_id)
             ? 'city_id = ' . (int) $request->city_id . ' AND '
             : NULL;
@@ -184,6 +180,7 @@ class BoardController extends Controller
         }
 
         $selected_tags = [];
+
         if( isset($request->tag_id) ) {
 
             $selected_tags = $request->tag_id;
