@@ -61,16 +61,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         $city = [NULL];
 
-        if( auth()->check() ) {
+        if (auth()->check()) {
             $user = auth()->user();
-            $city = $user->profile->city()->get();
-
-        } else {
+            // $city = $user->profile->city()->get();
+        }
+        else {
             $user_location = GeoIP::getLocation();
             $city = City::where('slug', $user_location['city'])->get();
         }
 
-        if( empty($city[0]) ) {
+        if (empty($city[0])) {
             $city[0] = City::first();
         }
 
