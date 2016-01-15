@@ -25,7 +25,7 @@
         <div class="row">
           <div class="col-md-2 col-sm-3 col-xs-4">
             <a href="{{ route('index') }}" class="logo">
-              Vizov <!-- <img src="/img/vizov-logo2.png" class="logo"> -->
+              <img src="/img/vizov.png" class="img-responsive">
             </a>
           </div>
           <div class="col-md-8 col-sm-6 col-xs-8">
@@ -93,11 +93,10 @@
 
     <div class="container">
       @yield('content')
-    </div>
+    </div><hr>
 
-    <hr>
-    <footer class="footer"><br>
-      <div class="container">
+    <footer class="footer container"><br>
+      <div class="row">
         <div class="col-md-8">
           <ul class="list-unstyled list-inline">
             @foreach ($pages as $page)
@@ -106,17 +105,9 @@
           </ul>
         </div>
         <div class="col-md-4 text-right">
-          <!-- <ul class="list-inline">
-            <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-vk fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-google-plus fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-instagram fa-2x"></i></a></li>
-          </ul> -->
+          <p class="text-right">© 2015 — 2016 «VIZOV»</p>
         </div>
-        <p class="text-center">© 2015 — 2016 «VIZOV»</p>
-      </div>
-      <br>
+      </div><br>
     </footer>
 
     <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
