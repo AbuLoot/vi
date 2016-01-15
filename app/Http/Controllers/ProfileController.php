@@ -160,4 +160,9 @@ class ProfileController extends Controller
     {
         Auth::user();
     }
+
+    public function addFavorite(Request $request)
+    {
+        
+    }
 }

@@ -100,6 +100,7 @@
                   <div class="media-body">
                     <div class="row post-title-fix">
                       <h4 class="col-md-8 col-sm-8 media-heading">
+                        <a href class="favorite" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
                         <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                       </h4>
                       <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>
@@ -128,5 +129,6 @@
 
 @section('scripts')
   <script src="/js/multiple-select.js"></script>
-  <script src="/js/multi_tag_select.js"></script>
+  <script src="/js/multi-tag-select.js"></script>
+  <script src="/js/favorite.js"></script>
 @endsection
