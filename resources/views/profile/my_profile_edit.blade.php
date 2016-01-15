@@ -122,12 +122,6 @@
               <h4 class="modal-title">Кликните по карте, чтобы указать адрес</h4>
             </div>
             <div class="modal-body">
-              <style>
-                #map {
-                    width: 100%;
-                    height: 500px;
-                }
-              </style>
               <div id="map"></div>
             </div>
             <div class="modal-footer">

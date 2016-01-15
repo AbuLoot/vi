@@ -193,12 +193,6 @@
             <h4 class="modal-title">Кликните по карте, чтобы указать адрес</h4>
           </div>
           <div class="modal-body">
-            <style>
-              #map {
-                  width: 100%;
-                  height: 500px;
-              }
-            </style>
             <div id="map"></div>
           </div>
           <div class="modal-footer">
@@ -221,7 +215,7 @@
   <script src="/bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
   <script src="/bower_components/bootstrap/dist/js/custom.js"></script>
   <script src="/js/multiple-select.js"></script>
-  <script src="/js/multi_tag_select.js"></script>
+  <script src="/js/multi-tag-select.js"></script>
   <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-  <script src="/js/show_on_map.js"></script>
+  <script src="/js/show-on-map.js"></script>
 @endsection
