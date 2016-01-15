@@ -160,9 +160,12 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="address" class="col-md-3 col-sm-3">Адрес</label>
+                <label for="address" class="col-md-3 col-sm-3">Адрес </label>
                 <div class="col-md-9 col-sm-9">
                   <input type="text" class="form-control" id="address" name="address" maxlength="80" value="{{ (old('address')) ? old('address') : $user->profile->address }}">
+                </div>
+                <div class="col-md-12">
+                  <a id="show_map_modal" data-toggle="modal" href="#show_map" class="pull-right">Показать на карте</a>
                 </div>
               </div>
               <div class="form-group">
@@ -214,6 +217,24 @@
         </div>
       </div>
     </div>
+
+    <div id="show_map" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Кликните по карте, чтобы указать адрес</h4>
+          </div>
+          <div class="modal-body">
+            <div id="map"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <button id="save_map_modal" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 @endsection
 
 @section('styles')
@@ -226,5 +247,7 @@
   <script src="/bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
   <script src="/bower_components/bootstrap/dist/js/custom.js"></script>
   <script src="/js/multiple-select.js"></script>
-  <script src="/js/multi_tag_select.js"></script>
+  <script src="/js/multi-tag-select.js"></script>
+  <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <script src="/js/show-on-map.js"></script>
 @endsection
