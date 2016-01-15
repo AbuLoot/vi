@@ -52,7 +52,7 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="address">Адрес вашей работы:</label>
+                    <label style="width:100%;" for="address">Адрес вашей работы: <a id="show_map_modal" data-toggle="modal" href="#show_map" class="pull-right">Показать на карте</a></label>
                     <input type="text" class="form-control" name="address" id="address" maxlength="200" placeholder="Адрес" value="{{ $profile->address }}">
                   </div>
                   <div class="form-group">
@@ -114,6 +114,30 @@
           </div>
         </div>
       </div>
+
+      <div id="show_map" class="modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Кликните по карте, чтобы указать адрес</h4>
+            </div>
+            <div class="modal-body">
+              <style>
+                #map {
+                    width: 100%;
+                    height: 500px;
+                }
+              </style>
+              <div id="map"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+              <button id="save_map_modal" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 @endsection
 
 @section('styles')
@@ -122,4 +146,7 @@
 
 @section('scripts')
   <script src="/bower_components/jasny-bootstrap/js/fileinput.js"></script>
+  <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <script src="/js/show_on_map.js"></script>
+
 @endsection
