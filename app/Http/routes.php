@@ -1,7 +1,5 @@
 <?php
 
-// Route::get('create/roles', 'AdminController@createRoles');
-// Route::post('post/admin', 'AdminController@postAdmin');
 
 // Pages
 Route::get('p/{page}', ['uses' => 'PagesController@page']);
@@ -11,10 +9,6 @@ Route::get('/', ['as' => 'index', 'uses' => 'BoardController@getServices']);
 Route::get('uslugi', ['as' => 'services', 'uses' => 'BoardController@getServices']);
 Route::get('uslugi/{category}', ['as' => 'show-services', 'uses' => 'BoardController@showServices']);
 Route::get('1/{post}/{id}', ['as' => 'show-post-service', 'uses' => 'BoardController@showPostService']);
-
-// Route::get('tovary', ['as' => 'products', 'uses' => 'BoardController@getProducts']);
-// Route::get('tovary/{category}', ['as' => 'show-products', 'uses' => 'BoardController@showProducts']);
-// Route::get('2/{post}/{id}', ['as' => 'show-post-product', 'uses' => 'BoardController@showPostProduct']);
 
 // Search tools
 Route::get('search/posts', ['uses' => 'BoardController@searchPosts']);
@@ -28,23 +22,24 @@ Route::get('profiles', ['uses' => 'ProfileController@getProfiles']);
 Route::post('review', ['uses' => 'CommentController@saveReview']);
 Route::post('comment', ['uses' => 'CommentController@saveComment']);
 
+// For Authenticated User
 Route::group(['middleware' => 'auth'], function() {
+
 	Route::resource('posts', 'PostsController');
-	Route::resource('projects', 'ProjectsController');
 
 	Route::get('my_profile', ['uses' => 'ProfileController@getMyProfile']);
 	Route::get('my_profile/edit', ['uses' => 'ProfileController@editMyProfile']);
 	Route::post('my_profile/{id}', ['uses' => 'ProfileController@updateMyProfile']);
 
 	Route::get('my_posts', ['uses' => 'ProfileController@getMyPosts']);
-
 	Route::get('my_reviews', ['uses' => 'ProfileController@getMyReviews']);
-
 	Route::get('my_setting', ['uses' => 'ProfileController@getMySetting']);
+
 	Route::post('update_password', ['uses' => 'ProfileController@updatePassword']);
 	Route::post('delete_account', ['uses' => 'ProfileController@deleteAccount']);
 });
 
+// For Administrator
 Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
     Route::resource('users', 'AdminUsersController');
     Route::resource('services', 'AdminServicesController');

@@ -45,7 +45,7 @@
                           </div>
                         </td>
                       </tr>
-                      @if( isset($category_tags) )
+                      @if (isset($category_tags))
                         <tr>
                           <td colspan="2">
                             <div class="form-control input-sm">

@@ -5,7 +5,7 @@
       <div class="col-md-offset-2 col-md-8">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h3>Разместить услугу</h3><br>
+            <h3 class="text-center">Размещение услуги</h3><br>
             <form action="{{ route('posts.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="form-group">
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="tags" class="col-md-3 col-sm-3">Специализация</label>
+                <label for="tags" class="col-md-3 col-sm-3">Специализации</label>
                 <div class="col-md-9 col-sm-9">
                   <div class="form-control">
                     <select class="" name="tags_id[]" id="tags" style="width:100%;" multiple>

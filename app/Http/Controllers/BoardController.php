@@ -16,7 +16,6 @@ use App\User;
 
 class BoardController extends Controller
 {
-
     public function __construct() 
     {
         User::detectUserLocation();
@@ -40,7 +39,7 @@ class BoardController extends Controller
 
         $category_tags = $category->tags()->get();
 
-        return view('board.found_posts', compact('category', 'category_tags', 'profiles', 'posts'));
+        return view('board.posts', compact('category', 'category_tags', 'profiles', 'posts'));
     }
 
     public function showPostService($post, $id)
