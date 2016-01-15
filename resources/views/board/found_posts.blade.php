@@ -128,5 +128,5 @@
 
 @section('scripts')
   <script src="/js/multiple-select.js"></script>
-  <script src="/js/multi_tag_select.js"></script>
+  <script src="/js/multi-tag-select.js"></script>
 @endsection
