@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var isShowed = false;
-    var city_name = $("#city option:selected").html() + ", " + $("#address").val();
+    var city_name = $("#city option:selected").html();
+    var address = $("#address").val();
     $('#show_map_modal').click(function () {
         if( !isShowed) {
             ymaps.ready(init);
@@ -18,7 +19,7 @@ $(document).ready(function() {
 
         var default_coodrs = [0,0];
 
-        ymaps.geocode(city_name, {
+        ymaps.geocode(city_name + ", " + address, {
                 results: 1
             }).then(function (res) {
                     // Выбираем первый результат геокодирования.
@@ -41,8 +42,8 @@ $(document).ready(function() {
                      */
                         
                      var myPlacemark = new ymaps.Placemark(coords, {
-                     iconContent: city_name,
-                     balloonContent: city_name
+                     iconContent: address,
+                     balloonContent: city_name + ", " + address
                      }, {
                      preset: 'islands#violetStretchyIcon'
                      });
@@ -110,7 +111,8 @@ $(document).ready(function() {
 
         $('#city, #address').change(function(){
             myMap.destroy();
-            city_name = $("#city option:selected").html() + ", " + $("#address").val();
+            city_name = $("#city option:selected").html();
+            address = $("#address").val();
             isShowed = false;
         });
 
