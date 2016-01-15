@@ -5,7 +5,7 @@
       <div class="col-md-offset-2 col-md-8">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h3>Редактирование объявления</h3><br>
+            <h3 class="text-center">Редактирование</h3><br>
             <form action="{{ route('posts.update', $post->id) }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
               <input type="hidden" name="_method" value="PUT">
               {!! csrf_field() !!}

@@ -3,14 +3,7 @@ body {
   background-color: #F5F8FA;
 }
 .logo {
-  color: #fff;
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-.logo:hover, .logo:active {
-  color: #fff;
-  text-decoration: none;
+  display: block;
 }
 .text-gray {
   color: #666666;
