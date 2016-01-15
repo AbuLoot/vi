@@ -4,8 +4,6 @@
 		var category = $(this);
 		var address = window.location.href + '/?cat_id=' + category.val();
 
-		console.log(address);
-
 		$.ajax({
 			url: address,
 			success: updateTagList

@@ -162,3 +162,13 @@ body {
     width: 100%;
     height: 500px;
 }
+.favorite:focus,
+.favorite {
+  color: #e6e6e6;
+}
+
+.favorite.active,
+.favorite:hover {
+  color: #ff7518 !important;
+  outline: none !important;
+}

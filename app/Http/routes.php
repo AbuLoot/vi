@@ -23,6 +23,7 @@ Route::get('filter/posts', ['uses' => 'BoardController@filterPosts']);
 // Profiles
 Route::get('profile/{id}', ['uses' => 'ProfileController@getProfile']);
 Route::get('profiles', ['uses' => 'ProfileController@getProfiles']);
+Route::get('profiles/add-favorite', ['uses' => 'ProfileController@addFavorite']);
 
 // Comment
 Route::post('review', ['uses' => 'CommentController@saveReview']);
