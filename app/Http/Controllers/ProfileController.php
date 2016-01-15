@@ -160,4 +160,22 @@ class ProfileController extends Controller
     {
         Auth::user();
     }
+
+    public function addFavorite(Request $request)
+    {
+        $post_id =  $request->input('post_id');
+        $user = auth()->user();
+        if ($user->profile()) {
+            $user->profile()->first()->addFavorite(intval($post_id));
+        }
+    }
+
+    public function deleteFavorite(Request $request)
+    {
+        $post_id =  $request->input('post_id');
+        $user = auth()->user();
+        if ($user->profile()) {
+            $user->profile()->first()->deleteFavorite(intval($post_id));
+        }
+    }
 }

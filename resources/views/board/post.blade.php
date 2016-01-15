@@ -32,7 +32,10 @@
                   </ol>
                 </div>
               </div>
-              <h3>{{ $post->title }}</h3>
+              <h3>
+                  <a href class="favorite" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
+                {{ $post->title }}
+              </h3>
               <div class="row">
                 @if ($images)
                   <div class="col-md-7 col-sm-12 gallery">
@@ -177,4 +180,8 @@
           @include('partials/rating')
         </aside>
       </div>
+@endsection
+
+@section('scripts')
+  <script src="/js/favorite.js"></script>
 @endsection
