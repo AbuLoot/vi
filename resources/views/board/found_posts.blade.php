@@ -100,11 +100,7 @@
                   <div class="media-body">
                     <div class="row post-title-fix">
                       <h4 class="col-md-8 col-sm-8 media-heading">
-                        <?php 
-                          $active_if_favorite = '';
-                          if (isset($favorites) && ( array_search($post->id, $favorites) !==false )) $active_if_favorite = 'active'
-                        ?>
-                        <a href class="favorite {{$active_if_favorite}}" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
+                        @include('partials.favorites')
                         <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                       </h4>
                       <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>

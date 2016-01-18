@@ -160,8 +160,12 @@ body {
   color: #e6e6e6;
 }
 
-.favorite.active,
-.favorite:hover {
+.favorite.active {
   color: #ff7518 !important;
   outline: none !important;
+}
+
+.media,
+.media-body {
+  overflow: visible;
 }

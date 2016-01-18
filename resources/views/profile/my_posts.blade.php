@@ -25,11 +25,7 @@
                       <div class="row">
                         <div class="col-md-8">
                           <h4 class="media-heading post-title-fix">
-                            <?php 
-                              $active_if_favorite = '';
-                              if (isset($favorites) && ( array_search($post->id, $favorites) !==false )) $active_if_favorite = 'active'
-                            ?>
-                            <a href class="favorite {{$active_if_favorite}}" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
+                            @include('partials.favorites')
                             <a href="{{ route('show-post-service', ['post' => $post->slug, 'id' => $post->id]) }}">{{ $post->title }}</a>
                           </h4>
                           <p class="text-gray">

@@ -1,17 +1,33 @@
 $(document).ready(function () {
-	$('.favorite').click(function () {
+
+	$('.favorite').click(handleFavorite);
+
+	$('[data-toggle="tooltip"]').tooltip();
+
+	function handleFavorite() {
 		var star = $(this);
+		var starCont = star.closest('span');
 
 		if(star.hasClass('active')) {
-			star.removeClass('active');
 			deleteFavorite(star);
+			var newStar = $('<a href="" class="favorite " data-toggle="tooltip" data-placement="top" title="" data-original-title="В избранные"><span class="glyphicon glyphicon-star"></span></a>');
+			newStar.data('id', star.data('id'));
+			star.remove();
 		} else {
-			star.addClass('active');
 			addFavorite(star);
+			var newStar = $('<a href="" class="favorite active" data-toggle="tooltip" data-placement="top" title="" data-original-title="Удалить из избранных"><span class="glyphicon glyphicon-star"></span></a>');
+			newStar.data('id', star.data('id'));
+			star.remove();
 		}
 
+		console.log(newStar.data());
+		starCont.append(newStar);
+		newStar.click(handleFavorite);
+		$('.tooltip').remove();
+		newStar.tooltip();
+
 		return false;
-	});
+	}
 
 	function addFavorite(star) {
 		var post_id = star.data('id');
