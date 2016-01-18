@@ -171,6 +171,7 @@ body {
 }
 
 .show-favorite:hover,
+.show-favorite:active,
 .show-favorite {
   font-size: 25px;
   text-decoration: none;
