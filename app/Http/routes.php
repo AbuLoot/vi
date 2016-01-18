@@ -17,7 +17,11 @@ Route::get('filter/posts', ['uses' => 'BoardController@filterPosts']);
 // Profiles
 Route::get('profile/{id}', ['uses' => 'ProfileController@getProfile']);
 Route::get('profiles', ['uses' => 'ProfileController@getProfiles']);
+
+// Favorites
 Route::get('profiles/add-favorite', ['uses' => 'ProfileController@addFavorite']);
+Route::get('profiles/delete-favorite', ['uses' => 'ProfileController@deleteFavorite']);
+Route::get('favorites', ['as' => 'get-favorites', 'uses' => 'ProfileController@showMyFavorites']);
 
 // Comment
 Route::post('review', ['uses' => 'CommentController@saveReview']);
