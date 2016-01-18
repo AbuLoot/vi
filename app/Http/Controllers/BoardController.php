@@ -203,6 +203,6 @@ class BoardController extends Controller
         $category = Category::findOrFail($request->category_id);
         $category_tags = $category->tags()->get();
 
-        return view('board.found_posts', compact('category', 'category_tags', 'selected_tags', 'section', 'sections', 'profiles', 'posts'));
+        return view('board.posts', compact('category', 'category_tags', 'selected_tags', 'section', 'sections', 'profiles', 'posts'));
     }
 }

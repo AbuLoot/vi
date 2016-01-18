@@ -38,7 +38,7 @@ $(document).ready(function () {
 		$.ajax({
 			url: address,
 			success: function() {
-				console.log('favorite added!');
+				console.log('favorite deleted!');
 			}
 		});
 	}

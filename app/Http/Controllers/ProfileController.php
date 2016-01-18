@@ -163,19 +163,42 @@ class ProfileController extends Controller
 
     public function addFavorite(Request $request)
     {
-        $post_id =  $request->input('post_id');
+        $post_id = intval($request->input('post_id'));
+        if (!$post_id) return;
+
         $user = auth()->user();
-        if ($user->profile()) {
-            $user->profile()->first()->addFavorite(intval($post_id));
+        if ($user && $user->profile()) {
+            $user->profile()->first()->addFavorite($post_id);
+        } else {
+            $profile = new Profile();
+
+            return $profile->addFavoriteToCookie($request);
+        }
+    }
+
+    public function getFavorites(Request $request) {
+        $user = auth()->user();
+        if ($user && $user->profile()) {
+            return $user->profile()->first()->getFavorites();
+        } else {
+            $profile = new Profile();
+
+            return $profile->getFavoritesFromCookie($request);
         }
     }
 
     public function deleteFavorite(Request $request)
     {
-        $post_id =  $request->input('post_id');
+        $post_id = $request->input('post_id');
+        if (!$post_id) return;
+
         $user = auth()->user();
-        if ($user->profile()) {
-            $user->profile()->first()->deleteFavorite(intval($post_id));
+        if ($user && $user->profile()) {
+            $user->profile()->first()->deleteFavorite($post_id);
+        } else {
+            $profile = new Profile();
+
+            return $profile->deleteFavoriteFromCookie($request);
         }
     }
 }
