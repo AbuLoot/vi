@@ -108,13 +108,17 @@ class ProfileController extends Controller
         return redirect('/my_profile')->with('status', 'Профиль обновлен!');
     }
 
-    public function getMyPosts()
+    public function getMyPosts(Request $request)
     {
         $posts = Post::where('user_id', Auth::id())
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('profile.my_posts', compact('posts'));
+
+        $favorites = $this->getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('profile.my_posts', compact('posts', 'favorites'));
     }
 
     public function getMyReviews()
@@ -176,7 +180,7 @@ class ProfileController extends Controller
         }
     }
 
-    public function getFavorites(Request $request) {
+    public static function getFavorites(Request $request) {
         $user = auth()->user();
         if ($user && $user->profile()) {
             return $user->profile()->first()->getFavorites();

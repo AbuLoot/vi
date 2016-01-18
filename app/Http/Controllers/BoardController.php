@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProfileController;
 
 use App\Service;
 use App\Section;
@@ -31,18 +32,20 @@ class BoardController extends Controller
     	return view('board.section', compact('service', 'section'));
     }
 
-    public function showServices($category)
+    public function showServices($category, Request $request)
     {
         $category = Category::where('slug', $category)->first();
         $profiles = Profile::where('category_id', $category->id)->take(5)->get();
         $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
         $category_tags = $category->tags()->get();
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
 
-        return view('board.posts', compact('category', 'category_tags', 'profiles', 'posts'));
+        return view('board.posts', compact('category', 'category_tags', 'profiles', 'posts', 'favorites'));
     }
 
-    public function showPostService($post, $id)
+    public function showPostService($post, $id, Request $request)
     {
         $post = Post::findOrFail($id);
         $post->views = ++$post->views;
@@ -57,7 +60,11 @@ class BoardController extends Controller
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);
 
-        return view('board.post', compact('post', 'profiles', 'prev', 'next', 'images', 'contacts', 'first_number', 'second_number'));
+
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('board.post', compact('post', 'profiles', 'prev', 'next', 'images', 'contacts', 'first_number', 'second_number', 'favorites'));
     }
 
     // Section Projects
@@ -112,7 +119,11 @@ class BoardController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
-        return view('board.found_posts', compact('text', 'posts', 'profiles'));
+
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('board.found_posts', compact('text', 'posts', 'profiles', 'favorites'));
     }
 
     public function filterPosts(Request $request)
@@ -203,6 +214,9 @@ class BoardController extends Controller
         $category = Category::findOrFail($request->category_id);
         $category_tags = $category->tags()->get();
 
-        return view('board.posts', compact('category', 'category_tags', 'selected_tags', 'section', 'sections', 'profiles', 'posts'));
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('board.posts', compact('category', 'category_tags', 'selected_tags', 'section', 'sections', 'profiles', 'posts', 'favorites'));
     }
 }

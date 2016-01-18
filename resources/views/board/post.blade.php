@@ -33,7 +33,11 @@
                 </div>
               </div>
               <h3>
-                  <a href class="favorite" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
+                <?php 
+                  $active_if_favorite = '';
+                  if (isset($favorites) && ( array_search($post->id, $favorites) !==false )) $active_if_favorite = 'active'
+                ?>
+                <a href class="favorite {{$active_if_favorite}}" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
                 {{ $post->title }}
               </h3>
               <div class="row">
