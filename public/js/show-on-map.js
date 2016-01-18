@@ -2,11 +2,16 @@ $(document).ready(function() {
     var isShowed = false;
     var city_name = $("#city option:selected").html();
     var address = $("#address").val();
-    $('#show_map_modal').click(function () {
-        if( !isShowed) {
-            ymaps.ready(init);
-            isShowed = true;
-        }
+    var coords = [0,0];
+
+    ymaps.ready(function () {
+        ymaps.geocode(city_name + ", " + address, {
+            results: 1
+        }).then(function (res) {
+            var firstGeoObject = res.geoObjects.get(0),
+            coords = firstGeoObject.geometry.getCoordinates();
+            init(coords);
+        });
     });
 
     $('#city').change(function(){
@@ -15,9 +20,8 @@ $(document).ready(function() {
     });
 
 
-    function init() {
+    function init(coords) {
 
-        var default_coodrs = [0,0];
 
         ymaps.geocode(city_name + ", " + address, {
                 results: 1
@@ -31,11 +35,9 @@ $(document).ready(function() {
 
                     // Добавляем первый найденный геообъект на карту.
                     myMap.geoObjects.add(firstGeoObject);
-                    // Масштабируем карту на область видимости геообъекта.
-                    myMap.setBounds(bounds, {
-                        // Проверяем наличие тайлов на данном масштабе.
-                        checkZoomRange: true
-                    });
+                    myMap.setZoom(13);
+
+
 
                     /**
                      * Если нужно добавить по найденным геокодером координатам метку со своими стилями и контентом балуна, создаем новую метку по координатам найденной и добавляем ее на карту вместо найденной.
@@ -55,8 +57,8 @@ $(document).ready(function() {
 
         var myPlacemark,
             myMap = new ymaps.Map('map', {
-                center: default_coodrs,
-                zoom: 9
+                center: coords,
+                zoom: 13
             }, {
                 searchControlProvider: 'yandex#search'
             });
