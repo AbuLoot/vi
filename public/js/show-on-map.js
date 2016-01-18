@@ -7,7 +7,7 @@ $(document).ready(function() {
             ymaps.ready(init);
             isShowed = true;
         }
-    })
+    });
 
     $('#city').change(function(){
         city_name = $("#city option:selected").html();
