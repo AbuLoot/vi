@@ -169,3 +169,16 @@ body {
 .media-body {
   overflow: visible;
 }
+
+.show-favorite:hover,
+.show-favorite {
+  font-size: 25px;
+  text-decoration: none;
+  color: #3fb618 !important;
+  margin-right: 10px;
+}
+.show-favorite sup {
+  left: -14px;
+  font-size: 55%;
+  top: -1.3em;
+}

@@ -114,7 +114,7 @@
                 </section><hr>
               @empty
                 <h4>В этой рубрике пока нет объявлений.</h4>
-                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a>
+                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
               @endforelse
 
               {!! $posts->render() !!}

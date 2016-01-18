@@ -20,11 +20,10 @@ $(document).ready(function () {
 			star.remove();
 		}
 
-		console.log(newStar.data());
 		starCont.append(newStar);
 		newStar.click(handleFavorite);
 		$('.tooltip').remove();
-		newStar.tooltip();
+		newStar.tooltip('show');
 
 		return false;
 	}

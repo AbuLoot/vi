@@ -50,11 +50,12 @@
                   <i class="glyphicon glyphicon-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="/my_profile">Мой профиль</a></li>
-                  <li><a href="/my_posts">Мои объявления</a></li>
-                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a></li>
+                  <li><a href="/my_profile"><i class="glyphicon glyphicon-user"></i> Мой профиль</a></li>
+                  <li><a href="/my_posts"><i class="glyphicon glyphicon-list-alt"></i> Мои объявления</a></li>
+                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a></li>
+                  <li><a href="{{ route('get-favorites') }}"><i class="glyphicon glyphicon-star"></i> Избарнные</a></li>
                   <li class="divider"></li>
-                  <li><a href="/auth/logout">Выход</a></li>
+                  <li><a href="/auth/logout"><i class="glyphicon glyphicon-lock"></i> Выход</a></li>
                 </ul>
               @elseif (Auth::user()->is('admin'))
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,11 +82,19 @@
     <nav class="navbar-services">
       <div class="container">
         <div class="row">
-          <div class="col-md-offset-2 col-md-8 col-sm-8">
+          <div class="col-md-offset-2 col-md-6 col-sm-6">
             <a class="btn btn-link btn-sm text-uppercase" href="{{ route('services') }}"><b>Все Услуги</b></a>
           </div>
-          <div class="col-md-2 col-sm-4">
-            <a class="btn btn-success btn-sm pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a>
+          <div class="col-md-4 col-sm-6">
+            <a class="btn btn-success btn-sm pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
+
+            <a class="show-favorite pull-right" href="{{ route('get-favorites') }}"><i class="glyphicon glyphicon-star-empty"></i>
+              <sup>
+                @if(isset($favorites) && count($favorites))
+                  {{ count($favorites) }}
+                @endif
+              </sup>
+            </a>
           </div>
         </div>
       </div>

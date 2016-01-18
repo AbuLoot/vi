@@ -165,6 +165,20 @@ class ProfileController extends Controller
         Auth::user();
     }
 
+    public function showMyFavorites(Request $request) {
+
+        $favorites = $this->getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+        $profiles = Profile::take(5)->get();
+
+        $posts = Post::whereIn('id', array_values($favorites))
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        return view('profile.my_favorites', compact('posts', 'favorites', 'profiles'));
+
+    }
+
     public function addFavorite(Request $request)
     {
         $post_id = intval($request->input('post_id'));
