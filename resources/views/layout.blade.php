@@ -53,6 +53,7 @@
                   <li><a href="/my_profile"><i class="glyphicon glyphicon-user"></i> Мой профиль</a></li>
                   <li><a href="/my_posts"><i class="glyphicon glyphicon-list-alt"></i> Мои объявления</a></li>
                   <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a></li>
+                  <li><a href="{{ route('get-favorites') }}"><i class="glyphicon glyphicon-star"></i> Избарнные</a></li>
                   <li class="divider"></li>
                   <li><a href="/auth/logout"><i class="glyphicon glyphicon-lock"></i> Выход</a></li>
                 </ul>
