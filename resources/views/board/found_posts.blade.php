@@ -100,7 +100,7 @@
                   <div class="media-body">
                     <div class="row post-title-fix">
                       <h4 class="col-md-8 col-sm-8 media-heading">
-                        <a href class="favorite" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
+                        @include('partials.favorites')
                         <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                       </h4>
                       <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>
@@ -110,7 +110,7 @@
                 </section><hr>
               @empty
                 <h4>В этой рубрике пока нет объявлений.</h4>
-                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-menu-right"></i> Разместить Услугу</a>
+                <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
               @endforelse
 
               {!! $posts->render() !!}

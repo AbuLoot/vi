@@ -108,13 +108,17 @@ class ProfileController extends Controller
         return redirect('/my_profile')->with('status', 'Профиль обновлен!');
     }
 
-    public function getMyPosts()
+    public function getMyPosts(Request $request)
     {
         $posts = Post::where('user_id', Auth::id())
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('profile.my_posts', compact('posts'));
+
+        $favorites = $this->getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('profile.my_posts', compact('posts', 'favorites'));
     }
 
     public function getMyReviews()
@@ -161,21 +165,58 @@ class ProfileController extends Controller
         Auth::user();
     }
 
+    public function showMyFavorites(Request $request) {
+
+        $favorites = $this->getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+        $profiles = Profile::take(5)->get();
+
+        $posts = Post::whereIn('id', array_values($favorites))
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        return view('profile.my_favorites', compact('posts', 'favorites', 'profiles'));
+
+    }
+
     public function addFavorite(Request $request)
     {
-        $post_id =  $request->input('post_id');
+        $post_id = intval($request->input('post_id'));
+        if (!$post_id) return;
+
         $user = auth()->user();
-        if ($user->profile()) {
-            $user->profile()->first()->addFavorite(intval($post_id));
+        if ($user && $user->profile()) {
+            $user->profile()->first()->addFavorite($post_id);
+        } else {
+            $profile = new Profile();
+
+            return $profile->addFavoriteToCookie($request);
+        }
+    }
+
+    public static function getFavorites(Request $request) {
+        $user = auth()->user();
+        if ($user && $user->profile()) {
+            return $user->profile()->first()->getFavorites();
+        } else {
+            $profile = new Profile();
+
+            return $profile->getFavoritesFromCookie($request);
         }
     }
 
     public function deleteFavorite(Request $request)
     {
-        $post_id =  $request->input('post_id');
+        $post_id = $request->input('post_id');
+        if (!$post_id) return;
+
         $user = auth()->user();
-        if ($user->profile()) {
-            $user->profile()->first()->deleteFavorite(intval($post_id));
+        if ($user && $user->profile()) {
+            $user->profile()->first()->deleteFavorite($post_id);
+        } else {
+            $profile = new Profile();
+
+            return $profile->deleteFavoriteFromCookie($request);
         }
     }
 }

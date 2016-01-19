@@ -25,6 +25,7 @@
                       <div class="row">
                         <div class="col-md-8">
                           <h4 class="media-heading post-title-fix">
+                            @include('partials.favorites')
                             <a href="{{ route('show-post-service', ['post' => $post->slug, 'id' => $post->id]) }}">{{ $post->title }}</a>
                           </h4>
                           <p class="text-gray">
@@ -57,3 +58,8 @@
         </div>
       </div>
 @endsection
+
+@section('scripts')
+  <script src="/js/favorite.js"></script>
+@endsection
+

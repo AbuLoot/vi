@@ -33,7 +33,7 @@
                 </div>
               </div>
               <h3>
-                  <a href class="favorite" data-id="{{ $post->id }}"><span class="glyphicon glyphicon-star"></span></a>
+                @include('partials.favorites')
                 {{ $post->title }}
               </h3>
               <div class="row">
