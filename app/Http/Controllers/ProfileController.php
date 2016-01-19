@@ -16,18 +16,9 @@ use Image;
 use Storage;
 use App\Post;
 use Validator;
-use App\Http\Controllers\ProfileController;
-
 
 class ProfileController extends Controller
 {
-
-    public function __construct(Request $request)
-    {
-        $favorites = ProfileController::getFavorites($request);
-        view()->share('favorites', $favorites);
-    }
-
     public function getProfile($id)
     {
         $profile = Profile::find($id);
@@ -158,8 +149,8 @@ class ProfileController extends Controller
         if (Hash::check($request->password, Auth::user()->password))
         {
             $user = User::findOrFail(Auth::id());
-            $user->password = bcrypt($request->new_password);
-            $user->save();
+            $user->password = bcrypt($request->password);
+            $user->update();
 
             return redirect()->back()->with('status', 'Пароль изменен!');
         }
