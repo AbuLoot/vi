@@ -17,10 +17,17 @@ use App\Post;
 use Image;
 use Storage;
 use App\Http\Requests\PostRequest;
+use App\Http\Controllers\ProfileController;
 
 class PostsController extends Controller
 {
     protected $file;
+
+    public function __construct(Request $request)
+    {
+        $favorites = ProfileController::getFavorites($request);
+        view()->share('favorites', $favorites);
+    }
 
     /**
      * Display a listing of the resource.

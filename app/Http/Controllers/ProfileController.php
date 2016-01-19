@@ -16,9 +16,18 @@ use Image;
 use Storage;
 use App\Post;
 use Validator;
+use App\Http\Controllers\ProfileController;
+
 
 class ProfileController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        $favorites = ProfileController::getFavorites($request);
+        view()->share('favorites', $favorites);
+    }
+
     public function getProfile($id)
     {
         $profile = Profile::find($id);

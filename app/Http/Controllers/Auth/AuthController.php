@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use App\Http\Controllers\ProfileController;
+
 
 class AuthController extends Controller
 {
@@ -28,9 +31,11 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+        $favorites = ProfileController::getFavorites($request);
+        view()->share('favorites', $favorites);
         User::detectUserLocation();
     }
 

@@ -17,8 +17,10 @@ use App\User;
 
 class BoardController extends Controller
 {
-    public function __construct() 
+    public function __construct(Request $request) 
     {
+        $favorites = ProfileController::getFavorites($request);
+        view()->share('favorites', $favorites);
         User::detectUserLocation();
     }
 
