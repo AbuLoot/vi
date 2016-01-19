@@ -149,8 +149,8 @@ class ProfileController extends Controller
         if (Hash::check($request->password, Auth::user()->password))
         {
             $user = User::findOrFail(Auth::id());
-            $user->password = bcrypt($request->password);
-            $user->update();
+            $user->password = bcrypt($request->new_password);
+            $user->save();
 
             return redirect()->back()->with('status', 'Пароль изменен!');
         }
