@@ -84,7 +84,7 @@
                   </ul>
                   <h3><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</h3><hr>
                   <p>{{ $contacts->phone }} | {{ $contacts->phone2 }}</p>
-                  <p>{{ $post->city->title }}, {{ $post->address }}</p>
+                  <p>{{ $post->city->title }}, {{ $post->address }} - <a id="show_on_map_modal" data-toggle="modal" href="#show_on_map">На карте</a></p>
                   <p>{{ $post->description }}</p>
                   <p><small>{{ $post->created_at }}</small> | <small>Просмотров: {{ $post->views }}</small></p>
                 </div>
@@ -180,8 +180,27 @@
           @include('partials/rating')
         </aside>
       </div>
+
+      <div id="show_on_map" class="modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            {{ $post->city->title }}, {{ $post->address }}
+          </div>
+          <div class="modal-body">
+            <div id="map"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 @endsection
 
 @section('scripts')
   <script src="/js/favorite.js"></script>
+  <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <script src="/js/show-on-map2.js"></script>
 @endsection
