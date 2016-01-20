@@ -86,6 +86,7 @@ class ProfileController extends Controller
         }
 
         $profile->user->name = $request->name;
+        $profile->user->company_name = $request->input('company_name');
         $profile->user->save();
 
         $profile->city_id = $request->city_id;

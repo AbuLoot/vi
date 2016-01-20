@@ -23,6 +23,12 @@
                     <label for="name">Ваше ФИО:</label>
                     <input type="text" class="form-control" name="name" id="name" minlength="3" maxlength="60" value="{{ Auth::user()->name }}" required>
                   </div>
+                  @if ($profile->face_id == 2)
+                    <div class="form-group">
+                      <label for="company_name">Название компании:</label>
+                      <input type="text" class="form-control" name="company_name" id="company_name" minlength="3" maxlength="60" value="{{ Auth::user()->company_name }}" required>
+                    </div>
+                  @endif
                   <div class="form-group">
                     <label for="phone">В какой сфере деятельности вы работаете:</label>
                     <select class="form-control" name="category_id" id="category">

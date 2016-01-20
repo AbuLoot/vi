@@ -9,10 +9,12 @@ $(document).ready(function () {
 		var starCont = star.closest('span');
 
 		if(star.hasClass('active')) {
+			updateFavoriteCount('-');
 			deleteFavorite(star);
 			var tooltipMessage = 'В избранные';
 			var tooltipClass = '';
 		} else {
+			updateFavoriteCount('+');
 			addFavorite(star);
 			var tooltipMessage = 'Удалить из избранных';
 			var tooltipClass = 'active';
@@ -28,6 +30,7 @@ $(document).ready(function () {
 		newStar.click(handleFavorite);
 		$('.tooltip').remove();
 		newStar.tooltip('show');
+
 
 		return false;
 	}
@@ -60,6 +63,31 @@ $(document).ready(function () {
 				console.log('favorite deleted!');
 			}
 		});
+	}
+
+	function updateFavoriteCount(operand) {
+		var counter = $('.show-favorite');
+		if (!counter.length) return;
+
+		counter = counter.children('sup');
+		var count = parseInt(counter.html());
+
+		if (operand === '+') {
+			if (!count) {
+				count = 1;
+			} else {
+				count += 1;
+			}
+		} else {
+			if (count <= 1) {
+				count = '';
+			} else {
+				count -= 1;
+			}
+		}
+
+		counter.html(count);
+
 	}
 
 });

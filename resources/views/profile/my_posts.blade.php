@@ -55,7 +55,3 @@
       </div>
 @endsection
 
-@section('scripts')
-  <script src="/js/favorite.js"></script>
-@endsection
-

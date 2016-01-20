@@ -18,6 +18,12 @@
                         <td style="width:180px">Ваше ФИО</td>
                         <td>{{ Auth::user()->name }}</td>
                       </tr>
+                      @if ($profile->face_id == 2)
+                        <tr>
+                          <td>Название компании</td>
+                          <td>{{ Auth::user()->company_name }}</td>
+                        </tr>
+                      @endif
                       <tr>
                         <td>Email</td>
                         <td>{{ Auth::user()->email }}</td>
