@@ -91,7 +91,7 @@
                   </div>
                   <div class="tab-pane fade" id="posts">
                     @forelse ($posts as $post)
-                      <div class="media">
+                      <section class="media">
                         <div class="media-left">
                           <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
                             @if ( ! empty($post->image))
@@ -102,18 +102,17 @@
                           </a>
                         </div>
                         <div class="media-body">
-                          <div class="row post-title-fix">
-                            <h4 class="col-md-8 media-heading">
-                              <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
-                            </h4>
-                            <h4 class="col-md-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <br><small>Торг&nbsp;возможен</small> @endif</h4>
+                          <div class="h4 media-heading">
+                            <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                            @include('partials.favorites')
                           </div>
-                          <p class="text-gray">
-                            {{ $post->city->title }} / {{ $post->category->title }}<br>
-                            <small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small>
-                          </p>
+                          <span class="text-success"><b>{{ $post->price }} тг</b></span>
+                          @if ($post->deal == 'on')<span class="text-deal"> - торг возможен</span>@endif
+                          <br>
+                          <span class="text-post"><b>{{ $post->category->section->title }}</b> > {{ $post->category->title }}</span><br>
+                          <span class="text-post"><b>{{ $post->city->title }}</b> - {{ $post->created_at }}. Просмотров {{ $post->views }}</span><br>
                         </div>
-                      </div><hr>
+                      </section><hr>
                     @empty
                       <h4>Нет объявлений.</h4>
                     @endforelse

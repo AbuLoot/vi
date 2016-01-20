@@ -31,7 +31,7 @@
                             ?>
                             @foreach($cities as $city)
                               @if ($city->id == $user_city_id)
-                                <option value="{{ $city->id }}" selected >{{ $city->title }}</option>
+                                <option value="{{ $city->id }}" selected>{{ $city->title }}</option>
                               @else
                                 <option value="{{ $city->id }}">{{ $city->title }}</option>
                               @endif
@@ -57,8 +57,8 @@
                                 @foreach( $category_tags as $tag)
                                   <?php
                                     $selected = '';
-                                    if ( isset( $selected_tags) ) {
-                                      if ( array_search($tag->id, $selected_tags) !== false) {
+                                    if (isset($selected_tags)) {
+                                      if (array_search($tag->id, $selected_tags) !== false) {
                                         $selected = 'selected';
                                       }
                                     }
@@ -68,27 +68,15 @@
                               </select>
                             </div>
                           </td>
+                          <td>
+                            <button type="submit" class="btn btn-primary btn-block btn-sm">Показать</button>
+                          </td>
                         </tr>
                       @endif
-                      <tr>
-                        <td>
-                          <input type="text" class="form-control input-sm" name="from" placeholder="Цена от" value="{{ (Request::input('from')) ? Request::input('from') : NULL }}">
-                        </td>
-                        <td>
-                          <div class="input-group input-group-sm">
-                            <input type="text" class="form-control" name="to" placeholder="до" value="{{ (Request::input('to')) ? Request::input('to') : NULL }}">
-                            <div class="input-group-addon">тг</div>
-                          </div>
-                        </td>
-                        <td>
-                          <button type="submit" class="btn btn-primary btn-block btn-sm">Показать</button>
-                        </td>
-                      </tr>
                     </thead>
                   </table>
                 </form>
               </div>
-              <br>
 
               @forelse ($posts as $post)
                 <section class="media">
@@ -102,14 +90,14 @@
                     </a>
                   </div>
                   <div class="media-body">
-                    <div class="row post-title-fix">
-                      <h4 class="col-md-8 col-sm-8 media-heading">
-                        @include('partials.favorites')
-                        <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
-                      </h4>
-                      <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>
+                    <div class="h4 media-heading">
+                      <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                      @include('partials.favorites')
                     </div>
-                    <p class="text-gray">{{ $post->city->title }} / {{ $post->category->section->title }} <br><small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="text-gray glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small></p>
+                    <span class="text-success"><b>{{ $post->price }} тг</b></span>
+                    @if ($post->deal == 'on')<span class="text-deal"> - торг возможен</span>@endif
+                    <br>
+                    <span class="text-post">{{ $post->city->title }} - {{ $post->created_at }}. Просмотров {{ $post->views }}</span><br>
                   </div>
                 </section><hr>
               @empty

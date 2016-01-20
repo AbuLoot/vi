@@ -1,9 +1,21 @@
 body {
+  font-size: 14px;
   margin-top: 55px;
   background-color: #F5F8FA;
 }
 .logo {
   display: block;
+}
+.h4 {
+  font-size: 18px;
+}
+.text-post {
+  color: #666666;
+  font-size: 12px;
+}
+.text-deal {
+  color: #666666;
+  font-size: 14px;
 }
 .text-gray {
   color: #666666;
@@ -26,6 +38,7 @@ body {
   padding-bottom: 10px;
   margin-bottom: 20px;
   border-bottom: 1px solid #d3e0e9;
+  background-color: #fff;
 }
 
 
@@ -107,17 +120,22 @@ body {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .service {
-  display: inline-block;
+  /*display: inline-block;*/
+  /*vertical-align: text-bottom;*/
 }
 .icon {
   color: #60a2eb;
   /*color: rgba(0, 0, 0, 0.54);*/
   float: left;
   margin-right: 5px;
+  vertical-align: text-bottom;
 }
 .title {
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
+  margin-top: 10px;
+  /*display: inline-block;*/
+  vertical-align: text-bottom;
 }
 .messengers > label {
   margin-bottom: 0px;
@@ -174,15 +192,9 @@ body {
 .show-favorite:hover,
 .show-favorite:active,
 .show-favorite {
-  font-size: 25px;
+  font-size: 22px;
   text-decoration: none;
-  color: #3fb618 !important;
-  margin-right: 10px;
-}
-.show-favorite sup {
-  left: -14px;
-  font-size: 55%;
-  top: -1.3em;
+  color: #ff7518 !important;
 }
 
 select[name="tags_id[]"], button.ms-choice {

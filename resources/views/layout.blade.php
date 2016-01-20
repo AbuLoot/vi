@@ -23,12 +23,12 @@
     <header class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="row">
-          <div class="col-md-2 col-sm-3 col-xs-4">
+          <div class="col-md-2 col-sm-3 col-xs-3">
             <a href="{{ route('index') }}" class="logo">
               <img src="/img/vizov.png" class="img-responsive">
             </a>
           </div>
-          <div class="col-md-8 col-sm-6 col-xs-8">
+          <div class="col-md-8 col-sm-6 col-xs-5">
             <form action="/search/posts">
               <div class="input-group">
                 <input type="text" class="form-control input-sm" name="text" minlength="2" maxlength="100" placeholder="Введите название услуги или товара" required>
@@ -40,7 +40,7 @@
               </div>
             </form>
           </div>
-          <div class="col-md-2 col-sm-3">
+          <div class="col-md-2 col-sm-3 col-xs-4">
             <div class="btn-group pull-right">
               @if (Auth::guest())
                 <a class="btn btn-primary btn-sm" href="/auth/login">Войти</a>
@@ -54,7 +54,7 @@
                   <li><a href="/my_posts"><i class="glyphicon glyphicon-list-alt"></i> Мои объявления</a></li>
                   <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a></li>
                   <li class="divider"></li>
-                  <li><a href="/auth/logout"><i class="glyphicon glyphicon-lock"></i> Выход</a></li>
+                  <li><a href="/auth/logout"><i class="glyphicon glyphicon-log-out"></i> Выход</a></li>
                 </ul>
               @elseif (Auth::user()->is('admin'))
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,19 +81,18 @@
     <nav class="navbar-services">
       <div class="container">
         <div class="row">
-          <div class="col-md-offset-2 col-md-6 col-sm-6">
+          <div class="col-md-offset-2 col-md-8 col-sm-6">
             <a class="btn btn-link btn-sm text-uppercase" href="{{ route('services') }}"><b>Все Услуги</b></a>
-          </div>
-          <div class="col-md-4 col-sm-6">
-            <a class="btn btn-success btn-sm pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
-
-            <a class="show-favorite pull-right" href="{{ route('get-favorites') }}"><i class="glyphicon glyphicon-star-empty"></i>
+            <a class="text-warning show-favorite pull-right" href="{{ route('get-favorites') }}" data-toggle="tooltip" data-placement="left" title="" data-original-title="Избранные"><i class="glyphicon glyphicon-star"></i>
               <sup>
-                @if(isset($favorites) && count($favorites))
+                @if (count($favorites) > 0)
                   {{ count($favorites) }}
                 @endif
               </sup>
             </a>
+          </div>
+          <div class="col-md-2 col-sm-6">
+            <a class="btn btn-success btn-sm pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
           </div>
         </div>
       </div>
