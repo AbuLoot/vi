@@ -235,3 +235,28 @@ button.ms-choice > div {
 .select-sm button.ms-choice > div {
   top: 4px;
 }
+
+.nav-tabs > li.big {
+  padding-right: 0;
+  padding-left: 0;
+  text-align: center;
+}
+
+.nav-tabs .big a {
+  border-color: transparent !important;
+  background-color: #e6e6e6;
+} 
+
+.nav-tabs > li.big:last-child, .nav-tabs > li.big:last-child a{
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.register-tabs {
+  margin-top: 30px;
+  border-bottom: none !important;
+}
+
+.register-pane {
+  padding-top: 30px;
+}
