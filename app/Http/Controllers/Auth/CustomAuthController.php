@@ -53,6 +53,7 @@ class CustomAuthController extends Controller
 
 		$user = User::create([
 			'name' => $request->name,
+			'company_name' => $request->input('company_name'),
 			'email' => $request->email,
 			'password' => bcrypt($request->password),
             'ip' => $request->ip(),
@@ -93,6 +94,12 @@ class CustomAuthController extends Controller
         $profile = new Profile;
         $profile->user_id = $user->id;
         $profile->city_id = $confirm->city_id;
+
+        if ($user->company_name) {
+        	$profile->face_id = 2;
+        } else {
+        	$profile->face_id = 1;
+        }
 
         $contacts = [
             'phone' => null,
