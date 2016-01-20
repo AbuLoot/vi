@@ -40,7 +40,7 @@
               <div class="form-group">
                 <label for="tags" class="col-md-3 col-sm-3">Теги</label>
                 <div class="col-md-9 col-sm-9">
-                  <div class="form-control">
+                  <div class="">
                     <select class="" name="tags_id[]" id="tags" style="width:100%;" multiple>
                       <!-- <option value="">Выберите категорию</option> -->
                       @foreach ($all_tags as $tag)
