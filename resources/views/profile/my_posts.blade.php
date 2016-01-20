@@ -11,9 +11,9 @@
               <div class="panel-body">
                 <h3>Мои объявления</h3>
                 @forelse ($posts as $post)
-                  <div class="media">
+                  <section class="media">
                     <div class="media-left">
-                      <a href="{{ route('show-post-service', ['post' => $post->slug, 'id' => $post->id]) }}">
+                      <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
                         @if ( ! empty($post->image))
                           <img class="media-object" src="/img/posts/{{ $post->user_id.'/'.$post->image }}" alt="{{ $post->title }}" style="width:200px">
                         @else
@@ -23,21 +23,18 @@
                     </div>
                     <div class="media-body">
                       <div class="row">
-                        <div class="col-md-8">
-                          <h4 class="media-heading post-title-fix">
-                            @include('partials.favorites')
-                            <a href="{{ route('show-post-service', ['post' => $post->slug, 'id' => $post->id]) }}">{{ $post->title }}</a>
-                          </h4>
-                          <p class="text-gray">
-                            {{ $post->city->title }} / {{ $post->category->title }}<br>
-                            <small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small>
-                          </p>
+                        <div class="col-md-9">
+                          <div class="h4 media-heading">
+                            <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                          </div>
+                          <span class="text-success"><b>{{ $post->price }} тг</b></span>
+                          @if ($post->deal == 'on')<span class="text-deal"> - торг возможен</span>@endif
+                          <br>
+                          <span class="text-post"><b>{{ $post->category->section->title }}</b> > {{ $post->category->title }}</span><br>
+                          <span class="text-post"><b>{{ $post->city->title }}</b> - {{ $post->created_at }}. Просмотров {{ $post->views }}</span><br>
                         </div>
-                        <div class="col-md-4">
-                          <h4 class="media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <br><small>Торг&nbsp;возможен</small> @endif</h4>
-                          <p></p>
-                          <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-block btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Редактировать</a>
-                          <p></p>
+                        <div class="col-md-3">
+                          <p><a href="{{ route('posts.edit', $post->id) }}" class="btn btn-block btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Редактировать</a></p>
                           <form method="POST" action="{{ route('posts.destroy', $post->id) }}" accept-charset="UTF-8">
                             <input name="_method" type="hidden" value="DELETE">
                             <input name="_token" type="hidden" value="{{ csrf_token() }}">
@@ -46,11 +43,10 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <hr>
+                  </section><hr>
                 @empty
-                  <h4>У вас пока нет объявлений.</h4>
-                  <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Добавить объявление</a>
+                  <h4>В этой рубрике пока нет объявлений.</h4>
+                  <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
                 @endforelse
               </div>
             </div>

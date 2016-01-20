@@ -8,5 +8,5 @@
   }
 ?>
 <span>
-	<a href class="favorite {{$active_if_favorite}}" data-id="{{ $post->id }}" data-toggle="tooltip" data-placement="top" title="{{$favorite_tooltip_text}}"><span class="glyphicon glyphicon-star"></span></a>
+  <a href="#" class="favorite {{ $active_if_favorite }}" data-id="{{ $post->id }}" data-toggle="tooltip" data-placement="top" title="{{ $favorite_tooltip_text }}"><span class="glyphicon glyphicon-star"></span></a>
 </span>

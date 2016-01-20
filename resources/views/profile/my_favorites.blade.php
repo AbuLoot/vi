@@ -5,10 +5,7 @@
         <div class="col-md-8">
           <div class="panel panel-default">
             <div class="panel-body">
-              <h3>
-                Избранные ({{ count($posts) }})
-              </h3>
-              <br>
+              <h4>Избранные ({{ count($posts) }})</h4>
 
               @forelse ($posts as $post)
                 <section class="media">
@@ -22,25 +19,22 @@
                     </a>
                   </div>
                   <div class="media-body">
-                    <div class="row post-title-fix">
-                      <h4 class="col-md-8 col-sm-8 media-heading">
-                        @include('partials.favorites')
-                        <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
-                      </h4>
-                      <h4 class="col-md-4 col-sm-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <small>Торг&nbsp;возможен</small> @endif</h4>
+                    <div class="h4 media-heading">
+                      <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                      @include('partials.favorites')
                     </div>
-                    <p class="text-gray">{{ $post->city->title }} / {{ $post->category->section->title }} <br><small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="text-gray glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small></p>
+                    <span class="text-success"><b>{{ $post->price }} тг</b></span>
+                    @if ($post->deal == 'on')<span class="text-deal"> - торг возможен</span>@endif
+                    <br>
+                    <span class="text-post"><b>{{ $post->category->section->title }}</b> > {{ $post->category->title }}</span><br>
+                    <span class="text-post"><b>{{ $post->city->title }}</b> - {{ $post->created_at }}. Просмотров {{ $post->views }}</span><br>
                   </div>
                 </section><hr>
               @empty
                 <h4>У вас пока нет объявлений в избранных</h4>
-                <p>
-                  Вы можете добавлять понравившиеся вам объявления в избранные, чтобы потом вернуться к ним для более подробного изучения в любое время.
-                  Чтобы добавить объявление в избранные, нужно нажать на значок <i class="glyphicon glyphicon-star"></i>  , который находится слева в списке объявлений, или на странице с текстом просматриваемого объявления. При этом значок сменит цвет, это значит что объявление добавлено.
-                </p>
+                <p>Вы можете добавлять понравившиеся вам объявления в избранные, чтобы потом вернуться к ним для более подробного изучения в любое время. Чтобы добавить объявление в избранные, нужно нажать на значок <i class="glyphicon glyphicon-star"></i>  , который находится справа в списке объявлений, или на странице с текстом просматриваемого объявления. При этом значок сменит цвет, это значит что объявление добавлено.</p>
                 <a href="{{ route('posts.create') }}" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
               @endforelse
-
             </div>
           </div>
         </div>

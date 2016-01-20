@@ -31,15 +31,11 @@
                     @endif
                   </ol>
                 </div>
-              </div>
-              <h3>
-                @include('partials.favorites')
-                {{ $post->title }}
-              </h3>
+              </div><br>
               <div class="row">
                 @if ($images)
                   <div class="col-md-7 col-sm-12 gallery">
-                    <div id="carousel-example-generic" class="carousel" data-ride="carousel" data-interval="false">
+                    <div id="post-images" class="carousel" data-ride="carousel" data-interval="false">
                       <div class="carousel-inner" role="listbox">
                         <?php $i = 0; ?>
                         @foreach ($images as $key => $image)
@@ -60,13 +56,13 @@
                       <?php $i = 0; ?>
                       @foreach ($images as $key => $image)
                         @if ($i == 0)
-                          <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
+                          <li data-target="#post-images" data-slide-to="0" class="active">
                             <a href="#">
                               <img src="/img/posts/{{ $post->user_id.'/'.$image['mini_image'] }}" class="img-responsive">
                             </a>
                           </li> 
                         @else
-                          <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}">
+                          <li data-target="#post-images" data-slide-to="{{ $i }}">
                             <a href="#">
                               <img src="/img/posts/{{ $post->user_id.'/'.$image['mini_image'] }}" class="img-responsive">
                             </a>
@@ -78,27 +74,31 @@
                   </div>
                 @endif
                 <div class="col-md-5 col-sm-12">
+                  <h3>
+                    {{ $post->title }}
+                    @include('partials.favorites')
+                  </h3>
+                  <p class="h3"><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</p><hr>
+                  <p>{{ $contacts->phone }} | {{ $contacts->phone2 }}</p>
+                  <p>{{ $post->city->title }}, {{ $post->address }} - <a id="show_on_map_modal" data-toggle="modal" href="#show_on_map">На карте</a></p>
+                  <p>{{ $post->description }}</p>
                   <ul class="list-inline">
                     <li><a href="/profile/{{ $post->user->profile->id }}"><u><i class="glyphicon glyphicon-user"></i> {{ $post->user->name }}</u></a></li>
                     <li><i class="glyphicon glyphicon-envelope"></i> {{ $post->email }}</li>
                   </ul>
-                  <h3><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</h3><hr>
-                  <p>{{ $contacts->phone }} | {{ $contacts->phone2 }}</p>
-                  <p>{{ $post->city->title }}, {{ $post->address }} - <a id="show_on_map_modal" data-toggle="modal" href="#show_on_map">На карте</a></p>
-                  <p>{{ $post->description }}</p>
-                  <p><small>{{ $post->created_at }}</small> | <small>Просмотров: {{ $post->views }}</small></p>
+                  <p><small>{{ $post->created_at }}</small> | <small>Просмотров {{ $post->views }}</small></p>
                 </div>
               </div>
               @if( $post->tags()->first() )
                 <div class="row">
                   <div class="col-md-12">
-                    <p>
-                      Теги:
+                    <p><b>Специализации:</b></p>
+                    <ol>
                       <?php $tags = $post->tags()->get(); ?>
                       @foreach( $tags as $tag )
-                        <a href="#">{{ $tag->title }};</a>
+                        <li>{{ $tag->title }};</li>
                       @endforeach
-                    </p>
+                    </ol>
                   </div>
                 </div>
               @endif
@@ -110,9 +110,7 @@
             <div class="panel-body">
               @unless ($post->comment === 'nobody')
                 <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <i class="glyphicon glyphicon-comment"></i> Комментарии: {{ $post->comments->count() }}
-                  </div>
+                  <div class="panel-heading">Комментариев {{ $post->comments->count() }}</div>
                   <div class="panel-body">
                     @foreach ($post->comments as $comment)
                       <dl>                
@@ -138,13 +136,13 @@
                     <div class="form-group">
                       <label for="name" class="col-md-2 col-sm-2">Ваше имя</label>
                       <div class="col-md-10 col-sm-10">
-                        <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') }}" required>
+                        <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') ? old('name') : Auth::check() ? Auth::user()->name : null }}" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="email" class="col-md-2 col-sm-2">Email</label>
                       <div class="col-md-10 col-sm-10">
-                        <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('eamil') }}" required>
+                        <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('email') ? old('email') : Auth::check() ? Auth::user()->email : null }}" required>
                       </div>
                     </div>
                     <div class="form-group">
@@ -196,7 +194,6 @@
         </div>
       </div>
     </div>
-
 @endsection
 
 @section('scripts')
