@@ -52,7 +52,7 @@
                       @if (isset($category_tags))
                         <tr>
                           <td colspan="2">
-                            <div class="form-control input-sm">
+                            <div class="select-sm">
                               <select class="" name="tags_id[]" id="category_tags" style="width:100%;" multiple>
                                 @foreach( $category_tags as $tag)
                                   <?php
