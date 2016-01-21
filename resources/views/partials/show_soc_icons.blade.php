@@ -1,6 +1,6 @@
 @if (isset($contacts))
 	<p>
-		@if (isset($contacts->phone) && $contacts->phone) 
+		@if (isset($contacts->phone) AND $contacts->phone) 
 			<span>{{ $contacts->phone }}</span>
 			<span class="soc-icon-container">
 				@if ($contacts->telegram == 'on') 
@@ -16,7 +16,7 @@
 
 		@endif
 
-		@if (isset($contacts->phone2) && $contacts->phone2) 
+		@if (isset($contacts->phone2) AND $contacts->phone2) 
 			&nbsp;&nbsp;|&nbsp;&nbsp;
 			<span>{{ $contacts->phone2 }}</span>
 			<span class="soc-icon-container">
