@@ -26,7 +26,7 @@
                         <td>
                           <select class="form-control input-sm" name="city_id">
                             <?php 
-                              $user_city_id = $user_city->id ? $user_city->id : NULL; // $user_city shared to view in AppServiceProvider
+                              $user_city_id = $user_city->id ? $user_city->id : NULL; // $user_city shared to view in controller
                               $user_city_id = Request::input('city_id') ? Request::input('city_id') : $user_city_id;
                             ?>
                             @foreach($cities as $city)
