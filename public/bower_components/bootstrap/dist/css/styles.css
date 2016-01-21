@@ -111,9 +111,11 @@ body {
   width: 174px;
   height: 120px;
 }
+.category-title {
+  color: #4A4A4A;
+}
 .categories {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 15px;
   margin-bottom: 30px;
   background-color: #fff;
   border: 1px solid #d3e0e9;
@@ -139,9 +141,6 @@ body {
 }
 .messengers > label {
   margin-bottom: 0px;
-}
-.category-title {
-  cursor: pointer;
 }
 
 /* Gallery */
@@ -192,8 +191,9 @@ body {
 .show-favorite:hover,
 .show-favorite:active,
 .show-favorite {
-  font-size: 22px;
+  font-size: 20px;
   text-decoration: none;
+  margin-top: 2px;
   color: #ff7518 !important;
 }
 
@@ -249,27 +249,10 @@ button.ms-choice > div {
   top: 4px;
 }
 
-.nav-tabs > li.big {
-  padding-right: 0;
-  padding-left: 0;
-  text-align: center;
-}
-
-.nav-tabs .big a {
-  border-color: transparent !important;
-  background-color: #e6e6e6;
-} 
-
-.nav-tabs > li.big:last-child, .nav-tabs > li.big:last-child a{
-  margin-right: 0;
-  margin-left: 0;
-}
-
-.register-tabs {
-  margin-top: 30px;
-  border-bottom: none !important;
-}
-
-.register-pane {
-  padding-top: 30px;
+/* Footer */
+.footer {
+  color: #fff;
+  background-color: #222222;
+  padding: 50px 0;
+  border-top: 1px solid #111111;
 }

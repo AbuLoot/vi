@@ -31,7 +31,7 @@
           <div class="col-md-8 col-sm-6 col-xs-5">
             <form action="/search/posts">
               <div class="input-group">
-                <input type="text" class="form-control input-sm" name="text" minlength="2" maxlength="100" placeholder="Введите название услуги или товара" required>
+                <input type="text" class="form-control input-sm" name="text" minlength="2" maxlength="100" placeholder="Введите название услуги" required>
                 <div class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="submit">
                     <i class="glyphicon glyphicon-search"></i> <span class="hidden-xs">Найти</span>
@@ -62,6 +62,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li><a href="/admin/pages">Страницы</a></li>
+                  <li><a href="/admin/cities">Города</a></li>
                   <li><a href="/admin/services">Сервисы</a></li>
                   <li><a href="/admin/section">Разделы</a></li>
                   <li><a href="/admin/categories">Категории</a></li>
@@ -83,9 +84,10 @@
         <div class="row">
           <div class="col-md-offset-2 col-md-8 col-sm-6">
             <a class="btn btn-link btn-sm text-uppercase" href="{{ route('services') }}"><b>Все Услуги</b></a>
-            <a class="text-warning show-favorite pull-right" href="{{ route('get-favorites') }}" data-toggle="tooltip" data-placement="left" title="" data-original-title="Избранные"><i class="glyphicon glyphicon-star"></i>
+            <a class="show-favorite pull-right" href="{{ route('get-favorites') }}" data-toggle="tooltip" data-placement="left" title="Избранные" data-original-title="Избранные">
+              <i class="glyphicon glyphicon-star"></i>
               <sup>
-                @if (count($favorites) > 0)
+                @if (isset($favorites) AND count($favorites) > 0)
                   {{ count($favorites) }}
                 @endif
               </sup>
@@ -98,30 +100,32 @@
       </div>
     </nav>
 
-    <div class="container">
+    <main class="container">
       @yield('content')
-    </div><hr>
+    </main>
 
-    <footer class="footer container"><br>
-      <div class="row">
-        <div class="col-md-8">
-          <ul class="list-unstyled list-inline">
-            @foreach ($pages as $page)
-              <li><a href="{{ url('p/' . $page->slug) }}">{{ $page->title }}</a></li>
-            @endforeach
-          </ul>
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <ul class="list-unstyled list-inline">
+              @foreach ($pages as $page)
+                <li><a href="{{ url('p/' . $page->slug) }}">{{ $page->title }}</a></li>
+              @endforeach
+            </ul>
+          </div>
+          <div class="col-md-4 text-right">
+            <p class="text-right">© 2015 — 2016 «VIZOV»</p>
+          </div>
         </div>
-        <div class="col-md-4 text-right">
-          <p class="text-right">© 2015 — 2016 «VIZOV»</p>
-        </div>
-      </div><br>
+      </div>
     </footer>
 
-    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
     <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
     <script src="/bower_components/bootstrap/dist/js/jquery-2.1.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>$('[data-toggle="tooltip"]').tooltip();</script>
     @yield('scripts')
   </body>
 </html>

@@ -122,7 +122,6 @@ class ProfileController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-
         $favorites = $this->getFavorites($request);
         $favorites = $favorites ? $favorites : [];
 
@@ -202,11 +201,16 @@ class ProfileController extends Controller
         }
     }
 
-    public static function getFavorites(Request $request) {
+    public static function getFavorites(Request $request)
+    {
         $user = auth()->user();
-        if ($user && $user->profile()) {
+
+        if ($user AND $user->profile() AND Auth::user()->is('user'))
+        {
             return $user->profile()->first()->getFavorites();
-        } else {
+        }
+        else
+        {
             $profile = new Profile();
 
             return $profile->getFavoritesFromCookie($request);

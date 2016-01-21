@@ -56,8 +56,22 @@
                             <td>{{ $profile->skills }}</td>
                           </tr>
                           <tr>
-                            <td>Телефон</td>
-                            <td>{{ $profile->phone }}</td>
+                            <td>Телефон 1</td>
+                            <td>
+                              {{ $contacts->phone }}
+                              @if ($contacts->telegram == 'on') Telegram, @endif
+                              @if ($contacts->whatsapp == 'on') WhatsApp, @endif
+                              @if ($contacts->viber == 'on') Viber @endif
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Телефон 2</td>
+                            <td>
+                              {{ $contacts->phone2 }}
+                              @if ($contacts->telegram2 == 'on') Telegram, @endif
+                              @if ($contacts->whatsapp2 == 'on') WhatsApp, @endif
+                              @if ($contacts->viber2 == 'on') Viber @endif
+                            </td>
                           </tr>
                           <tr>
                             <td>Веб-сайт</td>
@@ -81,7 +95,7 @@
                   </div>
                   <div class="tab-pane fade" id="posts">
                     @forelse ($posts as $post)
-                      <div class="media">
+                      <section class="media">
                         <div class="media-left">
                           <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
                             @if ( ! empty($post->image))
@@ -92,19 +106,16 @@
                           </a>
                         </div>
                         <div class="media-body">
-                          <div class="row post-title-fix">
-                            <h4 class="col-md-8 media-heading">
-                              <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
-                            </h4>
-                            <h4 class="col-md-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <br><small>Торг&nbsp;возможен</small> @endif</h4>
+                          <div class="h4 media-heading">
+                            <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
                           </div>
-                          <p class="text-gray">
-                            {{ $post->city->title }} / <b>{{ $post->category->section->title }}</b><br>
-                            <small>{{ $post->created_at }} &nbsp; <i class="fa fa-smile-o"></i> {{ $post->views }} &nbsp; <i class="fa fa-comments-o"></i> {{ $post->comments->count() }}</small>
-                          </p>
+                          <span class="text-success"><b>{{ $post->price }} тг</b></span>
+                          @if ($post->deal == 'on')<span class="text-deal"> - торг возможен</span>@endif
+                          <br>
+                          <span class="text-post"><b>{{ $post->category->section->title }}</b> > {{ $post->category->title }}</span><br>
+                          <span class="text-post"><b>{{ $post->city->title }}</b> - {{ $post->created_at }}. Просмотров {{ $post->views }}</span><br>
                         </div>
-                      </div>
-                      <br>
+                      </section><hr>
                     @empty
                       <h4>Нет объявлений.</h4>
                     @endforelse

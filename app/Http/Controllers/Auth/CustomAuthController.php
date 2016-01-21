@@ -95,9 +95,12 @@ class CustomAuthController extends Controller
         $profile->user_id = $user->id;
         $profile->city_id = $confirm->city_id;
 
-        if ($user->company_name) {
+        if ($user->company_name)
+        {
         	$profile->face_id = 2;
-        } else {
+        }
+        else
+        {
         	$profile->face_id = 1;
         }
 

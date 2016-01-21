@@ -2,8 +2,6 @@ $(document).ready(function () {
 
 	$('.favorite').click(handleFavorite);
 
-	$('[data-toggle="tooltip"]').tooltip();
-
 	function handleFavorite() {
 		var star = $(this);
 		var starCont = star.closest('span');
@@ -87,7 +85,5 @@ $(document).ready(function () {
 		}
 
 		counter.html(count);
-
 	}
-
 });

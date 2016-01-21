@@ -8,14 +8,11 @@
               <h3 class="text-center">Регистрация</h3>
               @include('partials.alerts')
 
-              <ul class="nav nav-tabs nav-pills register-tabs">
-                <li class="active big col-md-6"><a href="#individual" data-toggle="tab" aria-expanded="true">
-                  Частное лицо
-                </a></li>
-                <li class="big col-md-6"><a href="#compaign" data-toggle="tab" aria-expanded="false">
-                  Компания
-                </a></li>
-              </ul>
+              <br>
+              <ul class="nav nav-pills nav-justified">
+                <li class="active"><a href="#individual" data-toggle="tab" aria-expanded="true">Частное лицо</a></li>
+                <li><a href="#company" data-toggle="tab" aria-expanded="false">Компания</a></li>
+              </ul><br>
               <div class="tab-content">
                 <div class="tab-pane register-pane active" id="individual">
                   <form method="POST" action="/auth/register">
@@ -70,7 +67,7 @@
                     </div>
                   </form>
                 </div>
-                <div class="tab-pane register-pane" id="compaign">
+                <div class="tab-pane register-pane" id="company">
                   <form method="POST" action="/auth/register">
                     {!! csrf_field() !!}
                     <input type="hidden" name="face_id" value="2">
@@ -128,8 +125,6 @@
                   </form>
                 </div>
               </div>
-
-              
             </div>
           </div>
         </div>

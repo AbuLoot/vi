@@ -163,10 +163,10 @@ class AdminCategoriesController extends Controller
     {
         $category = Category::find($id);
 
-        if (Storage::exists('img/categories/'.$category->image))
-        {
-            Storage::delete('img/categories/'.$category->image);
-        }
+        // if (Storage::exists('img/categories/'.$category->image))
+        // {
+        //     Storage::delete('img/categories/'.$category->image);
+        // }
 
         $category->delete();
 

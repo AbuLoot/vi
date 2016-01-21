@@ -43,7 +43,7 @@
                               <td class="text-danger">Неактивен</td>
                             @endif
                             <td class="text-right">
-                              <a class="btn btn-primary btn-xs" href="{{ url(trans('services.'.$category->service_id.'.slug').'/'.$category->slug.'/'.$category->id) }}" title="Просмотр страницы" target="_blank"><span class="glyphicon glyphicon-file"></span></a>
+                              <a class="btn btn-primary btn-xs" href="{{ url($category->section->service->slug.'/'.$category->slug) }}" title="Просмотр страницы" target="_blank"><span class="glyphicon glyphicon-file"></span></a>
                               <a class="btn btn-primary btn-xs" href="{{ route('admin.categories.edit', $category->id) }}" title="Редактировать"><span class="glyphicon glyphicon-edit"></span></a>
                               <form method="POST" action="{{ route('admin.categories.destroy', $category->id) }}" accept-charset="UTF-8" class="btn-delete">
                                 <input name="_method" type="hidden" value="DELETE">

@@ -80,7 +80,7 @@
                   </h3>
                   <p class="h3"><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</p><hr>
                   <p>{{ $contacts->phone }} | {{ $contacts->phone2 }}</p>
-                  <p>{{ $post->city->title }}, {{ $post->address }} - <a id="show_on_map_modal" data-toggle="modal" href="#show_on_map">На карте</a></p>
+                  <p>{{ $post->city->title }}, {{ $post->address }} - <a id="show_on_map_modal" data-toggle="modal" href="#show_on_map"><span class="glyphicon glyphicon-map-marker"></span> Посмотреть на карте</a></p>
                   <p>{{ $post->description }}</p>
                   <ul class="list-inline">
                     <li><a href="/profile/{{ $post->user->profile->id }}"><u><i class="glyphicon glyphicon-user"></i> {{ $post->user->name }}</u></a></li>

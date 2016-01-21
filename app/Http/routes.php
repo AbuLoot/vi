@@ -41,18 +41,19 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('my_setting', ['uses' => 'ProfileController@getMySetting']);
 
 	Route::post('update_password', ['uses' => 'ProfileController@updatePassword']);
-	Route::post('delete_account', ['uses' => 'ProfileController@deleteAccount']);
+	// Route::post('delete_account', ['uses' => 'ProfileController@deleteAccount']);
 });
 
 // For Administrator
 Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
-    Route::resource('users', 'AdminUsersController');
+    Route::resource('pages', 'AdminPagesController');
+    Route::resource('cities', 'AdminCitiesController');
     Route::resource('services', 'AdminServicesController');
     Route::resource('section', 'AdminSectionController');
     Route::resource('categories', 'AdminCategoriesController');
     Route::resource('tags', 'AdminTagsController');
     Route::resource('posts', 'AdminPostsController');
-    Route::resource('pages', 'AdminPagesController');
+    Route::resource('users', 'AdminUsersController');
 });
 
 // Authentication routes...

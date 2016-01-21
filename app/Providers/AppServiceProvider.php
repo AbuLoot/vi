@@ -20,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
         $pages = Page::all();
         $cities = City::all();
 
-        view()->share('pages', $pages);
-        view()->share('cities', $cities);
+        view()->share(['pages' => $pages, 'cities' => $cities]);
     }
 
     /**
