@@ -121,8 +121,8 @@
 @endsection
 
 @section('scripts')
-  <script src="/bower_components/bootstrap/dist/js/dropdowns-enhancement.js"></script>
   <script src="/js/multiple-select.js"></script>
   <script src="/js/multi-tag-select.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/dropdowns-enhancement.js"></script>
   <script src="/js/favorite.js"></script>
 @endsection
