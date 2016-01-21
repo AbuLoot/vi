@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('title_description', $profile->user->name)
+
+@section('meta_description', $profile->user->about)
+
 @section('content')
       <div class="row">
         <div class="col-md-3">
@@ -13,11 +17,11 @@
                 <h3>{{ $profile->user->name }}</h3>
 
                 <ul class="nav nav-tabs">
-                  <li class="@if (old('id')) NULL @else active @endif"><a href="#info" data-toggle="tab"><i class="glyphicon glyphicon-info-sign"></i> Информация</a></li>
+                  <li class="@if (old('id')) NULL @else active @endif"><a href="#info" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
                   <li><a href="#posts" data-toggle="tab"><i class="glyphicon glyphicon-list"></i> Объявления</a></li>
                   <li class="@if (old('id')) active @endif"><a href="#reviews" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i> Отзывы</a></li>
-                </ul>
-                <br>
+                </ul><br>
+
                 <div id="myTabContent" class="tab-content">
                   <div class="tab-pane fade @if (old('id')) NULL @else active in @endif" id="info">
                     <div class="table-responsive">
@@ -33,7 +37,7 @@
                           </tr>
                           <tr>
                             <td>Cфера деятельности</td>
-                            <th>{{ ($profile->section_id == 0) ? 'Не указан' : $profile->section->title }}</th>
+                            <th>{{ ($profile->category_id == 0) ? 'Не указан' : $profile->category->title }}</th>
                           </tr>
                           <tr>
                             <td>Город</td>
@@ -48,8 +52,22 @@
                             <td>{{ $profile->skills }}</td>
                           </tr>
                           <tr>
-                            <td>Телефон</td>
-                            <td>{{ $profile->phone }}</td>
+                            <td>Телефон 1</td>
+                            <td>
+                              {{ $contacts->phone }}
+                              @if ($contacts->telegram == 'on') Telegram, @endif
+                              @if ($contacts->whatsapp == 'on') WhatsApp, @endif
+                              @if ($contacts->viber == 'on') Viber @endif
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Телефон 2</td>
+                            <td>
+                              {{ $contacts->phone2 }}
+                              @if ($contacts->telegram2 == 'on') Telegram, @endif
+                              @if ($contacts->whatsapp2 == 'on') WhatsApp, @endif
+                              @if ($contacts->viber2 == 'on') Viber @endif
+                            </td>
                           </tr>
                           <tr>
                             <td>Веб-сайт</td>
@@ -73,9 +91,9 @@
                   </div>
                   <div class="tab-pane fade" id="posts">
                     @forelse ($posts as $post)
-                      <div class="media">
+                      <section class="media">
                         <div class="media-left">
-                          <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
+                          <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">
                             @if ( ! empty($post->image))
                               <img class="media-object" src="/img/posts/{{ $post->user_id.'/'.$post->image }}" alt="{{ $post->title }}" style="width:200px">
                             @else
@@ -84,18 +102,17 @@
                           </a>
                         </div>
                         <div class="media-body">
-                          <div class="row post-title-fix">
-                            <h4 class="col-md-8 media-heading">
-                              <a href="{{ url($post->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
-                            </h4>
-                            <h4 class="col-md-4 media-heading text-right text-success">{{ $post->price }} тг @if ($post->deal == 'on') <br><small>Торг&nbsp;возможен</small> @endif</h4>
+                          <div class="h4 media-heading">
+                            <a href="{{ url($post->category->section->service_id.'/'.$post->slug.'/'.$post->id) }}">{{ $post->title }}</a>
+                            @include('partials.favorites')
                           </div>
-                          <p class="text-gray">
-                            {{ $post->city->title }} / <b>{{ $post->section->title }}</b><br>
-                            <small>{{ $post->created_at }} &nbsp; Просмотров: {{ $post->views }} &nbsp; <small><i class="glyphicon glyphicon-pencil"></i></small> {{ $post->comments->count() }}</small>
-                          </p>
+                          <span class="text-success"><b>{{ $post->price }} тг</b></span>
+                          @if ($post->deal == 'on')<span class="text-deal"> - торг возможен</span>@endif
+                          <br>
+                          <span class="text-post"><b>{{ $post->category->section->title }}</b> > {{ $post->category->title }}</span><br>
+                          <span class="text-post"><b>{{ $post->city->title }}</b> - {{ $post->created_at }}. Просмотров {{ $post->views }}</span><br>
                         </div>
-                      </div><hr>
+                      </section><hr>
                     @empty
                       <h4>Нет объявлений.</h4>
                     @endforelse
@@ -144,13 +161,13 @@
                           <div class="form-group">
                             <label for="name" class="col-md-2">Ваше имя</label>
                             <div class="col-md-10">
-                              <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') }}" required>
+                              <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') ? old('name') : Auth::check() ? Auth::user()->name : NULL }}" required>
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="email" class="col-md-2">Email адрес</label>
                             <div class="col-md-10">
-                              <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('email') }}" required>
+                              <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('email') ? old('email') : Auth::check() ? Auth::user()->email : NULL }}" required>
                             </div>
                           </div>
                           <div class="form-group">

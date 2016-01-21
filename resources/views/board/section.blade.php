@@ -5,21 +5,24 @@
 @section('meta_description', $service->meta_description)
 
 @section('content')
-  @foreach ($sections->chunk(4) as $chunk)
-    <div class="row section">
-      <div class="col-md-2"></div>
-      @foreach ($chunk as $section)
-        <section class="col-md-2 col-sm-3 col-xs-6">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <a href="{{ url($section->service->slug.'/'.$section->slug.'/'.$section->id) }}">
-                <img src="/img/section/{{ $section->image }}" alt="{{ $section->title }}">
-                <h5>{{ $section->title }}</h5>
-              </a>
-            </div>
-          </div>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      @foreach ($section as $item)
+        <h4 class="category-title text-center">{{ $item->title }}</h4><br>
+        <section class="categories" id="{{ $item->slug }}"><br>
+          @foreach ($item->categories->sortBy('sort_id')->chunk(3) as $chunk)
+            <div class="row">
+              @foreach ($chunk as $category)
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <a href="{{ url($category->section->service->slug.'/'.$category->slug) }}" class="service">
+                    <i class="material-icons md-24 icon">{{ $category->image }}</i> <span class="title">{{ $category->title }}</span>
+                  </a>
+                </div>
+              @endforeach
+            </div><br>
+          @endforeach
         </section>
       @endforeach
     </div>
-  @endforeach
+  </div>
 @endsection

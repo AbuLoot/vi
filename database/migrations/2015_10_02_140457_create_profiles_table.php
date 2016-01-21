@@ -20,7 +20,7 @@ class CreateProfilesTable extends Migration
             $table->integer('city_id')->unsigned();
             $table->foreign('city_id')->references('id')->on('cities');
             $table->integer('face_id');
-            $table->integer('section_id');
+            $table->integer('category_id');
             $table->string('phone');
             $table->string('skills');
             $table->string('address');

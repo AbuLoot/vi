@@ -3,20 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use DB;
 
 use Auth;
 use App\City;
 use App\Section;
+use App\Category;
 use App\Post;
 use Image;
 use Storage;
 use App\Http\Requests\PostRequest;
+use App\Http\Controllers\ProfileController;
 
 class PostsController extends Controller
 {
     protected $file;
+
+    public function __construct(Request $request)
+    {
+        $favorites = ProfileController::getFavorites($request);
+        view()->share('favorites', $favorites);
+    }
 
     /**
      * Display a listing of the resource.
@@ -33,12 +44,18 @@ class PostsController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $req)
     {
-        $user = Auth::user();
-        $section = Section::orderBy('sort_id')->get();
 
-        return view('board.create_post', compact('user', 'section'));
+        if( $req->ajax() ) {
+            return $this->getTags( $req->input('cat_id') );
+        }
+
+        $user = Auth::user();
+        $contacts = json_decode($user->profile->phone);
+        $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
+
+        return view('board.create_post', compact('user', 'contacts', 'section'));
     }
 
     /**
@@ -48,7 +65,8 @@ class PostsController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $section = Section::findOrFail($request->section_id);
+
+        $category = Category::findOrFail($request->category_id);
 
         $introImage = null;
         $images = [];
@@ -123,7 +141,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->user_id = Auth::id();
         $post->city_id = $request->city_id;
-        $post->section_id = $request->section_id;
+        $post->category_id = $request->category_id;
         $post->slug = str_slug($request->title);
         $post->title = $request->title;
         $post->price = $request->price;
@@ -132,10 +150,27 @@ class PostsController extends Controller
         $post->image = $introImage;
         $post->images = serialize($images);
         $post->address = $request->address;
-        $post->phone = $request->phone;
+
+        $contacts = [
+            'phone' => $request->phone,
+            'telegram' => $request->telegram,
+            'whatsapp' => $request->whatsapp,
+            'viber' => $request->viber,
+
+            'phone2' => $request->phone2,
+            'telegram2' => $request->telegram2,
+            'whatsapp2' => $request->whatsapp2,
+            'viber2' => $request->viber2
+        ];
+
+        $post->phone = json_encode($contacts);
         $post->email = $request->email;
         $post->comment = $request->comment;
         $post->save();
+
+        if( $tags_id = $request->input('tags_id') ) {
+            $post->attachTags( $tags_id);
+        }
 
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
     }
@@ -157,12 +192,20 @@ class PostsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id, Request $req)
     {
-        $post = Auth::user()->posts()->find($id);
-        $section = Section::orderBy('sort_id')->get();
 
-        return view('board.edit_post', compact('post', 'section'));
+        if( $req->ajax() ) {
+            return $this->getTags( $req->input('cat_id') );
+        }
+
+        $post = Auth::user()->posts()->find($id);
+        $contacts = json_decode($post->phone);
+        $section = Section::orderBy('sort_id')->where('service_id', 1)->where('status', 1)->get();
+
+        $all_tags = $this->getTags( $post->category_id );
+
+        return view('board.edit_post', compact('post', 'section', 'contacts', 'all_tags'));
     }
 
     /**
@@ -262,7 +305,7 @@ class PostsController extends Controller
         }
 
         $post->city_id = $request->city_id;
-        $post->section_id = $request->section_id;
+        $post->category_id = $request->category_id;
         $post->slug = str_slug($request->title);
         $post->title = $request->title;
         $post->price = $request->price;
@@ -271,9 +314,28 @@ class PostsController extends Controller
         if (isset($introImage)) $post->image = $introImage;
         if (isset($images)) $post->images = $images;
         $post->address = $request->address;
-        $post->phone = $request->phone;
+
+        $contacts = [
+            'phone' => $request->phone,
+            'telegram' => $request->telegram,
+            'whatsapp' => $request->whatsapp,
+            'viber' => $request->viber,
+
+            'phone2' => $request->phone2,
+            'telegram2' => $request->telegram2,
+            'whatsapp2' => $request->whatsapp2,
+            'viber2' => $request->viber2
+        ];
+
+        $post->phone = json_encode($contacts);
         $post->email = $request->email;
         $post->comment = $request->comment;
+
+        if( $tags_id = $request->input('tags_id') ) {
+            $post->detachTags();
+            $post->attachTags( $tags_id);
+        }
+
         $post->save();
 
         return redirect('my_posts')->with('status', 'Объявление добавлено!');
@@ -281,21 +343,26 @@ class PostsController extends Controller
 
     public function optimalResize($width, $height)
     {
-        if ($this->file->width() <= $this->file->height())
+        if ($this->file->width() > $width OR $this->file->height() > $height)
         {
-            $this->file->resize(null, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-        }
-        else
-        {
-            $this->file->resize($width, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
+            if ($this->file->width() <= $this->file->height())
+            {
+                $this->file->resize(null, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
+            else
+            {
+                $this->file->resize($width, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
         }
 
         if ($this->file->width() > $width OR $this->file->height() > $height)
+        {
             $this->file->crop($width, $height);
+        }
     }
 
     /**
@@ -334,5 +401,13 @@ class PostsController extends Controller
         $post->delete();
 
         return redirect('/my_posts');
+    }
+
+    public function getTags( $cat_id ) {
+        if( !$cat_id ) {
+            return [];
+        }
+
+        return Category::find($cat_id)->tags()->get();
     }
 }

@@ -18,13 +18,19 @@
                         <td style="width:180px">Ваше ФИО</td>
                         <td>{{ Auth::user()->name }}</td>
                       </tr>
+                      @if ($profile->face_id == 2)
+                        <tr>
+                          <td>Название компании</td>
+                          <td>{{ Auth::user()->company_name }}</td>
+                        </tr>
+                      @endif
                       <tr>
                         <td>Email</td>
                         <td>{{ Auth::user()->email }}</td>
                       </tr>
                       <tr>
                         <td>Cфера деятельности</td>
-                        <td>{{ ($profile->section_id == 0) ? 'Не указан' : $profile->section->title }}</td>
+                        <td>{{ ($profile->category_id == 0) ? 'Не указан' : $profile->category->title }}</td>
                       </tr>
                       <tr>
                         <td>Город</td>
@@ -39,8 +45,22 @@
                         <td>{{ $profile->skills }}</td>
                       </tr>
                       <tr>
-                        <td>Телефон</td>
-                        <td>{{ $profile->phone }}</td>
+                        <td>Телефон 1</td>
+                        <td>
+                          {{ $contacts->phone }}
+                          @if ($contacts->telegram == 'on') <i class="glyphicon glyphicon-ok"></i> Telegram @endif
+                          @if ($contacts->whatsapp == 'on') <i class="glyphicon glyphicon-ok"></i> WhatsApp @endif
+                          @if ($contacts->viber == 'on') <i class="glyphicon glyphicon-ok"></i> Viber @endif
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Телефон 2</td>
+                        <td>
+                          {{ $contacts->phone2 }}
+                          @if ($contacts->telegram2 == 'on') <i class="glyphicon glyphicon-ok"></i> Telegram @endif
+                          @if ($contacts->whatsapp2 == 'on') <i class="glyphicon glyphicon-ok"></i> WhatsApp @endif
+                          @if ($contacts->viber2 == 'on') <i class="glyphicon glyphicon-ok"></i> Viber @endif
+                        </td>
                       </tr>
                       <tr>
                         <td>Веб-сайт</td>

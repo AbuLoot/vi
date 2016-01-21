@@ -19,7 +19,7 @@ class AdminSectionController extends Controller
      */
     public function index()
     {
-        $section = Section::orderBy('service_id')->get();
+        $section = Section::orderBy('sort_id')->get();
 
         return view('admin.section.index', compact('section'));
     }
@@ -43,36 +43,19 @@ class AdminSectionController extends Controller
     {
         $section = new Section;
 
-        if ($request->hasFile('image'))
-        {
-            $image = $request->file('image')->getClientOriginalName();
-            $request->file('image')->move('img/section/', $image);
-        }
-        else
-        {
-            $image = 'no-image';
-        }
-
         $count = $section->count();
 
-        if ($request->sort_id > 0)
-            $section->sort_id = $request->sort_id;
-        else
-            $section->sort_id = ++$count;
+        if ($request->sort_id > 0) $section->sort_id = $request->sort_id;
+        else $section->sort_id = ++$count;
         $section->service_id = $request->service_id;
         $section->title = $request->title;
         $section->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
-        $section->image = $image;
-        $section->title_description = $request->title_description;
-        $section->meta_description = $request->meta_description;
-        $section->text = $request->text;
-        if ($request->status == 'on')
-            $section->status = 1;
-        else
-            $section->status = 0;
+        $section->lang = $request->lang;
+        if ($request->status == 'on') $section->status = 1;
+        else $section->status = 0;
         $section->save();
 
-        return redirect('/admin/section')->with('status', 'Рубрика добавлена!');
+        return redirect('/admin/section')->with('status', 'Раздел добавлен!');
     }
 
     /**
@@ -108,39 +91,19 @@ class AdminSectionController extends Controller
     public function update(SectionRequest $request, $id)
     {
         $section = Section::findOrFail($id);
-
-        if ($request->hasFile('image'))
-        {
-            $image = $request->file('image')->getClientOriginalName();
-            $request->file('image')->move('img/section/', $image);
-
-            if (Storage::exists('img/section/'.$section->image))
-            {
-                Storage::delete('img/section/'.$section->image);
-            }
-        }
-
         $count = $section->count();
 
-        if ($request->sort_id > 0)
-            $section->sort_id = $request->sort_id;
-        else
-            $section->sort_id = ++$count;
+        if ($request->sort_id > 0) $section->sort_id = $request->sort_id;
+        else $section->sort_id = ++$count;
         $section->service_id = $request->service_id;
         $section->title = $request->title;
         $section->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
-        if (isset($image))
-            $section->image = $image;
-        $section->title_description = $request->title_description;
-        $section->meta_description = $request->meta_description;
-        $section->text = $request->text;
-        if ($request->status == 'on')
-            $section->status = 1;
-        else
-            $section->status = 0;
+        $section->lang = $request->lang;
+        if ($request->status == 'on') $section->status = 1;
+        else $section->status = 0;
         $section->save();
 
-        return redirect('/admin/section')->with('status', 'Рубрика обновлена!');
+        return redirect('/admin/section')->with('status', 'Раздел обновлен!');
     }
 
     /**
@@ -153,13 +116,8 @@ class AdminSectionController extends Controller
     {
         $section = Section::find($id);
 
-        if (Storage::exists('img/section/'.$section->image))
-        {
-            Storage::delete('img/section/'.$section->image);
-        }
-
         $section->delete();
 
-        return redirect('/admin/section')->with('status', 'Рубрика удалена!');
+        return redirect('/admin/section')->with('status', 'Раздел удален!');
     }
 }

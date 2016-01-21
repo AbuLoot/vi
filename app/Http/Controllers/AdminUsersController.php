@@ -56,9 +56,10 @@ class AdminUsersController extends Controller
     public function show($id)
     {
         $profile = Profile::findOrFail($id);
+        $contacts = json_decode($profile->phone);
         $posts = $profile->user->posts()->orderBy('id', 'DESC')->get();
 
-        return view('admin.users.show', compact('profile', 'posts'));
+        return view('admin.users.show', compact('profile', 'contacts', 'posts'));
     }
 
     /**
@@ -70,9 +71,10 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         $profile = Profile::findOrFail($id);
+        $contacts = json_decode($profile->phone);
         $section = Section::all();
 
-        return view('admin.users.edit', compact('profile', 'section'));
+        return view('admin.users.edit', compact('profile', 'contacts', 'section'));
     }
 
     /**

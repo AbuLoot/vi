@@ -25,8 +25,9 @@ class PostRequest extends Request
     {
         return [
             'title' => 'required|min:5|max:80',
-            'section_id' => 'required|numeric',
+            'category_id' => 'required|numeric',
             'price' => 'max:10',
+            // 'images' => 'mimes:jpeg,png,svg,svgs,bmp,gif',
             'city_id' => 'required|numeric',
             'address' => 'max:80',
             'phone' => 'required|min:5|max:40',

@@ -5,123 +5,106 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProfileController;
 
 use App\Service;
 use App\Section;
+use App\Category;
 use App\Post;
+use App\Tag;
 use App\Profile;
+use App\User;
 
 class BoardController extends Controller
 {
-    // Section Call
-
-    public function getCall()
+    public function __construct(Request $request) 
     {
-        $service = Service::where('slug', 'uslugi_vyzova')->first();
-        $sections = Section::where('service_id', 1)->where('status', 1)->orderBy('sort_id')->get();
-
-    	return view('board.section', compact('service', 'sections'));
+        $favorites = ProfileController::getFavorites($request);
+        view()->share('favorites', $favorites);
+        User::detectUserLocation();
     }
 
-    public function showCall($section, $id)
-    {
-        $section = Section::where('slug', $section)->first();
-        $profiles = Profile::where('section_id', $section->id)->take(5)->get();
-        $posts = Post::where('section_id', $id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
+    // Section Services
 
-        return view('board.posts', compact('section', 'profiles', 'posts'));
+    public function getServices()
+    {
+        $service = Service::where('slug', 'uslugi')->first();
+        $section = Section::where('service_id', '1')->where('status', 1)->orderBy('sort_id')->get();
+
+    	return view('board.section', compact('service', 'section'));
     }
 
-    public function showPostCall($post, $id)
+    public function showServices($category, Request $request)
+    {
+        $category = Category::where('slug', $category)->first();
+        $profiles = Profile::where('category_id', $category->id)->take(5)->get();
+        $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
+
+        $category_tags = $category->tags()->get();
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('board.posts', compact('category', 'category_tags', 'profiles', 'posts', 'favorites'));
+    }
+
+    public function showPostService($post, $id, Request $request)
     {
         $post = Post::findOrFail($id);
         $post->views = ++$post->views;
         $post->save();
 
+        $profiles = Profile::where('category_id', $post->category_id)->take(5)->get();
+        $prev = Post::where('category_id', $post->category_id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
+        $next = Post::where('category_id', $post->category_id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
+
         $images = ($post->images) ? unserialize($post->images) : null;
 
-        $previous = Post::where('section_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
-        $next = Post::where('section_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
-
-        $profiles = Profile::where('section_id', $post->section_id)->take(5)->get();
+        $contacts = json_decode($post->phone);
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);
 
-        return view('board.post', compact('post', 'images', 'profiles', 'previous', 'next', 'first_number', 'second_number'));
+
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('board.post', compact('post', 'profiles', 'prev', 'next', 'images', 'contacts', 'first_number', 'second_number', 'favorites'));
     }
 
-    // Section Repair
+    // Section Projects
 
-    public function getRepair()
+    public function getProjects()
     {
-        $service = Service::where('slug', 'uslugi_remonta')->first();
-        $sections = Section::where('service_id', 2)->where('status', 1)->orderBy('sort_id')->get();
+        $service = Service::where('slug', 'proekty')->first();
+        $section = Section::where('service_id', '2')->where('status', 1)->orderBy('sort_id')->get();
 
-    	return view('board.section', compact('service', 'sections'));
+        return view('tender.section', compact('service', 'section'));
     }
 
-    public function showRepair($section, $id)
+    public function showProjects($category)
     {
-        $section = Section::where('slug', $section)->first();
-        $profiles = Profile::where('section_id', $section->id)->take(5)->get();
-        $posts = Post::where('section_id', $id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
+        $category = Category::where('slug', $category)->first();
+        $profiles = Profile::where('category_id', $category->id)->take(5)->get();
+        $posts = Post::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
 
-        return view('board.posts', compact('section', 'profiles', 'posts'));
+        return view('tender.posts', compact('category', 'profiles', 'posts'));
     }
 
-    public function showPostRepair($post, $id)
+    public function showPostProject($post, $id)
     {
         $post = Post::findOrFail($id);
         $post->views = ++$post->views;
         $post->save();
 
+        $profiles = Profile::where('category_id', $post->category_id)->take(5)->get();
+        $prev = Post::where('category_id', $post->category_id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
+        $next = Post::where('category_id', $post->category_id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
+
         $images = ($post->images) ? unserialize($post->images) : null;
-
-        $previous = Post::where('section_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
-        $next = Post::where('section_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
-
-        $profiles = Profile::where('section_id', $post->section_id)->take(5)->get();
+        $contacts = json_decode($post->phone);
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);
 
-        return view('board.post', compact('post', 'images', 'profiles', 'previous', 'next', 'first_number', 'second_number'));
-    }
-
-    // Section Materials
-
-    public function getMaterials()
-    {
-        $service = Service::where('slug', 'stroymaterialy')->first();
-        $sections = Section::where('service_id', 3)->where('status', 1)->orderBy('sort_id')->get();
-
-        return view('board.section', compact('service', 'sections'));
-    }
-
-    public function showMaterials($section, $id)
-    {
-        $section = Section::where('slug', $section)->first();
-        $profiles = Profile::where('section_id', $section->id)->take(5)->get();
-        $posts = Post::where('section_id', $id)->where('status', 1)->orderBy('id', 'DESC')->paginate(10);
-
-        return view('board.posts', compact('section', 'profiles', 'posts'));
-    }
-
-    public function showPostMaterials($post, $id)
-    {
-        $post = Post::findOrFail($id);
-        $post->views = ++$post->views;
-        $post->save();
-
-        $images = ($post->images) ? unserialize($post->images) : null;
-
-        $previous = Post::where('section_id', $post->section->id)->where('status', 1)->where('id', '>', $post->id)->select('id', 'slug')->first();
-        $next = Post::where('section_id', $post->section->id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
-
-        $profiles = Profile::where('section_id', $post->section_id)->take(5)->get();
-        $first_number = rand(1, 10);
-        $second_number = rand(1, 10);
-
-        return view('board.post', compact('post', 'images', 'profiles', 'previous', 'next', 'first_number', 'second_number'));
+        return view('tender.post', compact('post', 'profiles', 'prev', 'next', 'images', 'contacts', 'first_number', 'second_number'));
     }
 
     // Additional functionality
@@ -139,7 +122,11 @@ class BoardController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
-        return view('board.found_posts', compact('text', 'posts', 'profiles'));
+
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('board.found_posts', compact('text', 'posts', 'profiles', 'favorites'));
     }
 
     public function filterPosts(Request $request)
@@ -158,7 +145,7 @@ class BoardController extends Controller
 
         $query .= ($request->to)
             ? 'price <= ' . (int) $request->to
-            : 'price <= 9999999';
+            : 'price <= 9999999999';
 
         if ($request->text)
         {
@@ -166,25 +153,26 @@ class BoardController extends Controller
             $query .= " AND (title LIKE '%$text%' or description LIKE '%$text%')";
         }
 
-        $sections = Section::all();
+        $section = Section::all();
         $profiles = Profile::take(5)->get();
 
-        if ($request->section_id)
+        if ($request->category_id)
         {
-            $section = Section::find($request->section_id);
+            $section = Section::find($request->category_id);
             $posts = Post::where('status', 1)
-                ->where('section_id', $request->section_id)
+                ->where('category_id', $request->category_id)
                 ->whereRaw($query)
                 ->orderBy('id', 'DESC')
                 ->paginate(10);
 
             $posts->appends([
-                'section_id' => (int) $request->section_id,
+                'category_id' => (int) $request->category_id,
                 'city_id' => (int) $request->city_id,
                 'text' => $request->text,
                 'image' => ($request->image == 'on') ? 'on' : NULL,
                 'from' => (int) $request->from,
                 'to' => (int) $request->to,
+                'tag_id' => $request->tags_id,
             ]);
         }
         else
@@ -200,9 +188,38 @@ class BoardController extends Controller
                 'image' => ($request->image == 'on') ? 'on' : NULL,
                 'from' => (int) $request->from,
                 'to' => (int) $request->to,
+                'tag_id' => $request->tags_id,
             ]);
         }
 
-        return view('board.found_posts', compact('section', 'sections', 'profiles', 'posts'));
+        $selected_tags = [];
+
+        if( isset($request->tags_id) ) {
+
+            $selected_tags = $request->tags_id;
+
+            foreach ($posts as $post_key => $post) 
+            {
+                $hasTag = false;
+                foreach ($selected_tags as $tag_id) 
+                {
+                    if( $post->hasTag($tag_id) ) {
+                        $hasTag = true;
+                    }
+                }
+
+                if( !$hasTag ) {
+                    unset($posts[$post_key]);
+                }
+            }
+        }
+
+        $category = Category::findOrFail($request->category_id);
+        $category_tags = $category->tags()->get();
+
+        $favorites = ProfileController::getFavorites($request);
+        $favorites = $favorites ? $favorites : [];
+
+        return view('board.posts', compact('category', 'category_tags', 'selected_tags', 'section', 'sections', 'profiles', 'posts', 'favorites'));
     }
 }

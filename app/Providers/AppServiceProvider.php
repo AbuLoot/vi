@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Torann\GeoIP\GeoIPFacade as GeoIP;
 use App\Page;
 use App\City;
 
@@ -19,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
         $pages = Page::all();
         $cities = City::all();
 
-        view()->share('pages', $pages);
-        view()->share('cities', $cities);
+        view()->share(['pages' => $pages, 'cities' => $cities]);
     }
 
     /**

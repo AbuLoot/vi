@@ -3,21 +3,27 @@
 return [
 
 	"1" => [
-		"route" => "call",
-		"slug" => "uslugi_vyzova",
-		"title" => "Услуги вызова",
+		"route" => "services",
+		"slug" => "uslugi",
+		"title" => "Услуги",
 	],
 
 	"2" => [
-		"route" => "repair",
-		"slug" => "uslugi_remonta",
-		"title" => "Услуги ремонта",
+		"route" => "projects",
+		"slug" => "proekty",
+		"title" => "Проекты",
 	],
 
-	"3" => [
-		"route" => "materials",
-		"slug" => "stroymaterialy",
-		"title" => "Стройматериалы",
+	/*"3" => [
+		"route" => "products",
+		"slug" => "tovary",
+		"title" => "Товары",
 	],
+
+	"4" => [
+		"route" => "jobs",
+		"slug" => "rabota",
+		"title" => "Работа",
+	],*/
 
 ];

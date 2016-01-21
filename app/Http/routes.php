@@ -1,36 +1,35 @@
 <?php
 
+
 // Pages
 Route::get('p/{page}', ['uses' => 'PagesController@page']);
 
 // Board
-Route::get('/', ['as' => 'index', 'uses' => 'BoardController@getCall']);
-Route::get('uslugi_vyzova', ['as' => 'call', 'uses' => 'BoardController@getCall']);
-Route::get('uslugi_vyzova/{section}/{id}', ['as' => 'show-call', 'uses' => 'BoardController@showCall']);
-Route::get('1/{post}/{id}', ['as' => 'show-post-call', 'uses' => 'BoardController@showPostCall']);
-
-Route::get('uslugi_remonta', ['as' => 'repair', 'uses' => 'BoardController@getRepair']);
-Route::get('uslugi_remonta/{section}/{id}', ['as' => 'show-repair', 'uses' => 'BoardController@showRepair']);
-Route::get('2/{post}/{id}', ['as' => 'show-post-repair', 'uses' => 'BoardController@showPostRepair']);
-
-Route::get('stroymaterialy', ['as' => 'materials', 'uses' => 'BoardController@getMaterials']);
-Route::get('stroymaterialy/{section}/{id}', ['as' => 'show-materials', 'uses' => 'BoardController@showMaterials']);
-Route::get('3/{post}/{id}', ['as' => 'show-post-materials', 'uses' => 'BoardController@showPostMaterials']);
+Route::get('/', ['as' => 'index', 'uses' => 'BoardController@getServices']);
+Route::get('uslugi', ['as' => 'services', 'uses' => 'BoardController@getServices']);
+Route::get('uslugi/{category}', ['as' => 'show-services', 'uses' => 'BoardController@showServices']);
+Route::get('1/{post}/{id}', ['as' => 'show-post-service', 'uses' => 'BoardController@showPostService']);
 
 // Search tools
-Route::get('search', ['uses' => 'BoardController@searchPosts']);
-Route::get('filter', ['uses' => 'BoardController@filterPosts']);
+Route::get('search/posts', ['uses' => 'BoardController@searchPosts']);
+Route::get('filter/posts', ['uses' => 'BoardController@filterPosts']);
 
-// Profile
+// Profiles
 Route::get('profile/{id}', ['uses' => 'ProfileController@getProfile']);
 Route::get('profiles', ['uses' => 'ProfileController@getProfiles']);
+
+// Favorites
+Route::get('profiles/add-favorite', ['uses' => 'ProfileController@addFavorite']);
+Route::get('profiles/delete-favorite', ['uses' => 'ProfileController@deleteFavorite']);
+Route::get('favorites', ['as' => 'get-favorites', 'uses' => 'ProfileController@showMyFavorites']);
 
 // Comment
 Route::post('review', ['uses' => 'CommentController@saveReview']);
 Route::post('comment', ['uses' => 'CommentController@saveComment']);
 
-Route::group(['middleware' => 'auth'], function()
-{
+// For Authenticated User
+Route::group(['middleware' => 'auth'], function() {
+
 	Route::resource('posts', 'PostsController');
 
 	Route::get('my_profile', ['uses' => 'ProfileController@getMyProfile']);
@@ -38,20 +37,23 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('my_profile/{id}', ['uses' => 'ProfileController@updateMyProfile']);
 
 	Route::get('my_posts', ['uses' => 'ProfileController@getMyPosts']);
-
 	Route::get('my_reviews', ['uses' => 'ProfileController@getMyReviews']);
-
 	Route::get('my_setting', ['uses' => 'ProfileController@getMySetting']);
+
 	Route::post('update_password', ['uses' => 'ProfileController@updatePassword']);
-	Route::post('delete_account', ['uses' => 'ProfileController@deleteAccount']);
+	// Route::post('delete_account', ['uses' => 'ProfileController@deleteAccount']);
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function()
-{
-    Route::resource('users', 'AdminUsersController');
-    Route::resource('section', 'AdminSectionController');
-    Route::resource('posts', 'AdminPostsController');
+// For Administrator
+Route::group(['prefix' => 'admin', 'middleware' => 'role:admin'], function() {
     Route::resource('pages', 'AdminPagesController');
+    Route::resource('cities', 'AdminCitiesController');
+    Route::resource('services', 'AdminServicesController');
+    Route::resource('section', 'AdminSectionController');
+    Route::resource('categories', 'AdminCategoriesController');
+    Route::resource('tags', 'AdminTagsController');
+    Route::resource('posts', 'AdminPostsController');
+    Route::resource('users', 'AdminUsersController');
 });
 
 // Authentication routes...
@@ -75,6 +77,3 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 // Password reset routes...
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
-
-// Route::get('create/roles', 'AdminController@createRoles');
-// Route::post('post/admin', 'AdminController@postAdmin');

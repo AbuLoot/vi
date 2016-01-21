@@ -14,7 +14,7 @@
                   </div>
                   <div class="media-body">
                     <h5 class="media-heading"><a href="/profile/{{ $profile->id }}">{{ $profile->user->name }}</a></h5>
-                    <p>{{ $profile->section->title }}</p>
+                    <p>{{ ($profile->category_id == 0) ? 'Не указан' : $profile->category->title }}</p>
                     <div>
                       @for ($i = 1; $i <= 5; $i++)
                         @if ($i <= $profile->stars)

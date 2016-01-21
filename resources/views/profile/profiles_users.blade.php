@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('title_description', 'Все специалисты и компании')
+
+@section('meta_description', 'Все специалисты и компании Казахстана')
+
 @section('content')
       <div class="row">
         <div class="col-md-8">

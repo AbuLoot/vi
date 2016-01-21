@@ -2,7 +2,7 @@
 
 @section('title_description', $post->title)
 
-@section('meta_description', $post->description)
+@section('meta_description', str_limit($post->description, 200))
 
 @section('content')
       <div class="row">
@@ -12,31 +12,30 @@
               @include('partials.alerts')
               <div class="row">
                 <div class="col-md-6 col-sm-6">
-                  <ol class="breadcrumb">
-                    <li><a href="{{ route($post->section->service->route) }}">{{ $post->section->service->title }}</a></li>
-                    <li><a href="{{ url($post->section->service->slug . '/' . $post->section->slug . '/' . $post->section->id) }}">{{ $post->section->title }}</a></li>
+                  <ol class="breadcrumb breadcrumb-modified">
+                    <li><a href="{{ route($post->category->section->service->route) }}">{{ $post->category->section->service->title }}</a></li>
+                    <li><a href="{{ url($post->category->section->service->slug . '/' . $post->category->slug) }}">{{ $post->category->title }}</a></li>
                   </ol>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                  <ol class="breadcrumb text-right">
-                    @if (is_null($previous))
+                  <ol class="breadcrumb breadcrumb-modified text-right">
+                    @if (is_null($prev))
                       <li class="text-muted">← Предыдущий</li>
                     @else
-                      <li><a href="{{ url($post->section->service_id . '/' . $previous->slug . '/' . $previous->id) }}">← Предыдущий</a></li>
+                      <li><a href="{{ url($post->category->section->service_id . '/' . $prev->slug . '/' . $prev->id) }}">← Предыдущий</a></li>
                     @endif
                     @if (is_null($next))
                       <li class="text-muted">Следуйщий →</li>
                     @else
-                      <li><a href="{{ url($post->section->service_id . '/' . $next->slug . '/' . $next->id) }}">Следуйщий →</a></li>
+                      <li><a href="{{ url($post->category->section->service_id . '/' . $next->slug . '/' . $next->id) }}">Следуйщий →</a></li>
                     @endif
                   </ol>
                 </div>
-              </div>
-              <h3>{{ $post->title }}</h3>
+              </div><br>
               <div class="row">
                 @if ($images)
                   <div class="col-md-7 col-sm-12 gallery">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <div id="post-images" class="carousel" data-ride="carousel" data-interval="false">
                       <div class="carousel-inner" role="listbox">
                         <?php $i = 0; ?>
                         @foreach ($images as $key => $image)
@@ -57,13 +56,13 @@
                       <?php $i = 0; ?>
                       @foreach ($images as $key => $image)
                         @if ($i == 0)
-                          <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
+                          <li data-target="#post-images" data-slide-to="0" class="active">
                             <a href="#">
                               <img src="/img/posts/{{ $post->user_id.'/'.$image['mini_image'] }}" class="img-responsive">
                             </a>
                           </li> 
                         @else
-                          <li data-target="#carousel-example-generic" data-slide-to="{{ $i }}">
+                          <li data-target="#post-images" data-slide-to="{{ $i }}">
                             <a href="#">
                               <img src="/img/posts/{{ $post->user_id.'/'.$image['mini_image'] }}" class="img-responsive">
                             </a>
@@ -75,17 +74,34 @@
                   </div>
                 @endif
                 <div class="col-md-5 col-sm-12">
+                  <h3>
+                    {{ $post->title }}
+                    @include('partials.favorites')
+                  </h3>
+                  <p class="h3"><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</p><hr>
+                  @include('partials.show_soc_icons')
+                  <p>{{ $post->city->title }}, {{ $post->address }} - <a id="show_on_map_modal" data-toggle="modal" href="#show_on_map"><span class="glyphicon glyphicon-map-marker"></span> Посмотреть на карте</a></p>
+                  <p>{{ $post->description }}</p>
                   <ul class="list-inline">
                     <li><a href="/profile/{{ $post->user->profile->id }}"><u><i class="glyphicon glyphicon-user"></i> {{ $post->user->name }}</u></a></li>
                     <li><i class="glyphicon glyphicon-envelope"></i> {{ $post->email }}</li>
                   </ul>
-                  <h3><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</h3><hr>
-                  <p>{{ $post->phone }}</p>
-                  <p>{{ $post->city->title }}, {{ $post->address }}</p>
-                  <p>{{ $post->description }}</p>
-                  <p><small>{{ $post->created_at }}</small> | <small>Просмотров: {{ $post->views }}</small></p>
+                  <p><small>{{ $post->created_at }}</small> | <small>Просмотров {{ $post->views }}</small></p>
                 </div>
               </div>
+              @if( $post->tags()->first() )
+                <div class="row">
+                  <div class="col-md-12">
+                    <p><b>Специализации:</b></p>
+                    <ol>
+                      <?php $tags = $post->tags()->get(); ?>
+                      @foreach( $tags as $tag )
+                        <li>{{ $tag->title }};</li>
+                      @endforeach
+                    </ol>
+                  </div>
+                </div>
+              @endif
             </div>
           </article>
         </div>
@@ -94,23 +110,14 @@
             <div class="panel-body">
               @unless ($post->comment === 'nobody')
                 <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <i class="glyphicon glyphicon-comment"></i> Комментарии: {{ $post->comments->count() }}
-                  </div>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <tbody>
-                        @foreach ($post->comments as $comment)
-                          <tr>
-                            <th style="width:110px">{{ $comment->name }}</th>
-                            <td>
-                              {{ $comment->comment }}<br>
-                              <small>Опубликовано {{ $comment->created_at }}</small>
-                            </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+                  <div class="panel-heading">Комментариев {{ $post->comments->count() }}</div>
+                  <div class="panel-body">
+                    @foreach ($post->comments as $comment)
+                      <dl>                
+                        <dt>{{ $comment->name }} &nbsp;&nbsp;<small class="text-muted">{{ $comment->created_at }}</small></dt>
+                        <dd>{{ $comment->comment }}</dd>
+                      </dl>
+                    @endforeach
                   </div>
                 </div>
               @endunless
@@ -129,13 +136,13 @@
                     <div class="form-group">
                       <label for="name" class="col-md-2 col-sm-2">Ваше имя</label>
                       <div class="col-md-10 col-sm-10">
-                        <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') }}" required>
+                        <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') ? old('name') : Auth::check() ? Auth::user()->name : null }}" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="email" class="col-md-2 col-sm-2">Email</label>
                       <div class="col-md-10 col-sm-10">
-                        <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('eamil') }}" required>
+                        <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('email') ? old('email') : Auth::check() ? Auth::user()->email : null }}" required>
                       </div>
                     </div>
                     <div class="form-group">
@@ -171,4 +178,26 @@
           @include('partials/rating')
         </aside>
       </div>
+
+      <div id="show_on_map" class="modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            {{ $post->city->title }}, {{ $post->address }}
+          </div>
+          <div class="modal-body">
+            <div id="map"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+@endsection
+
+@section('scripts')
+  <script src="/js/favorite.js"></script>
+  <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <script src="/js/show-on-map2.js"></script>
 @endsection

@@ -13,13 +13,8 @@ class Section extends Model
         return $this->belongsTo('App\Service');
     }
 
-    public function posts()
+    public function categories()
     {
-        return $this->hasMany('App\Post', 'section_id');
-    }
-
-    public function profiles()
-    {
-    	return $this->hasMany('App\Profile', 'section_id');
+        return $this->hasMany('App\Category', 'section_id');
     }
 }

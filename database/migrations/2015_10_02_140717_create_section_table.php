@@ -19,10 +19,6 @@ class CreateSectionTable extends Migration
             $table->foreign('service_id')->references('id')->on('services');
             $table->string('slug');
             $table->string('title');
-            $table->string('image');
-            $table->string('title_description');
-            $table->string('meta_description');
-            $table->text('text');
             $table->char('lang', 2)->default('ru');
             $table->integer('status')->default(1);
             $table->timestamps();

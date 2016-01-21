@@ -10,7 +10,8 @@
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-cosmo.min.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/styles.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/iconfont/material-icons.css">
     @yield('styles')
 
     <!--[if lt IE 9]>
@@ -19,25 +20,27 @@
     <![endif]-->
   </head>
   <body>
-    <header class="navbar-basic navbar-fixed-top">
+    <header class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="row">
-          <div class="col-md-2 col-sm-3 col-xs-4">
-            <a href="{{ route('index') }}"><img src="/img/vizov-logo2.png" class="logo"></a>
+          <div class="col-md-2 col-sm-3 col-xs-3">
+            <a href="{{ route('index') }}" class="logo">
+              <img src="/img/vizov.png" class="img-responsive">
+            </a>
           </div>
-          <form action="/search">
-            <div class="col-md-8 col-sm-6 col-xs-8">
+          <div class="col-md-8 col-sm-6 col-xs-5">
+            <form action="/search/posts">
               <div class="input-group">
-                <input type="text" class="form-control input-sm" name="text" minlength="2" maxlength="100" placeholder="Введите название услуги или товара" required>
+                <input type="text" class="form-control input-sm" name="text" minlength="2" maxlength="100" placeholder="Введите название услуги" required>
                 <div class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="submit">
                     <i class="glyphicon glyphicon-search"></i> <span class="hidden-xs">Найти</span>
                   </button>
                 </div>
               </div>
-            </div>
-          </form>
-          <div class="col-md-2 col-sm-3 ">
+            </form>
+          </div>
+          <div class="col-md-2 col-sm-3 col-xs-4">
             <div class="btn-group pull-right">
               @if (Auth::guest())
                 <a class="btn btn-primary btn-sm" href="/auth/login">Войти</a>
@@ -47,11 +50,11 @@
                   <i class="glyphicon glyphicon-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="/my_profile">Мой профиль</a></li>
-                  <li><a href="/my_posts">Мои объявления</a></li>
-                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить услугу</a></li>
+                  <li><a href="/my_profile"><i class="glyphicon glyphicon-user"></i> Мой профиль</a></li>
+                  <li><a href="/my_posts"><i class="glyphicon glyphicon-list-alt"></i> Мои объявления</a></li>
+                  <li><a href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a></li>
                   <li class="divider"></li>
-                  <li><a href="/auth/logout">Выход</a></li>
+                  <li><a href="/auth/logout"><i class="glyphicon glyphicon-log-out"></i> Выход</a></li>
                 </ul>
               @elseif (Auth::user()->is('admin'))
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,8 +62,11 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li><a href="/admin/pages">Страницы</a></li>
-                  <li><a href="#">Разделы</a></li>
-                  <li><a href="/admin/section">Рубрики</a></li>
+                  <li><a href="/admin/cities">Города</a></li>
+                  <li><a href="/admin/services">Сервисы</a></li>
+                  <li><a href="/admin/section">Разделы</a></li>
+                  <li><a href="/admin/categories">Категории</a></li>
+                  <li><a href="/admin/tags">Теги</a></li>
                   <li><a href="/admin/posts">Объявления</a></li>
                   <li><a href="/admin/users">Пользователи</a></li>
                   <li class="divider"></li>
@@ -76,61 +82,50 @@
     <nav class="navbar-services">
       <div class="container">
         <div class="row">
-          <div class="col-md-offset-2 col-md-6 col-sm-8">
-            <ul class="nav nav-lines">
-              <li @if (Request::is('/', 'uslugi_vyzova')) class="active" @endif>
-                <a href="{{ route('call') }}">Услуги вызова</a>
-              </li>
-              <li @if (Request::is('uslugi_remonta')) class="active" @endif>
-                <a href="{{ route('repair') }}">Услуги ремонта</a>
-              </li>
-              <li @if (Request::is('stroymaterialy')) class="active" @endif>
-                <a href="{{ route('materials') }}">Стройматериалы</a>
-              </li>
-            </ul>
+          <div class="col-md-offset-2 col-md-8 col-sm-9">
+            <a class="btn btn-link btn-sm text-uppercase" href="{{ route('services') }}"><b>Все Услуги</b></a>
+            <a class="show-favorite pull-right" href="{{ route('get-favorites') }}" data-toggle="tooltip" data-placement="left" title="Избранные" data-original-title="Избранные">
+              <i class="glyphicon glyphicon-star"></i>
+              <sup>
+                @if (isset($favorites) AND count($favorites) > 0)
+                  {{ count($favorites) }}
+                @endif
+              </sup>
+            </a>
           </div>
-          <div class="col-md-4 col-sm-4">
-            <a class="btn btn-success btn-sm btn-post-service pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить услугу</a>
+          <div class="col-md-2 col-sm-3">
+            <a class="btn btn-success btn-sm pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
           </div>
         </div>
       </div>
     </nav>
 
-    <div class="container">
-      <br>
+    <main class="container">
       @yield('content')
-    </div>
+    </main>
 
-    <hr>
     <footer class="footer">
-      <br>
       <div class="container">
-        <div class="col-md-8">
-          <ul class="list-unstyled list-inline">
-            @foreach ($pages as $page)
-              <li><a href="{{ url('p/' . $page->slug) }}">{{ $page->title }}</a></li>
-            @endforeach
-          </ul>
+        <div class="row">
+          <div class="col-md-8 col-sm-8">
+            <ul class="list-unstyled list-inline">
+              @foreach ($pages as $page)
+                <li><a href="{{ url('p/' . $page->slug) }}">{{ $page->title }}</a></li>
+              @endforeach
+            </ul>
+          </div>
+          <div class="col-md-4 col-sm-4 text-right">
+            <p class="text-right">© 2015 — 2016 «VIZOV»</p>
+          </div>
         </div>
-        <div class="col-md-4 text-right">
-          <!-- <ul class="list-inline">
-            <li><a href="#"><i class="fa fa-facebook fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-vk fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-google-plus fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter fa-2x"></i></a></li>
-            <li><a href="#"><i class="fa fa-instagram fa-2x"></i></a></li>
-          </ul> -->
-        </div>
-        <p class="text-center">© 2015 — 2016 «VIZOV»</p>
       </div>
-      <br>
     </footer>
 
-    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
     <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
     <script src="/bower_components/bootstrap/dist/js/jquery-2.1.4.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>$('[data-toggle="tooltip"]').tooltip();</script>
     @yield('scripts')
   </body>
 </html>

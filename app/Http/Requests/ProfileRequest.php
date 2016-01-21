@@ -25,7 +25,7 @@ class ProfileRequest extends Request
     {
         return [
             'name' => 'required|min:3|max:60',
-            'section_id' => 'required|numeric',
+            'category_id' => 'required|numeric',
             'city_id' => 'required|numeric',
             'address' => 'max:80',
             'phone' => 'max:40',

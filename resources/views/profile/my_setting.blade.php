@@ -39,26 +39,15 @@
               function validatePassword() {
                 var pass2 = document.getElementById("new_password_confirmation").value;
                 var pass1 = document.getElementById("new_password").value;
-                if (pass1 != pass2)
+                if (pass1 != pass2) {
                   document.getElementById("new_password_confirmation").setCustomValidity("Пароли не совпадают");
-                else
+                }
+                else {
                   document.getElementById("new_password_confirmation").setCustomValidity('');
                   //empty string means no validation error
+                }
               }
             </script>
-
-            <div class="panel panel-danger">
-              <div class="panel-heading">
-                <h3 class="panel-title">Удаление аккаунта</h3>
-              </div>
-              <div class="panel-body">
-                <form method="POST" action="delete_account" accept-charset="UTF-8">
-                  <input name="_method" type="hidden" value="DELETE">
-                  <input name="_token" type="hidden" value="{{ csrf_token() }}">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить аккаунт?')"><span class="glyphicon glyphicon-fire"></span> Удалить</button>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
       </div>

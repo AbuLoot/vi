@@ -51,19 +51,15 @@ class AdminPagesController extends Controller
 
         $page = new Page;
 
-        if ($request->sort_id > 0)
-            $page->sort_id = $request->sort_id;
-        else
-            $page->sort_id = $page->count() + 1;
+        if ($request->sort_id > 0) $page->sort_id = $request->sort_id;
+        else $page->sort_id = $page->count() + 1;
         $page->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
         $page->title = $request->title;
         $page->title_description = $request->title_description;
         $page->meta_description = $request->meta_description;
         $page->text = $request->text;
-        if ($request->status == 'on')
-            $page->status = 1;
-        else
-            $page->status = 0;
+        if ($request->status == 'on') $page->status = 1;
+        else $page->status = 0;
         $page->save();
 
         return redirect('/admin/pages')->with('status', 'Страница добавлена!');
@@ -103,22 +99,18 @@ class AdminPagesController extends Controller
     {
         $page = Page::findOrFail($id);
 
-        if ($request->sort_id > 0)
-            $page->sort_id = $request->sort_id;
-        else
-            $page->sort_id = $page->count() + 1;
+        if ($request->sort_id > 0) $page->sort_id = $request->sort_id;
+        else $page->sort_id = $page->count() + 1;
         $page->slug = ( ! empty($request->slug)) ? $request->slug : str_slug($request->title);
         $page->title = $request->title;
         $page->title_description = $request->title_description;
         $page->meta_description = $request->meta_description;
         $page->text = $request->text;
-        if ($request->status == 'on')
-            $page->status = 1;
-        else
-            $page->status = 0;
+        if ($request->status == 'on') $page->status = 1;
+        else $page->status = 0;
         $page->save();
 
-        return redirect('/admin/pages')->with('status', 'Рубрика обновлена!');
+        return redirect('/admin/pages')->with('status', 'Страница обновлена!');
     }
 
     /**

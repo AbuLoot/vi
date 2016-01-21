@@ -23,32 +23,26 @@
                     <label for="name">Ваше ФИО:</label>
                     <input type="text" class="form-control" name="name" id="name" minlength="3" maxlength="60" value="{{ Auth::user()->name }}" required>
                   </div>
+                  @if ($profile->face_id == 2)
+                    <div class="form-group">
+                      <label for="company_name">Название компании:</label>
+                      <input type="text" class="form-control" name="company_name" id="company_name" minlength="3" maxlength="60" value="{{ Auth::user()->company_name }}" required>
+                    </div>
+                  @endif
                   <div class="form-group">
                     <label for="phone">В какой сфере деятельности вы работаете:</label>
-                    <select class="form-control" name="section_id" id="section">
-                      <option value="0">Выберите рубрику</option>
-                      <optgroup label="Услуги вызова">
-                        @foreach ($section as $item)
-                          @if ($item->service_id == 1)
-                            @if ($item->id == $profile->section_id)
-                              <option value="{{ $item->id }}" selected>{{ $item->title }}</option>
+                    <select class="form-control" name="category_id" id="category">
+                      @foreach ($section as $item)
+                        <optgroup label="{{ $item->title }}">
+                          @foreach ($item->categories as $category)
+                            @if ($category->id == $profile->category_id)
+                              <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
                             @else
-                              <option value="{{ $item->id }}">{{ $item->title }}</option>
+                              <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @endif
-                          @endif
-                        @endforeach
-                      </optgroup>
-                      <optgroup label="Услуги ремонта">
-                        @foreach ($section as $item)
-                          @if ($item->service_id == 2)
-                            @if ($item->id == $profile->section_id)
-                              <option value="{{ $item->id }}" selected>{{ $item->title }}</option>
-                            @else
-                              <option value="{{ $item->id }}">{{ $item->title }}</option>
-                            @endif
-                          @endif
-                        @endforeach
-                      </optgroup>
+                          @endforeach
+                        </optgroup>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group">
@@ -64,12 +58,36 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="address">Адрес вашей работы:</label>
+                    <label style="width:100%;" for="address">Адрес вашей работы: <a id="show_map_modal" data-toggle="modal" href="#show_map" class="pull-right">Показать на карте</a></label>
                     <input type="text" class="form-control" name="address" id="address" maxlength="200" placeholder="Адрес" value="{{ $profile->address }}">
                   </div>
                   <div class="form-group">
                     <label for="phone">Контакты (телефон):</label>
-                    <input type="tel" class="form-control" name="phone" id="phone" maxlength="40" placeholder="Номер телефона" value="{{ $profile->phone }}">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="tel" class="form-control" name="phone" id="phone" maxlength="40" placeholder="Номер телефона" value="{{ $contacts->phone }}">
+                      </div>
+                      <div class="col-md-6">
+                        <p></p>
+                        <label><input type="checkbox" name="telegram" {{ ($contacts->telegram == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                        <label><input type="checkbox" name="whatsapp" {{ ($contacts->whatsapp == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                        <label><input type="checkbox" name="viber" {{ ($contacts->viber == 'on') ? 'checked' : null }}> Viber</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone2">Контакты (телефон 2):</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <input type="tel" class="form-control" name="phone2" id="phone2" maxlength="40" placeholder="Номер телефона 2" value="{{ $contacts->phone2 }}">
+                      </div>
+                      <div class="col-md-6">
+                        <p></p>
+                        <label><input type="checkbox" name="telegram2" {{ ($contacts->telegram2 == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                        <label><input type="checkbox" name="whatsapp2" {{ ($contacts->whatsapp2 == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                        <label><input type="checkbox" name="viber2" {{ ($contacts->viber2 == 'on') ? 'checked' : null }}> Viber</label>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="skills">Навыки:</label>
@@ -102,6 +120,24 @@
           </div>
         </div>
       </div>
+
+      <div id="show_map" class="modal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Кликните по карте, чтобы указать адрес</h4>
+            </div>
+            <div class="modal-body">
+              <div id="map"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+              <button id="save_map_modal" type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 @endsection
 
 @section('styles')
@@ -110,4 +146,7 @@
 
 @section('scripts')
   <script src="/bower_components/jasny-bootstrap/js/fileinput.js"></script>
+  <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+  <script src="/js/show_on_map.js"></script>
+
 @endsection
