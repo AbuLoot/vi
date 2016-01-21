@@ -82,7 +82,7 @@
     <nav class="navbar-services">
       <div class="container">
         <div class="row">
-          <div class="col-md-offset-2 col-md-8 col-sm-6">
+          <div class="col-md-offset-2 col-md-8 col-sm-9">
             <a class="btn btn-link btn-sm text-uppercase" href="{{ route('services') }}"><b>Все Услуги</b></a>
             <a class="show-favorite pull-right" href="{{ route('get-favorites') }}" data-toggle="tooltip" data-placement="left" title="Избранные" data-original-title="Избранные">
               <i class="glyphicon glyphicon-star"></i>
@@ -93,7 +93,7 @@
               </sup>
             </a>
           </div>
-          <div class="col-md-2 col-sm-6">
+          <div class="col-md-2 col-sm-3">
             <a class="btn btn-success btn-sm pull-right" href="{{ route('posts.create') }}"><i class="glyphicon glyphicon-plus"></i> Разместить Услугу</a>
           </div>
         </div>
@@ -107,14 +107,14 @@
     <footer class="footer">
       <div class="container">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-8 col-sm-8">
             <ul class="list-unstyled list-inline">
               @foreach ($pages as $page)
                 <li><a href="{{ url('p/' . $page->slug) }}">{{ $page->title }}</a></li>
               @endforeach
             </ul>
           </div>
-          <div class="col-md-4 text-right">
+          <div class="col-md-4 col-sm-4 text-right">
             <p class="text-right">© 2015 — 2016 «VIZOV»</p>
           </div>
         </div>
