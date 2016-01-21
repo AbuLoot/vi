@@ -63,7 +63,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         if (auth()->check()) {
             $user = auth()->user();
-            // $city = $user->profile->city()->get();
+            if ($user->profile) {
+                $city = $user->profile->city()->get();
+            }
         }
         else {
             $user_location = GeoIP::getLocation();
