@@ -33,7 +33,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group tag-select-container">
                 <label for="tags" class="col-md-3 col-sm-3">Специализации</label>
                 <div class="col-md-9 col-sm-9">
                   <select class="" name="tags_id[]" id="tags" style="width:100%;" multiple>
