@@ -31,11 +31,16 @@ class Profile extends Model
     public function addFavorite($post_id)
     {
         $favorites = json_decode($this->favorites, true);
-        if ($favorites) {
+
+        if ($favorites)
+        {
             $favorites[]= $post_id;
-        } else {
+        }
+        else
+        {
             $favorites = [$post_id];
         }
+
         $favorites = array_unique($favorites);
         $this->favorites = json_encode($favorites, JSON_FORCE_OBJECT);
         $this->save();
@@ -50,15 +55,18 @@ class Profile extends Model
     {
         $favorites = json_decode($this->favorites, true);
 
-        if ($favorites) {
+        if ($favorites)
+        {
             $post_position = array_search($post_id, $favorites);
 
-            if($post_position !== false) {
+            if ($post_position !== false)
+            {
                 unset($favorites[$post_position]);
                 $this->favorites  = json_encode($favorites, JSON_FORCE_OBJECT);
                 $this->save();
             }
         }
+
         return $this->favorites;
     }
 
@@ -67,14 +75,18 @@ class Profile extends Model
         $response = new \Illuminate\Http\Response('adding favorite');
         $favorites = json_decode($request->cookie('favorites'), true);
 
-        if ($favorites) {
+        if ($favorites)
+        {
             $favorites[] = intval($request->input('post_id'));
-        } else {
+        }
+        else
+        {
             $favorites = [intval($request->input('post_id'))];
         }
 
         $favorites = array_unique($favorites);
         $response->withCookie(cookie()->forever('favorites', json_encode($favorites, JSON_FORCE_OBJECT)));
+
         return $response;
     }
 
@@ -89,10 +101,12 @@ class Profile extends Model
         $favorites = json_decode($request->cookie('favorites'), true);
         $post_id = intval($request->input('post_id'));
 
-        if ($favorites) {
+        if ($favorites)
+        {
             $post_position = array_search($post_id, $favorites);
 
-            if($post_position !== false) {
+            if ($post_position !== false)
+            {
                 unset($favorites[$post_position]);
                 $response->withCookie(cookie()->forever('favorites', json_encode($favorites, JSON_FORCE_OBJECT)));
             }

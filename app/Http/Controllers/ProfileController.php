@@ -189,12 +189,17 @@ class ProfileController extends Controller
     public function addFavorite(Request $request)
     {
         $post_id = intval($request->input('post_id'));
+
         if (!$post_id) return;
 
         $user = auth()->user();
-        if ($user && $user->profile()) {
+
+        if ($user && $user->profile())
+        {
             $user->profile()->first()->addFavorite($post_id);
-        } else {
+        }
+        else
+        {
             $profile = new Profile();
 
             return $profile->addFavoriteToCookie($request);
@@ -220,12 +225,17 @@ class ProfileController extends Controller
     public function deleteFavorite(Request $request)
     {
         $post_id = $request->input('post_id');
+
         if (!$post_id) return;
 
         $user = auth()->user();
-        if ($user && $user->profile()) {
+
+        if ($user && $user->profile())
+        {
             $user->profile()->first()->deleteFavorite($post_id);
-        } else {
+        }
+        else
+        {
             $profile = new Profile();
 
             return $profile->deleteFavoriteFromCookie($request);

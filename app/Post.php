@@ -71,12 +71,14 @@ class Post extends Model
         return $this->belongsToMany('App\Tag');
     }
 
-    public function hasTag( $id )
+    public function hasTag($id)
     {
         $tags = $this->tags()->get();
 
-        foreach( $tags as $tag ) {
-            if( $tag->id == $id ) {
+        foreach ($tags as $tag)
+        {
+            if ($tag->id == $id)
+            {
                 return true;
             }
         }
@@ -84,16 +86,19 @@ class Post extends Model
         return false;
     }
 
-    public function attachTags( $tags_id )
+    public function attachTags($tags_id)
     {
-        $this->tags()->attach( $tags_id );
+        $this->tags()->attach($tags_id);
     }
 
-    public function detachTags( $tags_id = NULL )
+    public function detachTags($tags_id = NULL)
     {
-        if( $tags_id ) {
+        if ($tags_id)
+        {
             $this->tags()->detach( $tags_id);
-        } else {
+        }
+        else
+        {
             $this->tags()->detach();
         }
     }

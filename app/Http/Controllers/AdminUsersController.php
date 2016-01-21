@@ -71,9 +71,10 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         $profile = Profile::findOrFail($id);
+        $contacts = json_decode($profile->phone);
         $section = Section::all();
 
-        return view('admin.users.edit', compact('profile', 'section'));
+        return view('admin.users.edit', compact('profile', 'contacts', 'section'));
     }
 
     /**

@@ -57,22 +57,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany('App\Post');
     }
 
-    public static function detectUserLocation() {
-
+    public static function detectUserLocation()
+    {
         $city = [NULL];
 
-        if (auth()->check()) {
+        if (auth()->check())
+        {
             $user = auth()->user();
-            if ($user->profile) {
+
+            if ($user->profile)
+            {
                 $city = $user->profile->city()->get();
             }
         }
-        else {
+        else
+        {
             $user_location = GeoIP::getLocation();
             $city = City::where('slug', $user_location['city'])->get();
         }
 
-        if (empty($city[0])) {
+        if (empty($city[0]))
+        {
             $city[0] = City::first();
         }
 

@@ -63,9 +63,25 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="phone" class="col-md-3">Контакты (телефон):</label>
-                  <div class="col-md-9">
-                    <input type="tel" class="form-control" name="phone" id="phone" maxlength="40" placeholder="Номер телефона" value="{{ $profile->phone }}">
+                  <label for="phone" class="col-md-3 col-sm-3">Телефон 1</label>
+                  <div class="col-md-5 col-sm-5">
+                    <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ $contacts->phone }}" required>
+                  </div>
+                  <div class="col-md-4 col-sm-4 messengers"><br>
+                    <label><input type="checkbox" name="telegram" {{ ($contacts->telegram == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                    <label><input type="checkbox" name="whatsapp" {{ ($contacts->whatsapp == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                    <label><input type="checkbox" name="viber" {{ ($contacts->viber == 'on') ? 'checked' : null }}> Viber</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="phone" class="col-md-3 col-sm-3">Телефон 2</label>
+                  <div class="col-md-5 col-sm-5">
+                    <input type="tel" class="form-control" id="phone" name="phone" minlength="5" maxlength="40" value="{{ $contacts->phone2 }}" required>
+                  </div>
+                  <div class="col-md-4 col-sm-4 messengers"><br>
+                    <label><input type="checkbox" name="telegram" {{ ($contacts->telegram2 == 'on') ? 'checked' : null }}> Telegram</label>&nbsp;
+                    <label><input type="checkbox" name="whatsapp" {{ ($contacts->whatsapp2 == 'on') ? 'checked' : null }}> WhatsApp</label>&nbsp;
+                    <label><input type="checkbox" name="viber" {{ ($contacts->viber2 == 'on') ? 'checked' : null }}> Viber</label>
                   </div>
                 </div>
                 <div class="form-group">
