@@ -79,7 +79,9 @@
                     @include('partials.favorites')
                   </h3>
                   <p class="h3"><span class="text-price">{{ $post->price }} тг</span> @if ($post->deal == 'on') <small class="text-muted">- Торг&nbsp;возможен</small> @endif</p><hr>
-                  <p>{{ $contacts->phone }} | {{ $contacts->phone2 }}</p>
+
+                  @include('partials.show_soc_icons')
+                  
                   <p>{{ $post->city->title }}, {{ $post->address }} - <a id="show_on_map_modal" data-toggle="modal" href="#show_on_map">На карте</a></p>
                   <p>{{ $post->description }}</p>
                   <ul class="list-inline">

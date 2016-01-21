@@ -273,3 +273,29 @@ button.ms-choice > div {
 .register-pane {
   padding-top: 30px;
 }
+
+.soc-icon-container {
+  display: inline-block;
+}
+
+.soc-icon-container > i {
+  display: inline-block;
+  width: 22px;
+  height: 23px;
+  background-image: url(/img/soc.png);
+  background-size: 66px;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+.soc-icon-container > i:first-child {
+  margin-left: 4px;
+}
+
+.soc-icon-whatsapp {
+  background-position: -22px;
+}
+
+.soc-icon-viber {
+  background-position: -44px;
+}

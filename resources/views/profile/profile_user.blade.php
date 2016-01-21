@@ -161,13 +161,13 @@
                           <div class="form-group">
                             <label for="name" class="col-md-2">Ваше имя</label>
                             <div class="col-md-10">
-                              <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') }}" required>
+                              <input type="text" class="form-control input-sm" id="name" name="name" minlength="3" maxlength="60" placeholder="Введите имя" value="{{ old('name') ? old('name') : Auth::check() ? Auth::user()->name : NULL }}" required>
                             </div>
                           </div>
                           <div class="form-group">
                             <label for="email" class="col-md-2">Email адрес</label>
                             <div class="col-md-10">
-                              <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('email') }}" required>
+                              <input type="email" class="form-control input-sm" id="email" name="email" minlength="8" maxlength="60" placeholder="Введите email" value="{{ old('email') ? old('email') : Auth::check() ? Auth::user()->email : NULL }}" required>
                             </div>
                           </div>
                           <div class="form-group">
