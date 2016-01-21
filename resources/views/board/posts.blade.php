@@ -26,7 +26,7 @@
                         <td>
                           <select class="form-control input-sm" name="city_id">
                             <?php 
-                              $user_city_id = $user_city->id ? $user_city->id : NULL; // $user_city shared to view in AppServiceProvider
+                              $user_city_id = $user_city->id ? $user_city->id : NULL; // $user_city shared to view in controller
                               $user_city_id = Request::input('city_id') ? Request::input('city_id') : $user_city_id;
                             ?>
                             @foreach($cities as $city)
@@ -52,7 +52,7 @@
                       @if (isset($category_tags))
                         <tr>
                           <td colspan="2">
-                            <div class="select-sm">
+                            <div class="tag-select-container select-sm">
                               <select class="" name="tags_id[]" id="category_tags" style="width:100%;" multiple>
                                 @foreach( $category_tags as $tag)
                                   <?php
@@ -121,8 +121,8 @@
 @endsection
 
 @section('scripts')
-  <script src="/bower_components/bootstrap/dist/js/dropdowns-enhancement.js"></script>
   <script src="/js/multiple-select.js"></script>
   <script src="/js/multi-tag-select.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/dropdowns-enhancement.js"></script>
   <script src="/js/favorite.js"></script>
 @endsection

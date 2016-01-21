@@ -58,6 +58,7 @@ class BoardController extends Controller
         $next = Post::where('category_id', $post->category_id)->where('status', 1)->orderBy('id', 'DESC')->where('id', '<', $post->id)->select('id', 'slug')->first();
 
         $images = ($post->images) ? unserialize($post->images) : null;
+
         $contacts = json_decode($post->phone);
         $first_number = rand(1, 10);
         $second_number = rand(1, 10);

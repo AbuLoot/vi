@@ -15,9 +15,10 @@
 		var tagList = $('#tags');
 
 		tagList.children().remove();
+		tagList.multiselect('destroy');
 
 		if( !tags.length ) {
-			tagList.multipleSelect();
+			tagList.multiselect({numberDisplayed: 1});
 			return;
 		}
 
@@ -26,16 +27,16 @@
 			tagList.append(child);
 		});
 
-		tagList.multipleSelect();
+		tagList.multiselect({numberDisplayed: 1});
 	}
 
 	if( $('#category').length ) {
-		$('#tags').multipleSelect();
+		$('#tags').multiselect({numberDisplayed: 1});
 		$('#category').bind("change", handleCategory);
 	}
 
 	if( $('#category_tags').length ) {
-		$('#category_tags').multipleSelect({placeholder: "Выберите подкатегорию"});
+		$('#category_tags').multiselect({numberDisplayed: 1});
 	}
 
 });
