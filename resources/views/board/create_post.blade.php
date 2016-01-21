@@ -236,16 +236,16 @@
 @endsection
 
 @section('styles')
-  <link href="/bower_components/jasny-bootstrap/dist/css/fileinput.min.css" rel="stylesheet">
   <link href="/css/multiple-select.css" rel="stylesheet">
+  <link href="/bower_components/jasny-bootstrap/dist/css/fileinput.min.css" rel="stylesheet">
 @endsection
 
 @section('scripts')
+  <script src="/js/multiple-select.js"></script>
+  <script src="/js/multi-tag-select.js"></script>
   <script src="/bower_components/jasny-bootstrap/js/fileinput.js"></script>
   <script src="/bower_components/bootstrap-maxlength/src/bootstrap-maxlength.js"></script>
   <script src="/bower_components/bootstrap/dist/js/custom.js"></script>
-  <script src="/js/multiple-select.js"></script>
-  <script src="/js/multi-tag-select.js"></script>
   <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
   <script src="/js/show-on-map.js"></script>
 @endsection
