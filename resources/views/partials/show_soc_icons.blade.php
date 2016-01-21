@@ -13,7 +13,6 @@
           <i class="soc-icon-viber"></i> 
         @endif
       </span>
-
     @endif
 
     @if (isset($contacts->phone2) AND $contacts->phone2) 
@@ -31,6 +30,5 @@
         @endif
       </span>
     @endif
-
   </p>
 @endif

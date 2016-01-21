@@ -29,7 +29,6 @@ $(document).ready(function () {
 		$('.tooltip').remove();
 		newStar.tooltip('show');
 
-
 		return false;
 	}
 
