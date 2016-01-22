@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    var isShowed = false;
     var city_name = $("#city option:selected").html();
     var address = $("#address").val();
     var coords = [0,0];
@@ -22,6 +21,14 @@ $(document).ready(function() {
 
     function init(coords) {
 
+        var myPlacemark,
+            myMap = new ymaps.Map('map', {
+                center: coords,
+                zoom: 13
+            }, {
+                searchControlProvider: 'yandex#search'
+            });
+
 
         ymaps.geocode(city_name + ", " + address, {
                 results: 1
@@ -43,7 +50,7 @@ $(document).ready(function() {
                      * Если нужно добавить по найденным геокодером координатам метку со своими стилями и контентом балуна, создаем новую метку по координатам найденной и добавляем ее на карту вместо найденной.
                      */
                         
-                     var myPlacemark = new ymaps.Placemark(coords, {
+                     myPlacemark = new ymaps.Placemark(coords, {
                      iconContent: address,
                      balloonContent: city_name + ", " + address
                      }, {
@@ -51,30 +58,21 @@ $(document).ready(function() {
                      });
 
                      myMap.geoObjects.add(myPlacemark);
-                     init.prototype.myPlacemark = myPlacemark;
                          
+                    // Слушаем клик на карте
+                    myMap.events.add('click', hadnleMarkClick);
                 });
 
-        var myPlacemark,
-            myMap = new ymaps.Map('map', {
-                center: coords,
-                zoom: 13
-            }, {
-                searchControlProvider: 'yandex#search'
-            });
 
-        // Слушаем клик на карте
-        myMap.events.add('click', function (e) {
+
+        function hadnleMarkClick(e) {
             var coords = e.get('coords');
 
             // Если метка уже создана – просто передвигаем ее
             if (myPlacemark) {
                 myPlacemark.geometry.setCoordinates(coords);
             }
-            else if (init.prototype.myPlacemark){
-                myPlacemark = init.prototype.myPlacemark;
-                myPlacemark.geometry.setCoordinates(coords);
-            } else {
+            else {
             // Если нет – создаем.
                 myPlacemark = createPlacemark(coords);
                 myMap.geoObjects.add(myPlacemark);
@@ -85,7 +83,7 @@ $(document).ready(function() {
                 init.prototype.myPlacemark = myPlacemark;
             }
             getAddress(coords);
-        });
+        }
 
         // Создание метки
         function createPlacemark(coords) {
@@ -112,19 +110,32 @@ $(document).ready(function() {
         }
 
         $('#city, #address').change(function(){
-            myMap.destroy();
             city_name = $("#city option:selected").html();
             address = $("#address").val();
-            isShowed = false;
+
+            ymaps.geocode(city_name + ", " + address, {
+                    results: 1
+            }).then(function (res) {
+                var firstGeoObject = res.geoObjects.get(0);
+                coords = firstGeoObject.geometry.getCoordinates();
+                myPlacemark.geometry.setCoordinates(coords);
+                myMap.setCenter(coords);
+                myPlacemark.properties
+                    .set({
+                        iconContent: firstGeoObject.properties.get('name'),
+                        balloonContent: firstGeoObject.properties.get('text')
+                    });
+            });
+
         });
 
+        $('#save_map_modal').click(function () {
+            if( myPlacemark ) {
+                var address = myPlacemark.properties._data.iconContent;
+                $('#address').val(address);
+            } 
+            return true;
+        });
     }
 
-    $('#save_map_modal').click(function () {
-        if( myPlacemark = init.prototype.myPlacemark ) {
-            var address = myPlacemark.properties._data.iconContent;
-            $('#address').val(address);
-        } 
-        return true;
-    });
 });
